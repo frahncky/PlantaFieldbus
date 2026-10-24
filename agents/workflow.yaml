@@ -1,0 +1,39 @@
+version: 1
+states:
+  preserved:
+    agent: evidence_curator
+    requires: [evidence_input]
+    produces: [evidence_manifest]
+    next: static_analysis
+  static_analysis:
+    agent: rea_static_analyst
+    requires: [evidence_manifest, approved_artifact]
+    produces: [static_report]
+    next: passive_network_analysis
+  passive_network_analysis:
+    agent: network_analyst
+    requires: [evidence_manifest, passive_capture, adapter_inventory]
+    produces: [network_report]
+    next: correlation
+  correlation:
+    agent: correlator
+    requires: [static_report, network_report]
+    produces: [protocol_hypothesis]
+    next: human_review
+  human_review:
+    requires: [protocol_hypothesis, human_approval]
+    next: client_build
+  client_build:
+    agent: client_builder
+    requires: [human_approval, protocol_hypothesis]
+    produces: [read_only_client, fixture_tests]
+    next: validation
+  validation:
+    agent: validator
+    requires: [read_only_client, fixture_tests]
+    produces: [validation_report, field_checklist]
+    next: human_review
+rules:
+  - Originals and captures stay outside the public repository.
+  - Live-network activity is not allowed.
+  - PLC writes are never automated.

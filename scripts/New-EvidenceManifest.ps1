@@ -8,6 +8,10 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path -LiteralPath $EvidenceDirectory).Path
+$outputDirectory = Split-Path -Parent $OutputPath
+if ($outputDirectory -and -not (Test-Path -LiteralPath $outputDirectory)) {
+    New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
+}
 
 $items = Get-ChildItem -LiteralPath $root -File -Recurse |
     Where-Object { $_.Name -notmatch '^(?:.*\.(?:key|pem|pfx|lic)|evidence-manifest\.json)$' } |

@@ -1,0 +1,9 @@
+field-capture/
+*.pcap
+*.pcapng
+*.etl
+*.zip
+*.iso
+*.msi
+*.cab
+

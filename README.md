@@ -1,10 +1,10 @@
 # PlantaFieldbus
 
-Base aberta para investigar e construir uma integração independente com uma planta didática SMAR legada, sem redistribuir software, drivers ou chaves proprietárias.
+Base aberta para investigar e construir uma integração independente com uma planta didática.
 
 ## Estado atual
 
-A distribuição SYSTEM302 analisada indica componentes OPC, Network Configurator e suporte a controladores/gateways HSE. A arquitetura exata da planta ainda precisa ser confirmada por observação passiva da rede Ethernet.
+A arquitetura exata da planta ainda precisa ser confirmada por observação passiva da rede Ethernet.
 
 ## Próximo passo
 

@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'adapters/simulation_adapter.dart';
+import 'domain/plant_models.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -50,21 +53,24 @@ class PlantConsole extends StatefulWidget {
 }
 
 class _PlantConsoleState extends State<PlantConsole> {
-  late final Timer _timer;
-  double _phase = 0;
+  late final SimulationAdapter _adapter;
+  StreamSubscription<PlantSnapshot>? _subscription;
+  PlantSnapshot? _snapshot;
   var _page = 0;
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (mounted) setState(() => _phase += .22);
+    _adapter = SimulationAdapter();
+    _subscription = _adapter.watch().listen((snapshot) {
+      if (mounted) setState(() => _snapshot = snapshot);
     });
   }
 
   @override
   void dispose() {
-    _timer.cancel();
+    _subscription?.cancel();
+    _adapter.disconnect();
     super.dispose();
   }
 
@@ -115,9 +121,9 @@ class _PlantConsoleState extends State<PlantConsole> {
   }
 
   Widget _dashboard() {
-    final level = 68 + cos(_phase * .7) * 3.2;
-    final flow = 42 + sin(_phase) * 2.8;
-    final pressure = 2.42 + sin(_phase * 1.3) * .12;
+    final level = _snapshot?.tags['level']?.value ?? 0;
+    final flow = _snapshot?.tags['flow']?.value ?? 0;
+    final pressure = _snapshot?.tags['pressure']?.value ?? 0;
     return ListView(
       padding: const EdgeInsets.all(24),
       children: [

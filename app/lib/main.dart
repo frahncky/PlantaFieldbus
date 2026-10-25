@@ -79,7 +79,7 @@ class _PlantConsoleState extends State<PlantConsole> {
     final pages = [_dashboard(), _topology(), _history(), _connection()];
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PLANTA FIELDBUS'),
+        title: const Text('SMAR PD3 — FIELDBUS'),
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 18),
@@ -133,7 +133,17 @@ class _PlantConsoleState extends State<PlantConsole> {
         ),
         const SizedBox(height: 6),
         const Text(
-          'Dados gerados pelo simulador local. Nenhuma conexão física ativa.',
+          'Perfil PD3-302 / FOUNDATION Fieldbus em validação. Dados somente simulados.',
+        ),
+        const SizedBox(height: 12),
+        const Card(
+          child: ListTile(
+            leading: Icon(Icons.hub_outlined, color: Colors.tealAccent),
+            title: Text('Segmento FOUNDATION Fieldbus — não conectado'),
+            subtitle: Text(
+              'Aguardando etiqueta da variante e captura passiva Ethernet.',
+            ),
+          ),
         ),
         const SizedBox(height: 20),
         Wrap(
@@ -141,28 +151,28 @@ class _PlantConsoleState extends State<PlantConsole> {
           runSpacing: 12,
           children: [
             _metric(
-              'Nível do tanque',
+              'LI-101 • Nível',
               '${level.toStringAsFixed(1)} %',
               Icons.water_drop,
               Colors.lightBlue,
             ),
             _metric(
-              'Vazão',
+              'FIT-101 • Vazão',
               '${flow.toStringAsFixed(1)} L/min',
               Icons.water,
               Colors.tealAccent,
             ),
             _metric(
-              'Pressão',
+              'PT-101 • Pressão',
               '${pressure.toStringAsFixed(2)} bar',
               Icons.speed,
               Colors.deepPurpleAccent,
             ),
             _metric(
-              'Alarmes ativos',
-              '0',
-              Icons.notifications_none,
-              Colors.amber,
+              'TIT-101 • Temperatura',
+              '26.4 °C',
+              Icons.thermostat_outlined,
+              Colors.orangeAccent,
             ),
           ],
         ),
@@ -174,7 +184,7 @@ class _PlantConsoleState extends State<PlantConsole> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Sinótico — circuito de recirculação',
+                  'Sinótico — malha hidráulica PD3 (perfil demonstrativo)',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 16),
@@ -190,10 +200,12 @@ class _PlantConsoleState extends State<PlantConsole> {
                           color: Colors.lightBlue,
                         ),
                         Text(
-                          'TQ-101   ${level.toStringAsFixed(1)} %',
+                          'TK-101   ${level.toStringAsFixed(1)} %',
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
-                        const Text('P-101 em operação • V-101 aberta'),
+                        const Text(
+                          'P-101 em operação • FV-101 aberta • FIT-101 estável',
+                        ),
                       ],
                     ),
                   ),
@@ -237,22 +249,22 @@ class _PlantConsoleState extends State<PlantConsole> {
 
   Widget _topology() => _pageBody(
     'Topologia',
-    'Modelo local. A topologia real será criada a partir da captura passiva.',
+    'Perfil PD3-302 demonstrativo. A topologia real será criada pela captura passiva.',
     const [
       ListTile(
         leading: Icon(Icons.computer),
         title: Text('Notebook de engenharia'),
-        subtitle: Text('Adaptador ainda não selecionado'),
+        subtitle: Text('Ethernet para controlador ou switch — não conectado'),
       ),
       ListTile(
         leading: Icon(Icons.hub_outlined),
-        title: Text('Gateway / controlador — desconhecido'),
-        subtitle: Text('Aguardando PCAPNG ou identificação física'),
+        title: Text('Controlador / bridge — a identificar'),
+        subtitle: Text('Modelo e IP serão obtidos pela etiqueta ou PCAPNG'),
       ),
       ListTile(
         leading: Icon(Icons.device_hub),
-        title: Text('Segmento Fieldbus — não confirmado'),
-        subtitle: Text('Nenhum comando ativo'),
+        title: Text('Segmento FOUNDATION Fieldbus — perfil PD3-302'),
+        subtitle: Text('Hipótese de trabalho; sem comandos ativos'),
       ),
     ],
   );

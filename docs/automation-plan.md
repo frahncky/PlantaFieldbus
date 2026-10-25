@@ -29,3 +29,9 @@ Após a coleta da rede, execute:
 ```
 
 Depois, entregue os arquivos gerados ao agente para a etapa REA de correlação.
+
+Para artefatos de software já extraídos, gere antes a lista priorizada de alvos:
+
+```powershell
+./scripts/Select-StaticTargets.ps1 -ArtifactDirectory <diretorio-extraido> -OutputPath ./investigation/static-targets.json
+```

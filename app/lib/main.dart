@@ -149,7 +149,7 @@ class _PlantConsoleState extends State<PlantConsole> {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SMAR PD3 — FIELDBUS'),
+        title: const Text('PLANTA FIELDBUS'),
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 18),
@@ -208,7 +208,7 @@ class _PlantConsoleState extends State<PlantConsole> {
         ),
         const SizedBox(height: 6),
         const Text(
-          'Perfil PD3-302 / FOUNDATION Fieldbus em validação. Dados somente simulados.',
+          'Perfil FOUNDATION Fieldbus em validação. Dados somente simulados.',
         ),
         const SizedBox(height: 12),
         const Card(
@@ -259,7 +259,7 @@ class _PlantConsoleState extends State<PlantConsole> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Sinótico — malha hidráulica PD3 (perfil demonstrativo)',
+                  'Sinótico — malha hidráulica (perfil demonstrativo)',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 16),
@@ -415,7 +415,7 @@ class _PlantConsoleState extends State<PlantConsole> {
             ),
             ListTile(
               leading: Icon(Icons.device_hub),
-              title: Text('Segmento FOUNDATION Fieldbus — perfil PD3-302'),
+              title: Text('Segmento FOUNDATION Fieldbus — perfil em validação'),
               subtitle: Text('Hipótese de trabalho; sem comandos ativos'),
             ),
           ],

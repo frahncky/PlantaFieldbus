@@ -32,6 +32,6 @@ class ModbusTcpAdapter extends UnavailableAdapter {
   const ModbusTcpAdapter() : super('Modbus TCP (aguardando confirmação)');
 }
 
-class SmarHseAdapter extends UnavailableAdapter {
-  const SmarHseAdapter() : super('SMAR/HSE (aguardando confirmação)');
+class HseAdapter extends UnavailableAdapter {
+  const HseAdapter() : super('HSE (aguardando confirmação)');
 }

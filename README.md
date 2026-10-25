@@ -7,7 +7,7 @@
 # PlantaFieldbus
 
 **Uma base aberta para observar, entender e operar uma planta didática com segurança.**<br>
-Simulação local, evidência passiva de rede e uma interface independente para a planta SMAR PD3.
+Simulação local, evidência passiva de rede e uma interface independente para uma planta didática Fieldbus.
 
 [![Flutter](https://img.shields.io/badge/Flutter-Windows%20desktop-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.13+-0175C2?logo=dart&logoColor=white)](https://dart.dev)
@@ -29,7 +29,7 @@ Simulação local, evidência passiva de rede e uma interface independente para 
 
 O **PlantaFieldbus** é uma base para construir uma interface independente de engenharia e operação de uma planta didática industrial. O projeto começa deliberadamente em **simulação local**: antes de qualquer integração física, a topologia e o protocolo precisam ser comprovados por etiqueta do equipamento e evidência passiva de rede.
 
-O perfil de trabalho atual é a série **SMAR PD3**, com a hipótese PD3-302 / FOUNDATION Fieldbus ainda sujeita à confirmação no laboratório.
+O perfil de trabalho atual é uma planta didática com segmento FOUNDATION Fieldbus ainda sujeito à confirmação no laboratório.
 
 ## 🧭 Recursos
 
@@ -41,7 +41,7 @@ O perfil de trabalho atual é a série **SMAR PD3**, com a hipótese PD3-302 / F
   </tr>
   <tr>
     <td align="center">🕸️<br><b>Topologia offline</b><br><sub>Importa somente o resumo gerado de uma captura passiva</sub></td>
-    <td align="center">🔌<br><b>Adaptadores isolados</b><br><sub>Contratos para simulação, OPC, Modbus TCP e SMAR/HSE</sub></td>
+    <td align="center">🔌<br><b>Adaptadores isolados</b><br><sub>Contratos para simulação, OPC, Modbus TCP e HSE</sub></td>
     <td align="center">🛡️<br><b>Gates de segurança</b><br><sub>Sem descoberta ativa, escrita ou mudança de configuração</sub></td>
   </tr>
 </table>
@@ -67,13 +67,13 @@ flowchart LR
     ANALYZE --> TOPO["🕸️ network-summary.json"]
     TOPO --> UI
     EVID["🏷️ Etiqueta + evidência"] -. valida .-> ADAPTER["🔌 Adaptador real somente leitura"]
-    ADAPTER -. futuro autorizado .-> PLANT["🏭 Planta PD3"]
+    ADAPTER -. futuro autorizado .-> PLANT["🏭 Planta didática"]
 ```
 
 | Pasta | Conteúdo |
 | --- | --- |
 | [`app/`](app/) | Console Flutter desktop, domínio, adaptadores e testes |
-| [`docs/`](docs/) | Captura passiva, plano de automação, perfil PD3 e roadmap |
+| [`docs/`](docs/) | Captura passiva, plano de automação, perfil Fieldbus e roadmap |
 | [`scripts/`](scripts/) | Coleta e análise offline de evidências de rede |
 | [`agents/`](agents/) | Papéis, máquinas de estado e gates para a investigação |
 

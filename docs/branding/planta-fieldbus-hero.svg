@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title desc">
+  <title id="title">PlantaFieldbus</title>
+  <desc id="desc">Console seguro de engenharia para planta didática industrial.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#071a24"/><stop offset="1" stop-color="#103b44"/></linearGradient>
+    <linearGradient id="line" x1="0" x2="1"><stop stop-color="#19c6bb"/><stop offset="1" stop-color="#66e0d6"/></linearGradient>
+  </defs>
+  <rect width="1280" height="360" rx="28" fill="url(#bg)"/>
+  <g opacity=".28" stroke="#75fff0" fill="none"><path d="M0 285H180V188H330V270H510V118H690V214H840V80H1020V180H1280" stroke-width="3"/><path d="M0 316H260V245H430V326H650V243H820V302H1020V232H1280" stroke-width="2"/></g>
+  <g stroke="url(#line)" fill="#0b3037" stroke-width="4"><circle cx="205" cy="188" r="23"/><circle cx="510" cy="118" r="23"/><circle cx="840" cy="80" r="23"/><circle cx="1020" cy="180" r="23"/></g>
+  <text x="80" y="142" fill="#ddfffb" font-family="Arial, sans-serif" font-size="54" font-weight="700">PLANTAFIELDBUS</text>
+  <text x="83" y="190" fill="#73dcd4" font-family="Arial, sans-serif" font-size="23">Engenharia observável para plantas didáticas industriais</text>
+  <text x="83" y="237" fill="#b9d7d6" font-family="Arial, sans-serif" font-size="18">simulação local · evidência passiva · operação segura</text>
+  <rect x="82" y="266" width="258" height="37" rx="18" fill="#0d5d60"/><text x="108" y="291" fill="#e7fffd" font-family="Arial, sans-serif" font-size="16" font-weight="700">SEM ESCRITA NO PLC</text>
+</svg>

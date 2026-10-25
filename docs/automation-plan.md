@@ -34,4 +34,9 @@ Para artefatos de software já extraídos, gere antes a lista priorizada de alvo
 
 ```powershell
 ./scripts/Select-StaticTargets.ps1 -ArtifactDirectory <diretorio-extraido> -OutputPath ./investigation/static-targets.json
+./scripts/New-StaticTriageReport.ps1 -TargetsPath ./investigation/static-targets.json
 ```
+
+O segundo comando cria uma fila de análise estática baseada somente em metadados e
+strings locais. Ela orienta a ordem das consultas REA, mas não confirma a função
+nem o protocolo de qualquer módulo.

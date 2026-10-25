@@ -13,7 +13,9 @@
 2. Persistir histórico e eventos simulados localmente. — base JSON concluída
 3. Criar interfaces somente leitura para `Simulation`, `OPC`, `Modbus TCP` e `SMAR/HSE`. — contratos concluídos; adaptadores reais permanecem inativos
 4. Implementar testes com replay para os adaptadores; os reais permanecem inativos até haver evidência de protocolo. — concluído para snapshots offline
-5. Importar a topologia observada da captura passiva. — importador offline preparado; aguarda `network-summary.json`
+5. Importar a topologia observada da captura passiva. — concluído: a tela importa um `network-summary.json` local sem estabelecer conexões.
+6. Histórico e alarmes locais do simulador. — concluído: mantém os últimos eventos na interface e grava cache JSON local.
+7. Designer inicial do sinótico. — concluído: prévia local e controles de visibilidade dos elementos demonstrativos.
 
 ## Gates obrigatórios
 

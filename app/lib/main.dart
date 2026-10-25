@@ -1,9 +1,13 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
 import 'adapters/simulation_adapter.dart';
 import 'domain/plant_models.dart';
+import 'domain/topology_models.dart';
+import 'services/event_store.dart';
+import 'services/network_summary_importer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -54,21 +58,81 @@ class PlantConsole extends StatefulWidget {
 
 class _PlantConsoleState extends State<PlantConsole> {
   late final SimulationAdapter _adapter;
+  late final JsonEventStore _eventStore;
+  final _capturePath = TextEditingController();
+  final _events = <PlantEvent>[];
+  final _persistedKeys = <String>{};
   StreamSubscription<PlantSnapshot>? _subscription;
   PlantSnapshot? _snapshot;
+  ObservedTopology? _observedTopology;
+  String? _topologyError;
   var _page = 0;
+  var _showPump = true;
+  var _showValve = true;
 
   @override
   void initState() {
     super.initState();
     _adapter = SimulationAdapter();
-    _subscription = _adapter.watch().listen((snapshot) {
-      if (mounted) setState(() => _snapshot = snapshot);
+    _eventStore = JsonEventStore(
+      File(
+        '${Directory.systemTemp.path}${Platform.pathSeparator}planta-fieldbus${Platform.pathSeparator}events.json',
+      ),
+    );
+    _loadHistory();
+    _subscription = _adapter.watch().listen(_onSnapshot);
+  }
+
+  Future<void> _loadHistory() async {
+    try {
+      final stored = await _eventStore.read();
+      if (!mounted) return;
+      setState(() {
+        _events.addAll(stored.take(100));
+        _persistedKeys.addAll(stored.map(_eventKey));
+      });
+    } on FormatException {
+      // A malformed local cache must never prevent the console from opening.
+    }
+  }
+
+  void _onSnapshot(PlantSnapshot snapshot) {
+    final newEvents = snapshot.events
+        .where((event) => _persistedKeys.add(_eventKey(event)))
+        .toList();
+    if (!mounted) return;
+    setState(() {
+      _snapshot = snapshot;
+      _events.insertAll(0, newEvents);
+      if (_events.length > 100) _events.removeRange(100, _events.length);
     });
+    for (final event in newEvents) {
+      unawaited(_eventStore.append(event));
+    }
+  }
+
+  String _eventKey(PlantEvent event) =>
+      '${event.time.toIso8601String()}|${event.severity.name}|${event.message}';
+
+  Future<void> _importTopology() async {
+    try {
+      final contents = await File(_capturePath.text.trim()).readAsString();
+      final imported = NetworkSummaryImporter().importJson(contents);
+      if (!mounted) return;
+      setState(() {
+        _observedTopology = imported;
+        _topologyError = null;
+      });
+    } on Object catch (error) {
+      if (mounted) {
+        setState(() => _topologyError = 'Não foi possível importar: $error');
+      }
+    }
   }
 
   @override
   void dispose() {
+    _capturePath.dispose();
     _subscription?.cancel();
     _adapter.disconnect();
     super.dispose();
@@ -76,7 +140,13 @@ class _PlantConsoleState extends State<PlantConsole> {
 
   @override
   Widget build(BuildContext context) {
-    final pages = [_dashboard(), _topology(), _history(), _connection()];
+    final pages = [
+      _dashboard(),
+      _topology(),
+      _history(),
+      _designer(),
+      _connection(),
+    ];
     return Scaffold(
       appBar: AppBar(
         title: const Text('SMAR PD3 — FIELDBUS'),
@@ -109,6 +179,11 @@ class _PlantConsoleState extends State<PlantConsole> {
             icon: Icon(Icons.timeline_outlined),
             selectedIcon: Icon(Icons.timeline),
             label: 'Histórico',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.design_services_outlined),
+            selectedIcon: Icon(Icons.design_services),
+            label: 'Designer',
           ),
           NavigationDestination(
             icon: Icon(Icons.settings_outlined),
@@ -188,39 +263,48 @@ class _PlantConsoleState extends State<PlantConsole> {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 16),
-                SizedBox(
-                  height: 220,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.water,
-                          size: 82,
-                          color: Colors.lightBlue,
+                Center(
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 28,
+                    runSpacing: 12,
+                    children: [
+                      _synopticNode(
+                        Icons.water,
+                        'TK-101',
+                        '${level.toStringAsFixed(1)} %',
+                        Colors.lightBlue,
+                      ),
+                      if (_showPump)
+                        _synopticNode(
+                          Icons.settings_input_component,
+                          'P-101',
+                          'simulada',
+                          Colors.tealAccent,
                         ),
-                        Text(
-                          'TK-101   ${level.toStringAsFixed(1)} %',
-                          style: Theme.of(context).textTheme.headlineSmall,
+                      if (_showValve)
+                        _synopticNode(
+                          Icons.tune,
+                          'FV-101',
+                          'aberta',
+                          Colors.orangeAccent,
                         ),
-                        const Text(
-                          'P-101 em operação • FV-101 aberta • FIT-101 estável',
-                        ),
-                      ],
-                    ),
+                    ],
                   ),
                 ),
+                const SizedBox(height: 12),
+                const Text('Layout demonstrativo editável na aba Designer.'),
               ],
             ),
           ),
         ),
         const SizedBox(height: 20),
-        const Card(
+        Card(
           child: ListTile(
-            leading: Icon(Icons.check_circle_outline, color: Colors.tealAccent),
-            title: Text('Simulador iniciado'),
-            subtitle: Text(
-              'Eventos e histórico serão persistidos localmente na próxima etapa.',
+            leading: const Icon(Icons.history, color: Colors.tealAccent),
+            title: Text('${_events.length} eventos locais'),
+            subtitle: const Text(
+              'Histórico gravado localmente; nenhum dado é enviado à rede.',
             ),
           ),
         ),
@@ -247,37 +331,233 @@ class _PlantConsoleState extends State<PlantConsole> {
         ),
       );
 
-  Widget _topology() => _pageBody(
-    'Topologia',
-    'Perfil PD3-302 demonstrativo. A topologia real será criada pela captura passiva.',
-    const [
-      ListTile(
-        leading: Icon(Icons.computer),
-        title: Text('Notebook de engenharia'),
-        subtitle: Text('Ethernet para controlador ou switch — não conectado'),
+  Widget _synopticNode(IconData icon, String tag, String value, Color color) =>
+      SizedBox(
+        width: 118,
+        child: Column(
+          children: [
+            Icon(icon, size: 50, color: color),
+            Text(tag, style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text(value),
+          ],
+        ),
+      );
+
+  Widget _topology() => ListView(
+    padding: const EdgeInsets.all(24),
+    children: [
+      Text('Topologia', style: Theme.of(context).textTheme.headlineMedium),
+      const SizedBox(height: 8),
+      const Text(
+        'Importa somente o JSON produzido pela análise de PCAP. Não abre conexão nem descobre hosts.',
       ),
-      ListTile(
-        leading: Icon(Icons.hub_outlined),
-        title: Text('Controlador / bridge — a identificar'),
-        subtitle: Text('Modelo e IP serão obtidos pela etiqueta ou PCAPNG'),
+      const SizedBox(height: 20),
+      Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Importar resumo offline',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: _capturePath,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Caminho para network-summary.json',
+                ),
+              ),
+              const SizedBox(height: 10),
+              FilledButton.icon(
+                onPressed: _importTopology,
+                icon: const Icon(Icons.upload_file),
+                label: const Text('Importar sem rede'),
+              ),
+              if (_topologyError != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Text(
+                    _topologyError!,
+                    style: const TextStyle(color: Colors.orangeAccent),
+                  ),
+                ),
+            ],
+          ),
+        ),
       ),
-      ListTile(
-        leading: Icon(Icons.device_hub),
-        title: Text('Segmento FOUNDATION Fieldbus — perfil PD3-302'),
-        subtitle: Text('Hipótese de trabalho; sem comandos ativos'),
+      const SizedBox(height: 16),
+      _topologyCard(),
+    ],
+  );
+
+  Widget _topologyCard() {
+    final nodes = _observedTopology?.nodes;
+    if (nodes == null) {
+      return const Card(
+        child: Column(
+          children: [
+            ListTile(
+              leading: Icon(Icons.computer),
+              title: Text('Notebook de engenharia'),
+              subtitle: Text(
+                'Ethernet para controlador ou switch — não conectado',
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.hub_outlined),
+              title: Text('Controlador / bridge — a identificar'),
+              subtitle: Text(
+                'Modelo e IP serão obtidos pela etiqueta ou PCAPNG',
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.device_hub),
+              title: Text('Segmento FOUNDATION Fieldbus — perfil PD3-302'),
+              subtitle: Text('Hipótese de trabalho; sem comandos ativos'),
+            ),
+          ],
+        ),
+      );
+    }
+    return Card(
+      child: Column(
+        children: [
+          ListTile(
+            leading: const Icon(
+              Icons.verified_outlined,
+              color: Colors.tealAccent,
+            ),
+            title: Text('Captura: ${_observedTopology!.captureName}'),
+            subtitle: Text(
+              '${nodes.length} endpoints observados; hash ${_observedTopology!.captureSha256}',
+            ),
+          ),
+          ...nodes.map(
+            (node) => ListTile(
+              leading: const Icon(Icons.lan_outlined),
+              title: Text(node.label),
+              subtitle: const Text(
+                'Observado na captura — papel ainda não classificado',
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _history() => ListView(
+    padding: const EdgeInsets.all(24),
+    children: [
+      Text(
+        'Histórico e alarmes',
+        style: Theme.of(context).textTheme.headlineMedium,
+      ),
+      const SizedBox(height: 8),
+      const Text('Eventos do simulador persistidos somente neste computador.'),
+      const SizedBox(height: 20),
+      Card(
+        child: _events.isEmpty
+            ? const ListTile(
+                leading: Icon(Icons.info_outline),
+                title: Text('Aguardando eventos do simulador'),
+              )
+            : Column(children: _events.take(30).map(_eventTile).toList()),
       ),
     ],
   );
 
-  Widget _history() => _pageBody(
-    'Histórico',
-    'Persistência local será adicionada sem depender da planta.',
-    const [
-      ListTile(
-        leading: Icon(Icons.info_outline),
-        title: Text('Sem dados históricos'),
-        subtitle: Text(
-          'O simulador hoje alimenta apenas a visualização atual.',
+  Widget _eventTile(PlantEvent event) {
+    final (icon, color) = switch (event.severity) {
+      EventSeverity.info => (Icons.info_outline, Colors.lightBlue),
+      EventSeverity.warning => (
+        Icons.warning_amber_outlined,
+        Colors.orangeAccent,
+      ),
+      EventSeverity.alarm => (Icons.error_outline, Colors.redAccent),
+    };
+    return ListTile(
+      leading: Icon(icon, color: color),
+      title: Text(event.message),
+      subtitle: Text(
+        '${event.time.toLocal()} • ${event.severity.name.toUpperCase()}',
+      ),
+    );
+  }
+
+  Widget _designer() => ListView(
+    padding: const EdgeInsets.all(24),
+    children: [
+      Text(
+        'Designer do sinótico',
+        style: Theme.of(context).textTheme.headlineMedium,
+      ),
+      const SizedBox(height: 8),
+      const Text(
+        'Editor local de elementos demonstrativos. Não altera PLC, tags ou configuração de campo.',
+      ),
+      const SizedBox(height: 20),
+      Card(
+        child: Column(
+          children: [
+            SwitchListTile(
+              value: _showPump,
+              onChanged: (value) => setState(() => _showPump = value),
+              title: const Text('Exibir P-101'),
+              subtitle: const Text('Bomba demonstrativa'),
+            ),
+            SwitchListTile(
+              value: _showValve,
+              onChanged: (value) => setState(() => _showValve = value),
+              title: const Text('Exibir FV-101'),
+              subtitle: const Text('Válvula demonstrativa'),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(height: 16),
+      Card(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Prévia', style: Theme.of(context).textTheme.titleLarge),
+              const SizedBox(height: 16),
+              Center(
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 28,
+                  runSpacing: 12,
+                  children: [
+                    _synopticNode(
+                      Icons.water,
+                      'TK-101',
+                      '${(_snapshot?.tags['level']?.value ?? 0).toStringAsFixed(1)} %',
+                      Colors.lightBlue,
+                    ),
+                    if (_showPump)
+                      _synopticNode(
+                        Icons.settings_input_component,
+                        'P-101',
+                        'simulada',
+                        Colors.tealAccent,
+                      ),
+                    if (_showValve)
+                      _synopticNode(
+                        Icons.tune,
+                        'FV-101',
+                        'aberta',
+                        Colors.orangeAccent,
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     ],

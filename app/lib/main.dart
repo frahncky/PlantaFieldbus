@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'adapters/simulation_adapter.dart';
+import 'adapters/passive_ethernet_discovery.dart';
+import 'domain/ethernet_discovery_beacon.dart';
 import 'domain/plant_models.dart';
 import 'domain/topology_models.dart';
 import 'services/event_store.dart';
@@ -63,12 +65,17 @@ class _PlantConsoleState extends State<PlantConsole> {
   final _events = <PlantEvent>[];
   final _persistedKeys = <String>{};
   StreamSubscription<PlantSnapshot>? _subscription;
+  StreamSubscription<EthernetDiscoveryBeacon>? _passiveSubscription;
+  PassiveEthernetDiscovery? _passiveDiscovery;
   PlantSnapshot? _snapshot;
   ObservedTopology? _observedTopology;
+  EthernetDiscoveryBeacon? _latestBeacon;
   String? _topologyError;
+  String? _passiveError;
   var _page = 0;
   var _showPump = true;
   var _showValve = true;
+  var _isPassiveListening = false;
 
   @override
   void initState() {
@@ -130,10 +137,43 @@ class _PlantConsoleState extends State<PlantConsole> {
     }
   }
 
+  Future<void> _togglePassiveDiscovery() async {
+    if (_isPassiveListening) {
+      await _passiveSubscription?.cancel();
+      await _passiveDiscovery?.stop();
+      if (mounted) setState(() => _isPassiveListening = false);
+      return;
+    }
+
+    try {
+      final discovery = PassiveEthernetDiscovery();
+      final stream = await discovery.start();
+      _passiveDiscovery = discovery;
+      _passiveSubscription = stream.listen(
+        (beacon) {
+          if (mounted) {
+            setState(() {
+              _latestBeacon = beacon;
+              _passiveError = null;
+            });
+          }
+        },
+        onError: (Object error) {
+          if (mounted) setState(() => _passiveError = '$error');
+        },
+      );
+      if (mounted) setState(() => _isPassiveListening = true);
+    } on Object catch (error) {
+      if (mounted) setState(() => _passiveError = '$error');
+    }
+  }
+
   @override
   void dispose() {
     _capturePath.dispose();
     _subscription?.cancel();
+    _passiveSubscription?.cancel();
+    _passiveDiscovery?.stop();
     _adapter.disconnect();
     super.dispose();
   }
@@ -563,36 +603,84 @@ class _PlantConsoleState extends State<PlantConsole> {
     ],
   );
 
-  Widget _connection() => _pageBody(
-    'Conexão',
-    'Modo seguro: sem descoberta ativa de rede e sem escrita.',
-    const [
-      ListTile(
-        leading: Icon(Icons.play_circle_outline, color: Colors.amber),
-        title: Text('Simulador local'),
-        subtitle: Text('Ativo para desenvolvimento da interface.'),
+  Widget _connection() => ListView(
+    padding: const EdgeInsets.all(24),
+    children: [
+      Text('Conexão', style: Theme.of(context).textTheme.headlineMedium),
+      const SizedBox(height: 8),
+      const Text('Modo seguro: sem descoberta ativa de rede e sem escrita.'),
+      const SizedBox(height: 24),
+      const Card(
+        child: ListTile(
+          leading: Icon(Icons.play_circle_outline, color: Colors.amber),
+          title: Text('Simulador local'),
+          subtitle: Text('Ativo para desenvolvimento da interface.'),
+        ),
       ),
-      ListTile(
-        leading: Icon(Icons.lock_outline),
-        title: Text('Escrita em PLC: bloqueada por projeto.'),
-        subtitle: Text(
-          'Exige adaptador confirmado, laboratório e autorização explícita.',
+      const SizedBox(height: 12),
+      Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _isPassiveListening
+                    ? 'Escuta passiva em execução'
+                    : 'Escuta passiva desativada',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Escuta somente anúncios UDP já presentes. Não envia datagramas, não abre TCP e não escreve no controlador.',
+              ),
+              const SizedBox(height: 12),
+              FilledButton.icon(
+                onPressed: _togglePassiveDiscovery,
+                icon: Icon(
+                  _isPassiveListening
+                      ? Icons.stop_circle_outlined
+                      : Icons.hearing,
+                ),
+                label: Text(
+                  _isPassiveListening
+                      ? 'Parar escuta'
+                      : 'Iniciar escuta passiva',
+                ),
+              ),
+              if (_latestBeacon != null)
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.sensors, color: Colors.tealAccent),
+                  title: Text('Firmware ${_latestBeacon!.firmware}'),
+                  subtitle: Text(
+                    'Identidade anunciada: Monitor ${_latestBeacon!.monitor}',
+                  ),
+                ),
+              if (_passiveError != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Text(
+                    _passiveError!,
+                    style: const TextStyle(color: Colors.orangeAccent),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+      const SizedBox(height: 12),
+      const Card(
+        child: ListTile(
+          leading: Icon(Icons.lock_outline),
+          title: Text('Escrita em PLC: bloqueada por projeto.'),
+          subtitle: Text(
+            'Exige adaptador confirmado, laboratório e autorização explícita.',
+          ),
         ),
       ),
     ],
   );
-
-  Widget _pageBody(String title, String subtitle, List<Widget> children) =>
-      ListView(
-        padding: const EdgeInsets.all(24),
-        children: [
-          Text(title, style: Theme.of(context).textTheme.headlineMedium),
-          const SizedBox(height: 8),
-          Text(subtitle),
-          const SizedBox(height: 24),
-          Card(child: Column(children: children)),
-        ],
-      );
 }
 
 class MyHomePage extends StatefulWidget {

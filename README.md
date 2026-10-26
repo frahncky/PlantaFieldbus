@@ -74,6 +74,7 @@ flowchart LR
 | --- | --- |
 | [`app/`](app/) | Console Flutter desktop, domínio, adaptadores e testes |
 | [`docs/`](docs/) | Captura passiva, plano de automação, perfil Fieldbus e roadmap |
+| [`desktop/PlantaFieldbus.Wpf/`](desktop/PlantaFieldbus.Wpf/) | Interface WPF nativa para Windows, em simulação local |
 | [`scripts/`](scripts/) | Coleta e análise offline de evidências de rede |
 | [`agents/`](agents/) | Papéis, máquinas de estado e gates para a investigação |
 

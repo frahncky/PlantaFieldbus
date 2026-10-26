@@ -1,0 +1,73 @@
+<Window x:Class="PlantaFieldbus.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PlantaFieldbus" Width="1280" Height="780" MinWidth="960" MinHeight="620"
+        Background="{StaticResource CanvasBrush}">
+  <Grid Margin="28">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <DockPanel LastChildFill="False" Margin="0,0,0,22">
+      <StackPanel DockPanel.Dock="Left">
+        <TextBlock Text="PLANTAFIELDBUS" FontSize="26" FontWeight="Bold" Foreground="{StaticResource AccentBrush}" />
+        <TextBlock Text="Console de engenharia · simulação e evidência passiva" Foreground="#9DBBB8" Margin="0,5,0,0" />
+      </StackPanel>
+      <Border DockPanel.Dock="Right" Background="#143A36" CornerRadius="14" Padding="14,7" VerticalAlignment="Center">
+        <TextBlock Text="MODO SEGURO — SEM CONEXÃO ATIVA" Foreground="{StaticResource AccentBrush}" FontWeight="SemiBold" />
+      </Border>
+    </DockPanel>
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="2.1*" />
+        <ColumnDefinition Width="1*" />
+      </Grid.ColumnDefinitions>
+      <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="24" Margin="0,0,18,0">
+        <Grid>
+          <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+          <DockPanel>
+            <TextBlock Text="SINÓTICO DA PLANTA" FontSize="18" FontWeight="SemiBold" DockPanel.Dock="Left" />
+            <TextBlock Text="Dados simulados" Foreground="#9DBBB8" DockPanel.Dock="Right" />
+          </DockPanel>
+          <Canvas Grid.Row="1" Margin="0,28,0,16">
+            <Rectangle Width="180" Height="250" RadiusX="18" RadiusY="18" Fill="#183E49" Stroke="#39D9BA" StrokeThickness="2" Canvas.Left="100" Canvas.Top="82" />
+            <Rectangle Width="180" Height="250" RadiusX="18" RadiusY="18" Fill="#183E49" Stroke="#39D9BA" StrokeThickness="2" Canvas.Left="460" Canvas.Top="82" />
+            <Line X1="280" X2="460" Y1="205" Y2="205" Stroke="#39D9BA" StrokeThickness="8" />
+            <Ellipse Width="70" Height="70" Fill="#24606A" Stroke="#39D9BA" StrokeThickness="2" Canvas.Left="335" Canvas.Top="170" />
+            <TextBlock Text="T-01" FontWeight="Bold" Canvas.Left="164" Canvas.Top="132" />
+            <TextBlock Text="T-02" FontWeight="Bold" Canvas.Left="524" Canvas.Top="132" />
+            <TextBlock Text="Bomba" Canvas.Left="346" Canvas.Top="194" />
+            <TextBlock Text="Malha didática — representação local" Foreground="#9DBBB8" Canvas.Left="230" Canvas.Top="370" />
+          </Canvas>
+          <ItemsControl Grid.Row="2" ItemsSource="{Binding Tags}">
+            <ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Columns="3" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <Border Background="#0C222A" CornerRadius="10" Padding="12" Margin="0,0,10,0">
+                  <StackPanel><TextBlock Text="{Binding Label}" Foreground="#9DBBB8"/><TextBlock Text="{Binding Value}" FontSize="20" FontWeight="SemiBold"/><TextBlock Text="{Binding Unit}" Foreground="{StaticResource AccentBrush}"/></StackPanel>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </Grid>
+      </Border>
+      <StackPanel Grid.Column="1">
+        <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="20" Margin="0,0,0,18">
+          <StackPanel>
+            <TextBlock Text="CONEXÃO" FontSize="16" FontWeight="SemiBold" />
+            <TextBlock Text="A integração real permanece bloqueada até existir evidência de protocolo de leitura." TextWrapping="Wrap" Foreground="#9DBBB8" Margin="0,10,0,16" />
+            <Button Content="Conexão indisponível" IsEnabled="False" Padding="12,8" />
+          </StackPanel>
+        </Border>
+        <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="20">
+          <StackPanel>
+            <TextBlock Text="EVENTOS LOCAIS" FontSize="16" FontWeight="SemiBold" />
+            <ListBox ItemsSource="{Binding Events}" Background="Transparent" BorderThickness="0" Margin="0,10,0,0">
+              <ListBox.ItemTemplate><DataTemplate><TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="0,5" Foreground="#C5DAD7" /></DataTemplate></ListBox.ItemTemplate>
+            </ListBox>
+          </StackPanel>
+        </Border>
+      </StackPanel>
+    </Grid>
+  </Grid>
+</Window>

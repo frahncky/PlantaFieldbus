@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('start', 'stop')]
+    [ValidateSet('start', 'stop', 'convert')]
     [string]$Action = 'start',
 
     [string]$OutputDirectory = ''
@@ -40,9 +40,21 @@ if ($Action -eq 'start') {
     exit 0
 }
 
-pktmon stop
+if ($Action -eq 'stop') {
+    pktmon stop
+}
+
 $etl = Join-Path $OutputDirectory "fieldbus-$timestamp.etl"
 $pcapng = Join-Path $OutputDirectory "fieldbus-$timestamp.pcapng"
-Move-Item -LiteralPath "$env:windir\System32\LogFiles\PktMon\PktMon.etl" -Destination $etl -Force
+$pktmonLog = @(
+    "$env:windir\System32\PktMon.etl",
+    "$env:windir\System32\LogFiles\PktMon\PktMon.etl"
+) | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
+
+if (-not $pktmonLog) {
+    throw 'O arquivo ETL do PktMon não foi encontrado. Execute a conversão somente após uma captura concluída.'
+}
+
+Move-Item -LiteralPath $pktmonLog -Destination $etl -Force
 pktmon etl2pcap $etl --out $pcapng
 Write-Host "Captura salva em: $pcapng"

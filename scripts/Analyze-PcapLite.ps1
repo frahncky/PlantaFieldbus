@@ -27,9 +27,14 @@ function IPv4([byte[]]$data, [int]$offset) {
     return "$($data[$offset]).$($data[$offset + 1]).$($data[$offset + 2]).$($data[$offset + 3])"
 }
 
+function MacAddress([byte[]]$data, [int]$offset) {
+    return ($data[$offset..($offset + 5)] | ForEach-Object { $_.ToString('X2') }) -join ':'
+}
+
 $interfaces = @{}
 $etherTypes = @{}
 $endpoints = @{}
+$macEndpoints = @{}
 $packets = 0
 $offset = 0
 
@@ -55,6 +60,10 @@ while ($offset + 12 -le $bytes.Length) {
             $interfaceKey = [int]$interfaceId
             if ($interfaces.ContainsKey($interfaceKey)) { $interfaces[$interfaceKey].packet_count++ }
             if ($capturedLength -ge 14) {
+                foreach ($mac in @((MacAddress $bytes $packetOffset), (MacAddress $bytes ($packetOffset + 6)))) {
+                    if (-not $macEndpoints.ContainsKey($mac)) { $macEndpoints[$mac] = 0 }
+                    $macEndpoints[$mac]++
+                }
                 $etherType = '{0:X4}' -f (([int]$bytes[$packetOffset + 12] -shl 8) -bor $bytes[$packetOffset + 13])
                 if (-not $etherTypes.ContainsKey($etherType)) { $etherTypes[$etherType] = 0 }
                 $etherTypes[$etherType]++
@@ -82,6 +91,7 @@ while ($offset + 12 -le $bytes.Length) {
     packet_count = $packets
     interfaces = @($interfaces.GetEnumerator() | Sort-Object Name | ForEach-Object { [ordered]@{ id = [int]$_.Key; link_type = $_.Value.link_type; packet_count = $_.Value.packet_count } })
     ether_types = @($etherTypes.GetEnumerator() | Sort-Object Name | ForEach-Object { [ordered]@{ type = $_.Key; packet_count = $_.Value } })
+    mac_endpoints = @($macEndpoints.GetEnumerator() | Sort-Object Name | ForEach-Object { [ordered]@{ address = $_.Key; packet_count = $_.Value } })
     ipv4_endpoints = @($endpoints.GetEnumerator() | Sort-Object Name | ForEach-Object { [ordered]@{ address = $_.Key; packet_count = $_.Value } })
 } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $OutputPath -Encoding utf8
 

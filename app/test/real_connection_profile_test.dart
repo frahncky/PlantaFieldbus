@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:planta_fieldbus/domain/real_connection_profile.dart';
+import 'package:planta_fieldbus_app/domain/real_connection_profile.dart';
 
 void main() {
   test('perfil sem evidências permanece pendente', () {
@@ -10,7 +10,7 @@ void main() {
       evidence: const [],
     );
     expect(profile.readyForReviewOnly, isFalse);
-    expect(profile.validateForReadOnlyReview(), hasLength(5));
+    expect(profile.validateForReadOnlyReview(), hasLength(6));
   });
 
   test('evidências completas permitem apenas revisão, não conexão', () {

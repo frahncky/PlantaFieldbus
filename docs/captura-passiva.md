@@ -15,3 +15,16 @@ Use este procedimento somente em uma rede que você esteja autorizado a observar
 
 O script apenas registra a configuração local e captura tráfego já existente; não envia sondagens, não altera interfaces e não escreve no PLC.
 
+## Captura vinculada a uma interface Ethernet
+
+Quando Wireshark e Npcap estiverem instalados, prefira uma captura vinculada à
+interface física: ela evita misturar o tráfego Wi-Fi do notebook na evidência.
+
+1. Abra PowerShell como administrador.
+2. Liste interfaces com `& "C:\Program Files\Wireshark\tshark.exe" -D`.
+3. Identifique o número que contém `Ethernet` e execute, por exemplo:
+   `./scripts/Capture-EthernetPassive.ps1 -InterfaceNumber 4 -DurationSeconds 180`.
+
+O script apenas escuta a interface indicada pelo operador durante o intervalo
+escolhido. Não cria conexões, não faz ARP, ping ou descoberta ativa.
+

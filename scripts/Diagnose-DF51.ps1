@@ -20,7 +20,9 @@ if ($adapter.Status -ne 'Up') { throw "A interface '$InterfaceName' nao esta ati
 $interfaces = @(& $tshark -D)
 if ($LASTEXITCODE -ne 0) { throw 'Falha ao listar interfaces do TShark.' }
 $selectedInterfaces = @($interfaces | Where-Object {
-  if ($_ -match '\\(([^()]*)\\) {
+  if ($_ -match '\(([^()]*)\)$') { $Matches[1] -eq $InterfaceName } else { $false }
+})
+if ($selectedInterfaces.Count -ne 1) {
   Write-Host 'Interfaces do TShark:'; $interfaces | ForEach-Object { Write-Host $_ }
   throw "Nao foi possivel selecionar exclusivamente '$InterfaceName'. Informe -InterfaceName com o nome exato."
 }

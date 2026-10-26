@@ -16,6 +16,7 @@
 5. Importar a topologia observada da captura passiva. — concluído: a tela importa um `network-summary.json` local sem estabelecer conexões.
 6. Histórico e alarmes locais do simulador. — concluído: mantém os últimos eventos na interface e grava cache JSON local.
 7. Designer inicial do sinótico. — concluído: prévia local e controles de visibilidade dos elementos demonstrativos.
+8. Decodificação de anúncios UDP observados. — concluída para replay offline; a escuta passiva fica desativada até início explícito do operador.
 
 ## Gates obrigatórios
 

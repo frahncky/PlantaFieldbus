@@ -35,7 +35,7 @@ if ($Action -eq 'start') {
 
     # Passive capture only. No discovery packets or PLC commands are sent.
     # Do not stop a previous session here: an operator may need to preserve it.
-    pktmon start --etw -p 0
+    pktmon start --etw
     Write-Host 'Captura passiva iniciada. Aguarde tráfego normal e execute o modo stop.'
     exit 0
 }

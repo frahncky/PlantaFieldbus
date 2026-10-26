@@ -14,13 +14,22 @@ if (-not $OutputPath) {
 }
 
 $tshark = Get-Command tshark -ErrorAction SilentlyContinue
-if (-not $tshark) {
+$tsharkPath = $tshark.Source
+if (-not $tsharkPath) {
+    # A instalação padrão do Wireshark no Windows normalmente não entra no PATH.
+    # Procurar apenas esse local conhecido mantém a análise offline e previsível.
+    $defaultTshark = Join-Path $env:ProgramFiles 'Wireshark\tshark.exe'
+    if (Test-Path -LiteralPath $defaultTshark) {
+        $tsharkPath = $defaultTshark
+    }
+}
+if (-not $tsharkPath) {
     throw 'TShark não foi encontrado. Instale o Wireshark/TShark antes de analisar uma captura; não use descoberta ativa como substituto.'
 }
 
-$protocols = & $tshark.Source -r $capture -q -z io,phs 2>&1
-$endpoints = & $tshark.Source -r $capture -q -z endpoints,ip 2>&1
-$conversations = & $tshark.Source -r $capture -q -z conv,ip 2>&1
+$protocols = & $tsharkPath -r $capture -q -z io,phs 2>&1
+$endpoints = & $tsharkPath -r $capture -q -z endpoints,ip 2>&1
+$conversations = & $tsharkPath -r $capture -q -z conv,ip 2>&1
 
 [PSCustomObject]@{
     capture = Split-Path -Leaf $capture

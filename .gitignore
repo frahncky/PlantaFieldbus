@@ -7,4 +7,6 @@ investigation/
 *.iso
 *.msi
 *.cab
+**/bin/
+**/obj/
 

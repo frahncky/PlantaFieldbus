@@ -34,7 +34,7 @@ if ($Action -eq 'start') {
         ConvertTo-Json | Set-Content -LiteralPath (Join-Path $OutputDirectory "addresses-$timestamp.json") -Encoding utf8
 
     # Passive capture only. No discovery packets or PLC commands are sent.
-    pktmon stop 2>$null
+    # Do not stop a previous session here: an operator may need to preserve it.
     pktmon start --etw -p 0
     Write-Host 'Captura passiva iniciada. Aguarde tráfego normal e execute o modo stop.'
     exit 0

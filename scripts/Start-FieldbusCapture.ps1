@@ -3,10 +3,22 @@ param(
     [ValidateSet('start', 'stop')]
     [string]$Action = 'start',
 
-    [string]$OutputDirectory = (Join-Path $PSScriptRoot '..\\field-capture')
+    [string]$OutputDirectory = ''
 )
 
 $ErrorActionPreference = 'Stop'
+
+if ([string]::IsNullOrWhiteSpace($OutputDirectory)) {
+    $scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Path
+    $OutputDirectory = Join-Path $scriptDirectory '..\\field-capture'
+}
+
+$identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+$principal = [Security.Principal.WindowsPrincipal]::new($identity)
+if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    throw 'Abra o PowerShell como Administrador antes de iniciar ou parar a captura passiva com PktMon.'
+}
+
 $OutputDirectory = [IO.Path]::GetFullPath($OutputDirectory)
 
 if (-not (Test-Path -LiteralPath $OutputDirectory)) {

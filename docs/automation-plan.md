@@ -21,6 +21,26 @@ Este fluxo define o que pode ser executado automaticamente a partir de evidênci
 
 ## Próxima execução
 
+Para executar todas as fases automáticas permitidas de uma vez, use:
+
+```powershell
+./scripts/Invoke-SafeEvidencePipeline.ps1 `
+  -EvidenceDirectory ./field-capture `
+  -ArtifactDirectory <diretorio-extraido>
+```
+
+O comando preserva hashes, processa todos os PCAP/PCAPNG existentes, cria os
+resumos leve e TShark e gera a fila de triagem estática. As saídas ficam em
+`field-capture/analysis/`, que não é publicada. Falhas de uma captura não
+impedem as demais fases. Ele para antes de qualquer adaptador real: não executa
+o software legado, não captura tráfego e não envia pacotes.
+
+Para incluir arquivos grandes de PktMon, aumente conscientemente o limite:
+
+```powershell
+./scripts/Invoke-SafeEvidencePipeline.ps1 -EvidenceDirectory ./field-capture -MaximumCaptureBytes 50MB
+```
+
 Após a coleta da rede, execute:
 
 ```powershell

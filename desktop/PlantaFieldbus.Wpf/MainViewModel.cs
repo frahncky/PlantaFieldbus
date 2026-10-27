@@ -10,6 +10,7 @@ namespace PlantaFieldbus.Wpf;
 public sealed class MainViewModel : INotifyPropertyChanged
 {
     private string _topologyStatus = "Nenhuma captura importada.";
+    private string _discoveryStatus = "Escuta passiva desativada.";
 
     public ObservableCollection<TagView> Tags { get; } =
     [
@@ -36,6 +37,27 @@ public sealed class MainViewModel : INotifyPropertyChanged
             _topologyStatus = value;
             OnPropertyChanged();
         }
+    }
+
+    public string DiscoveryStatus
+    {
+        get => _discoveryStatus;
+        private set
+        {
+            if (_discoveryStatus == value) return;
+            _discoveryStatus = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public void SetDiscoveryActive() => DiscoveryStatus = "Escuta passiva em execução na porta UDP 4987.";
+
+    public void SetDiscoveryInactive() => DiscoveryStatus = "Escuta passiva desativada.";
+
+    public void ReportBeacon(DiscoveryBeacon beacon)
+    {
+        DiscoveryStatus = $"Anúncio recebido: {beacon.SourceAddress} · DF51 v{beacon.Firmware} · Monitor {beacon.Monitor}";
+        Events.Insert(0, "Anúncio UDP de identidade recebido passivamente.");
     }
 
     /// <summary>Lê o JSON gerado pelo analisador offline; não acessa a rede.</summary>

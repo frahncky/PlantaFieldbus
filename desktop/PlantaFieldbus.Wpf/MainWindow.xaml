@@ -57,6 +57,8 @@
             <TextBlock Text="CONEXÃO" FontSize="16" FontWeight="SemiBold" />
             <TextBlock Text="A integração real permanece bloqueada até existir evidência de protocolo de leitura." TextWrapping="Wrap" Foreground="#9DBBB8" Margin="0,10,0,16" />
             <Button Content="Conexão indisponível" IsEnabled="False" Padding="12,8" />
+            <TextBlock Text="{Binding DiscoveryStatus}" TextWrapping="Wrap" Foreground="#9DBBB8" Margin="0,14,0,8" />
+            <Button x:Name="DiscoveryButton" Content="Iniciar escuta passiva" Click="ToggleDiscovery_Click" Padding="12,8" />
           </StackPanel>
         </Border>
         <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="20" Margin="0,0,0,18">

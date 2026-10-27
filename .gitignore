@@ -9,4 +9,5 @@ investigation/
 *.cab
 **/bin/
 **/obj/
+artifacts/
 

@@ -9,8 +9,8 @@
 **Uma base aberta para observar, entender e operar uma planta didática com segurança.**<br>
 Simulação local, evidência passiva de rede e uma interface independente para uma planta didática Fieldbus.
 
-[![Flutter](https://img.shields.io/badge/Flutter-Windows%20desktop-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
-[![Dart](https://img.shields.io/badge/Dart-3.13+-0175C2?logo=dart&logoColor=white)](https://dart.dev)
+[![WPF](https://img.shields.io/badge/WPF-.NET%208-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![Flutter](https://img.shields.io/badge/Flutter-protótipo%20legado-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
 [![Modo](https://img.shields.io/badge/modo-simulação%20local-0f766e)](#-estado-atual)
 [![Segurança](https://img.shields.io/badge/PLC-escrita%20bloqueada-b91c1c)](#-limites-de-segurança)
 
@@ -50,7 +50,8 @@ O perfil de trabalho atual é uma planta didática com segmento FOUNDATION Field
 
 | Área | Estado | Observação |
 | --- | :---: | --- |
-| Interface Flutter para Windows | ✅ | Painel, topologia, histórico, designer e conexão simulada |
+| Interface WPF para Windows | ✅ | Painel, sinótico, eventos e importação offline de topologia |
+| Interface Flutter | ✅ | Protótipo preservado durante a migração para WPF |
 | Simulador local | ✅ | Fonte de dados de desenvolvimento, somente leitura |
 | Histórico de eventos | ✅ | Cache JSON local, sem envio de dados para rede |
 | Importação de topologia | ✅ | Consome `network-summary.json` produzido pela análise offline |
@@ -61,7 +62,7 @@ O perfil de trabalho atual é uma planta didática com segmento FOUNDATION Field
 
 ```mermaid
 flowchart LR
-    UI["🖥️ Console Flutter"] --> SIM["🧪 SimulationAdapter"]
+    UI["🖥️ Console WPF"] --> SIM["🧪 Simulação local"]
     UI --> HIST["📜 Histórico JSON local"]
     PCAP["📦 PCAPNG passivo"] --> ANALYZE["🔎 Análise offline"]
     ANALYZE --> TOPO["🕸️ network-summary.json"]
@@ -79,6 +80,26 @@ flowchart LR
 | [`agents/`](agents/) | Papéis, máquinas de estado e gates para a investigação |
 
 ## 🚀 Como executar
+
+### WPF para Windows
+
+**Pré-requisito:** [.NET SDK 8](https://dotnet.microsoft.com/download/dotnet/8.0) para compilar; para executar o artefato publicado, basta o .NET Desktop Runtime 8.
+
+```powershell
+git clone https://github.com/frahncky/PlantaFieldbus.git
+cd PlantaFieldbus
+dotnet run --project .\desktop\PlantaFieldbus.Wpf\PlantaFieldbus.Wpf.csproj
+```
+
+Para gerar a distribuição local Windows x64:
+
+```powershell
+dotnet publish .\desktop\PlantaFieldbus.Wpf\PlantaFieldbus.Wpf.csproj -c Release -r win-x64 --self-contained false -o .\artifacts\windows-x64
+```
+
+> A aplicação WPF apenas simula dados e importa resumos JSON de capturas já realizadas. Ela não abre conexões de rede industrial.
+
+### Protótipo Flutter
 
 **Pré-requisitos:** [Flutter](https://docs.flutter.dev/get-started/install) com suporte a Windows desktop e o toolchain C++ do Visual Studio.
 

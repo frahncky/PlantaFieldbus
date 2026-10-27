@@ -28,6 +28,13 @@ public sealed class MainViewModel : INotifyPropertyChanged
 
     public ObservableCollection<TopologyNodeView> ObservedNodes { get; } = [];
 
+    public ObservableCollection<AdapterStatusView> Adapters { get; } =
+    [
+        new("OPC", "Aguardando confirmação de protocolo"),
+        new("Modbus TCP", "Aguardando confirmação de protocolo"),
+        new("HSE", "Aguardando confirmação de protocolo"),
+    ];
+
     public string TopologyStatus
     {
         get => _topologyStatus;
@@ -100,3 +107,4 @@ public sealed class MainViewModel : INotifyPropertyChanged
 public sealed record TagView(string Label, string Value, string Unit);
 
 public sealed record TopologyNodeView(string Address, string Description);
+public sealed record AdapterStatusView(string Name, string Status);

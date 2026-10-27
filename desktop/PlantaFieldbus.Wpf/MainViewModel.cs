@@ -1,10 +1,16 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace PlantaFieldbus.Wpf;
 
 /// <summary>Dados demonstrativos locais; não abre sockets e não comanda a planta.</summary>
-public sealed class MainViewModel
+public sealed class MainViewModel : INotifyPropertyChanged
 {
+    private string _topologyStatus = "Nenhuma captura importada.";
+
     public ObservableCollection<TagView> Tags { get; } =
     [
         new("Temperatura", "42,8", "°C"),
@@ -18,6 +24,57 @@ public sealed class MainViewModel
         "Adaptadores reais permanecem indisponíveis.",
         "Nenhum comando foi enviado à rede industrial.",
     ];
+
+    public ObservableCollection<TopologyNodeView> ObservedNodes { get; } = [];
+
+    public string TopologyStatus
+    {
+        get => _topologyStatus;
+        private set
+        {
+            if (_topologyStatus == value) return;
+            _topologyStatus = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>Lê o JSON gerado pelo analisador offline; não acessa a rede.</summary>
+    public void LoadNetworkSummary(string contents)
+    {
+        using var document = JsonDocument.Parse(contents);
+        var root = document.RootElement;
+        var capture = root.TryGetProperty("capture", out var captureValue)
+            ? captureValue.GetString() ?? "captura desconhecida"
+            : "captura desconhecida";
+        var hash = root.TryGetProperty("sha256", out var hashValue)
+            ? hashValue.GetString() ?? string.Empty
+            : string.Empty;
+
+        var addresses = new SortedSet<string>(StringComparer.Ordinal);
+        if (root.TryGetProperty("ip_endpoints", out var endpointLines) && endpointLines.ValueKind == JsonValueKind.Array)
+        {
+            foreach (var line in endpointLines.EnumerateArray())
+            {
+                foreach (Match match in Regex.Matches(line.GetString() ?? string.Empty, @"\b(?:\d{1,3}\.){3}\d{1,3}\b"))
+                    addresses.Add(match.Value);
+            }
+        }
+
+        ObservedNodes.Clear();
+        foreach (var address in addresses)
+            ObservedNodes.Add(new TopologyNodeView(address, "Endpoint observado na captura"));
+
+        var shortHash = hash.Length >= 12 ? hash[..12] : hash;
+        TopologyStatus = $"{capture} · {ObservedNodes.Count} endpoint(s) · hash {shortHash}";
+        Events.Insert(0, "Resumo de captura importado localmente.");
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 }
 
 public sealed record TagView(string Label, string Value, string Unit);
+
+public sealed record TopologyNodeView(string Address, string Description);

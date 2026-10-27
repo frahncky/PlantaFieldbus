@@ -59,6 +59,16 @@
             <Button Content="Conexão indisponível" IsEnabled="False" Padding="12,8" />
           </StackPanel>
         </Border>
+        <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="20" Margin="0,0,0,18">
+          <StackPanel>
+            <TextBlock Text="EVIDÊNCIA OFFLINE" FontSize="16" FontWeight="SemiBold" />
+            <TextBlock Text="{Binding TopologyStatus}" TextWrapping="Wrap" Foreground="#9DBBB8" Margin="0,8,0,12" />
+            <Button Content="Importar network-summary.json" Click="ImportNetworkSummary_Click" Padding="12,8" />
+            <ListBox ItemsSource="{Binding ObservedNodes}" Background="Transparent" BorderThickness="0" Margin="0,10,0,0" MaxHeight="120">
+              <ListBox.ItemTemplate><DataTemplate><StackPanel Margin="0,4"><TextBlock Text="{Binding Address}" FontWeight="SemiBold" /><TextBlock Text="{Binding Description}" Foreground="#9DBBB8" FontSize="11" /></StackPanel></DataTemplate></ListBox.ItemTemplate>
+            </ListBox>
+          </StackPanel>
+        </Border>
         <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="20">
           <StackPanel>
             <TextBlock Text="EVENTOS LOCAIS" FontSize="16" FontWeight="SemiBold" />

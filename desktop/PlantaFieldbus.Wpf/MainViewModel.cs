@@ -35,6 +35,23 @@ public sealed class MainViewModel : INotifyPropertyChanged
         new("HSE", "Aguardando confirmação de protocolo"),
     ];
 
+    public ObservableCollection<PanelSignalView> PanelSignals { get; } =
+    [
+        new("Painel ligado", "Observado", "Indicador verde aceso na fotografia do painel.", "#39D9BA"),
+        new("Emergência", "Não confirmado", "Lente vermelha visível; estado elétrico ainda não foi lido.", "#F2B84B"),
+        new("Temperatura alta", "Não confirmado", "Aguardando identificação do canal de entrada.", "#F2B84B"),
+        new("Nível baixo", "Não confirmado", "Aguardando identificação do canal de entrada.", "#F2B84B"),
+        new("Sirene", "Não confirmado", "Som e comando não foram acionados.", "#F2B84B"),
+    ];
+
+    public ObservableCollection<InventoryItemView> Inventory { get; } =
+    [
+        new("Controlador", "DFI302 / DF51 — associação provável", "Anúncio UDP observado em 192.168.164.100; etiqueta física ainda necessária."),
+        new("Identidade Ethernet", "MAC 00:30:5C:01:05:52", "UDP 4987 em broadcast, com firmware 3.7.5 e Monitor 3302."),
+        new("Rack de E/S", "Módulos presentes — modelo pendente", "Fotografar etiquetas frontais e bornes na próxima visita."),
+        new("Painel", "2 bombas, emergência, sirene e alarmes", "Mapeamento entre botoeira e E/S ainda pendente."),
+    ];
+
     public string TopologyStatus
     {
         get => _topologyStatus;
@@ -108,3 +125,5 @@ public sealed record TagView(string Label, string Value, string Unit);
 
 public sealed record TopologyNodeView(string Address, string Description);
 public sealed record AdapterStatusView(string Name, string Status);
+public sealed record PanelSignalView(string Label, string State, string Detail, string Accent);
+public sealed record InventoryItemView(string Category, string Value, string Detail);

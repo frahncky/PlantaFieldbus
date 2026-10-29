@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -7,7 +6,7 @@ import 'package:planta_fieldbus_app/domain/ethernet_discovery_beacon.dart';
 void main() {
   const parser = EthernetDiscoveryBeaconParser();
 
-  test('parses identity fields from a recorded discovery payload', () {
+  test('parses identity fields from the recorded UDP discovery payload', () {
     final payload = Uint8List.fromList(<int>[
       0x00,
       0xe9,
@@ -17,10 +16,48 @@ void main() {
       0x05,
       0x00,
       0x00,
-      ...latin1.encode('DF51V3.7.5   '),
+      0x01,
+      0x00,
+      0x84,
+      0xd6,
+      0x8f,
+      0x3f,
+      0xff,
+      0xff,
+      0xff,
+      0xff,
+      0x02,
+      0x44,
+      0x46,
+      0x35,
+      0x31,
+      0x56,
+      0x33,
+      0x2e,
+      0x37,
+      0x2e,
+      0x35,
+      0x20,
+      0x20,
+      0x20,
+      0x20,
+      0x20,
+      0xe6,
+      0x0c,
       0x00,
       0x00,
-      ...latin1.encode('Monitor 3302'),
+      0x4d,
+      0x6f,
+      0x6e,
+      0x69,
+      0x74,
+      0x6f,
+      0x72,
+      0x20,
+      0x33,
+      0x33,
+      0x30,
+      0x32,
     ]);
 
     final beacon = parser.tryParse(payload);

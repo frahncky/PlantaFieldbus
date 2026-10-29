@@ -23,13 +23,35 @@
         <ColumnDefinition Width="1*" />
       </Grid.ColumnDefinitions>
       <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="24" Margin="0,0,18,0">
-        <Grid>
-          <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
           <DockPanel>
-            <TextBlock Text="SINÓTICO DA PLANTA" FontSize="18" FontWeight="SemiBold" DockPanel.Dock="Left" />
-            <TextBlock Text="Dados simulados" Foreground="#9DBBB8" DockPanel.Dock="Right" />
+            <TextBlock Text="DIAGNÓSTICO DA PLANTA" FontSize="18" FontWeight="SemiBold" DockPanel.Dock="Left" />
+            <TextBlock Text="Evidência local · sem conexão ativa" Foreground="#9DBBB8" DockPanel.Dock="Right" />
           </DockPanel>
-          <Canvas Grid.Row="1" Margin="0,28,0,16">
+          <Border Background="#0C222A" BorderBrush="#24606A" BorderThickness="1" CornerRadius="12" Padding="16" Margin="0,18,0,12">
+            <StackPanel>
+              <TextBlock Text="IDENTIDADE OBSERVADA" Foreground="{StaticResource AccentBrush}" FontWeight="SemiBold" />
+              <TextBlock Text="192.168.164.100  ·  MAC 00:30:5C:01:05:52" FontSize="17" FontWeight="SemiBold" Margin="0,8,0,2" />
+              <TextBlock Text="Anúncio UDP 4987 a cada 30 s · DF51 v3.7.5 · Monitor 3302" Foreground="#9DBBB8" />
+            </StackPanel>
+          </Border>
+          <TextBlock Text="PAINEL OPERACIONAL — ESTADO OBSERVADO" FontWeight="SemiBold" Margin="0,10,0,10" />
+          <ItemsControl ItemsSource="{Binding PanelSignals}">
+            <ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Columns="2" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <Border Background="#0C222A" CornerRadius="10" Padding="12" Margin="0,0,10,10">
+                  <StackPanel>
+                    <DockPanel><TextBlock Text="{Binding Label}" FontWeight="SemiBold" DockPanel.Dock="Left"/><TextBlock Text="{Binding State}" Foreground="{Binding Accent}" DockPanel.Dock="Right"/></DockPanel>
+                    <TextBlock Text="{Binding Detail}" Foreground="#9DBBB8" TextWrapping="Wrap" FontSize="11" Margin="0,6,0,0" />
+                  </StackPanel>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+          <TextBlock Text="SINÓTICO DEMONSTRATIVO" FontWeight="SemiBold" Margin="0,10,0,0" />
+          <Canvas Height="390" Margin="0,8,0,8">
             <Rectangle Width="180" Height="250" RadiusX="18" RadiusY="18" Fill="#183E49" Stroke="#39D9BA" StrokeThickness="2" Canvas.Left="100" Canvas.Top="82" />
             <Rectangle Width="180" Height="250" RadiusX="18" RadiusY="18" Fill="#183E49" Stroke="#39D9BA" StrokeThickness="2" Canvas.Left="460" Canvas.Top="82" />
             <Line X1="280" X2="460" Y1="205" Y2="205" Stroke="#39D9BA" StrokeThickness="8" />
@@ -39,7 +61,7 @@
             <TextBlock Text="Bomba" Canvas.Left="346" Canvas.Top="194" />
             <TextBlock Text="Malha didática — representação local" Foreground="#9DBBB8" Canvas.Left="230" Canvas.Top="370" />
           </Canvas>
-          <ItemsControl Grid.Row="2" ItemsSource="{Binding Tags}">
+          <ItemsControl ItemsSource="{Binding Tags}">
             <ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Columns="3" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
               <DataTemplate>
@@ -49,7 +71,8 @@
               </DataTemplate>
             </ItemsControl.ItemTemplate>
           </ItemsControl>
-        </Grid>
+        </StackPanel>
+        </ScrollViewer>
       </Border>
       <StackPanel Grid.Column="1">
         <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="20" Margin="0,0,0,18">
@@ -62,6 +85,24 @@
             </ItemsControl>
             <TextBlock Text="{Binding DiscoveryStatus}" TextWrapping="Wrap" Foreground="#9DBBB8" Margin="0,14,0,8" />
             <Button x:Name="DiscoveryButton" Content="Iniciar escuta passiva" Click="ToggleDiscovery_Click" Padding="12,8" />
+          </StackPanel>
+        </Border>
+        <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="20" Margin="0,0,0,18">
+          <StackPanel>
+            <TextBlock Text="INVENTÁRIO DA BANCADA" FontSize="16" FontWeight="SemiBold" />
+            <ItemsControl ItemsSource="{Binding Inventory}" Margin="0,10,0,0">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border BorderBrush="#24606A" BorderThickness="0,0,0,1" Padding="0,8">
+                    <StackPanel>
+                      <TextBlock Text="{Binding Category}" Foreground="#9DBBB8" FontSize="11" />
+                      <TextBlock Text="{Binding Value}" FontWeight="SemiBold" TextWrapping="Wrap" />
+                      <TextBlock Text="{Binding Detail}" Foreground="#9DBBB8" FontSize="11" TextWrapping="Wrap" Margin="0,3,0,0" />
+                    </StackPanel>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
           </StackPanel>
         </Border>
         <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="20" Margin="0,0,0,18">

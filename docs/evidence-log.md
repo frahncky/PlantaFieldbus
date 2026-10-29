@@ -99,3 +99,32 @@ do aplicativo sem uma decisão explícita para alterar o ambiente de rede.
 
 - A instalação local não estabeleceu sessão com o controlador, não alterou a
   configuração da planta e não enviou comandos.
+
+## 2026-10-29 — validação em campo do DF51
+
+### Observado
+
+- A captura passiva `ethernet-20261029-100437.pcapng` registrou 232 quadros,
+  SHA-256 `08d04cc90b222e4c29b641c5e6d1e0705f2dddab753b2dd9a794b577e95d00eb`.
+- O MAC `00:30:5C:01:05:52` anunciou quatro vezes, a cada 30 segundos,
+  `192.168.164.100:4987` para broadcast, mantendo os marcadores `DF51V3.7.5`
+  e `Monitor 3302`.
+- Após uma configuração temporária e reversível do notebook como
+  `192.168.164.10/24`, um único ICMP para `192.168.164.100` respondeu em 7 ms.
+  A tabela ARP retornou o mesmo MAC observado na captura.
+- A consulta HTTP direcionada para `192.168.164.100` expirou; não há webserver
+  HTTP acessível na porta 80.
+- O IP temporário foi removido e a Ethernet do notebook voltou a DHCP/APIPA
+  (`169.254.57.19`) ao fim da visita.
+
+### Confirmado
+
+- O equipamento na rede é um controlador SMAR **DF51**, da plataforma DFI302,
+  com Ethernet de 10 Mbps e quatro canais FOUNDATION Fieldbus H1.
+
+### Limites mantidos
+
+- Não foram enviados firmware, projeto, parâmetros, comandos RUN/HOLD, reset
+  ou operações de download ao DF51.
+- O FBTools Wizard mostrou somente operações de download para o DF51; elas não
+  foram executadas por não constituírem recuperação somente de leitura.

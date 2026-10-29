@@ -1,129 +1,34 @@
 <Window x:Class="PlantaFieldbus.Wpf.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="PlantaFieldbus" Width="1280" Height="780" MinWidth="960" MinHeight="620"
-        Background="{StaticResource CanvasBrush}">
-  <Grid Margin="28">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
-    </Grid.RowDefinitions>
-    <DockPanel LastChildFill="False" Margin="0,0,0,22">
-      <StackPanel DockPanel.Dock="Left">
-        <TextBlock Text="PLANTAFIELDBUS" FontSize="26" FontWeight="Bold" Foreground="{StaticResource AccentBrush}" />
-        <TextBlock Text="Console de engenharia · simulação e evidência passiva" Foreground="#9DBBB8" Margin="0,5,0,0" />
-      </StackPanel>
-      <Border DockPanel.Dock="Right" Background="#143A36" CornerRadius="14" Padding="14,7" VerticalAlignment="Center">
-        <TextBlock Text="MODO SEGURO — SEM CONEXÃO ATIVA" Foreground="{StaticResource AccentBrush}" FontWeight="SemiBold" />
-      </Border>
-    </DockPanel>
-    <Grid Grid.Row="1">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="2.1*" />
-        <ColumnDefinition Width="1*" />
-      </Grid.ColumnDefinitions>
-      <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="24" Margin="0,0,18,0">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel>
-          <DockPanel>
-            <TextBlock Text="DIAGNÓSTICO DA PLANTA" FontSize="18" FontWeight="SemiBold" DockPanel.Dock="Left" />
-            <TextBlock Text="Evidência local · sem conexão ativa" Foreground="#9DBBB8" DockPanel.Dock="Right" />
-          </DockPanel>
-          <Border Background="#0C222A" BorderBrush="#24606A" BorderThickness="1" CornerRadius="12" Padding="16" Margin="0,18,0,12">
-            <StackPanel>
-              <TextBlock Text="IDENTIDADE OBSERVADA" Foreground="{StaticResource AccentBrush}" FontWeight="SemiBold" />
-              <TextBlock Text="192.168.164.100  ·  MAC 00:30:5C:01:05:52" FontSize="17" FontWeight="SemiBold" Margin="0,8,0,2" />
-              <TextBlock Text="Anúncio UDP 4987 a cada 30 s · DF51 v3.7.5 · Monitor 3302" Foreground="#9DBBB8" />
-            </StackPanel>
-          </Border>
-          <TextBlock Text="PAINEL OPERACIONAL — ESTADO OBSERVADO" FontWeight="SemiBold" Margin="0,10,0,10" />
-          <ItemsControl ItemsSource="{Binding PanelSignals}">
-            <ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Columns="2" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-              <DataTemplate>
-                <Border Background="#0C222A" CornerRadius="10" Padding="12" Margin="0,0,10,10">
-                  <StackPanel>
-                    <DockPanel><TextBlock Text="{Binding Label}" FontWeight="SemiBold" DockPanel.Dock="Left"/><TextBlock Text="{Binding State}" Foreground="{Binding Accent}" DockPanel.Dock="Right"/></DockPanel>
-                    <TextBlock Text="{Binding Detail}" Foreground="#9DBBB8" TextWrapping="Wrap" FontSize="11" Margin="0,6,0,0" />
-                  </StackPanel>
-                </Border>
-              </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
-          <TextBlock Text="SINÓTICO DEMONSTRATIVO" FontWeight="SemiBold" Margin="0,10,0,0" />
-          <Canvas Height="390" Margin="0,8,0,8">
-            <Rectangle Width="180" Height="250" RadiusX="18" RadiusY="18" Fill="#183E49" Stroke="#39D9BA" StrokeThickness="2" Canvas.Left="100" Canvas.Top="82" />
-            <Rectangle Width="180" Height="250" RadiusX="18" RadiusY="18" Fill="#183E49" Stroke="#39D9BA" StrokeThickness="2" Canvas.Left="460" Canvas.Top="82" />
-            <Line X1="280" X2="460" Y1="205" Y2="205" Stroke="#39D9BA" StrokeThickness="8" />
-            <Ellipse Width="70" Height="70" Fill="#24606A" Stroke="#39D9BA" StrokeThickness="2" Canvas.Left="335" Canvas.Top="170" />
-            <TextBlock Text="T-01" FontWeight="Bold" Canvas.Left="164" Canvas.Top="132" />
-            <TextBlock Text="T-02" FontWeight="Bold" Canvas.Left="524" Canvas.Top="132" />
-            <TextBlock Text="Bomba" Canvas.Left="346" Canvas.Top="194" />
-            <TextBlock Text="Malha didática — representação local" Foreground="#9DBBB8" Canvas.Left="230" Canvas.Top="370" />
-          </Canvas>
-          <ItemsControl ItemsSource="{Binding Tags}">
-            <ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Columns="3" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-              <DataTemplate>
-                <Border Background="#0C222A" CornerRadius="10" Padding="12" Margin="0,0,10,0">
-                  <StackPanel><TextBlock Text="{Binding Label}" Foreground="#9DBBB8"/><TextBlock Text="{Binding Value}" FontSize="20" FontWeight="SemiBold"/><TextBlock Text="{Binding Unit}" Foreground="{StaticResource AccentBrush}"/></StackPanel>
-                </Border>
-              </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
-        </StackPanel>
-        </ScrollViewer>
-      </Border>
-      <StackPanel Grid.Column="1">
-        <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="20" Margin="0,0,0,18">
-          <StackPanel>
-            <TextBlock Text="CONEXÃO" FontSize="16" FontWeight="SemiBold" />
-            <TextBlock Text="A integração real permanece bloqueada até existir evidência de protocolo de leitura." TextWrapping="Wrap" Foreground="#9DBBB8" Margin="0,10,0,16" />
-            <Button Content="Conexão indisponível" IsEnabled="False" Padding="12,8" />
-            <ItemsControl ItemsSource="{Binding Adapters}" Margin="0,12,0,0">
-              <ItemsControl.ItemTemplate><DataTemplate><DockPanel Margin="0,3"><TextBlock Text="{Binding Name}" FontWeight="SemiBold" DockPanel.Dock="Left" /><TextBlock Text="{Binding Status}" Foreground="#9DBBB8" HorizontalAlignment="Right" /></DockPanel></DataTemplate></ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <TextBlock Text="{Binding DiscoveryStatus}" TextWrapping="Wrap" Foreground="#9DBBB8" Margin="0,14,0,8" />
-            <Button x:Name="DiscoveryButton" Content="Iniciar escuta passiva" Click="ToggleDiscovery_Click" Padding="12,8" />
-          </StackPanel>
-        </Border>
-        <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="20" Margin="0,0,0,18">
-          <StackPanel>
-            <TextBlock Text="INVENTÁRIO DA BANCADA" FontSize="16" FontWeight="SemiBold" />
-            <ItemsControl ItemsSource="{Binding Inventory}" Margin="0,10,0,0">
-              <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                  <Border BorderBrush="#24606A" BorderThickness="0,0,0,1" Padding="0,8">
-                    <StackPanel>
-                      <TextBlock Text="{Binding Category}" Foreground="#9DBBB8" FontSize="11" />
-                      <TextBlock Text="{Binding Value}" FontWeight="SemiBold" TextWrapping="Wrap" />
-                      <TextBlock Text="{Binding Detail}" Foreground="#9DBBB8" FontSize="11" TextWrapping="Wrap" Margin="0,3,0,0" />
-                    </StackPanel>
-                  </Border>
-                </DataTemplate>
-              </ItemsControl.ItemTemplate>
-            </ItemsControl>
-          </StackPanel>
-        </Border>
-        <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="20" Margin="0,0,0,18">
-          <StackPanel>
-            <TextBlock Text="EVIDÊNCIA OFFLINE" FontSize="16" FontWeight="SemiBold" />
-            <TextBlock Text="{Binding TopologyStatus}" TextWrapping="Wrap" Foreground="#9DBBB8" Margin="0,8,0,12" />
-            <Button Content="Importar network-summary.json" Click="ImportNetworkSummary_Click" Padding="12,8" />
-            <ListBox ItemsSource="{Binding ObservedNodes}" Background="Transparent" BorderThickness="0" Margin="0,10,0,0" MaxHeight="120">
-              <ListBox.ItemTemplate><DataTemplate><StackPanel Margin="0,4"><TextBlock Text="{Binding Address}" FontWeight="SemiBold" /><TextBlock Text="{Binding Description}" Foreground="#9DBBB8" FontSize="11" /></StackPanel></DataTemplate></ListBox.ItemTemplate>
-            </ListBox>
-          </StackPanel>
-        </Border>
-        <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="20">
-          <StackPanel>
-            <TextBlock Text="EVENTOS LOCAIS" FontSize="16" FontWeight="SemiBold" />
-            <ListBox ItemsSource="{Binding Events}" Background="Transparent" BorderThickness="0" Margin="0,10,0,0">
-              <ListBox.ItemTemplate><DataTemplate><TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="0,5" Foreground="#C5DAD7" /></DataTemplate></ListBox.ItemTemplate>
-            </ListBox>
-          </StackPanel>
-        </Border>
-      </StackPanel>
-    </Grid>
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ Title="PlantaFieldbus · Diagnóstico" Width="1440" Height="860" MinWidth="1100" MinHeight="700" Background="{StaticResource CanvasBrush}">
+ <Window.Resources>
+  <Style x:Key="Caption" TargetType="TextBlock"><Setter Property="FontSize" Value="12"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Foreground" Value="#9DBBB8"/></Style>
+  <Style x:Key="Blocked" TargetType="Button"><Setter Property="Padding" Value="9,6"/><Setter Property="Margin" Value="3"/><Setter Property="IsEnabled" Value="False"/></Style>
+ </Window.Resources>
+ <Grid Margin="26"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <Grid Margin="0,0,0,18"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+   <StackPanel><TextBlock Text="PLANTAFIELDBUS" FontSize="27" FontWeight="Bold" Foreground="{StaticResource AccentBrush}"/><TextBlock Text="Diagnóstico e recuperação assistida · planta didática" Foreground="#9DBBB8" Margin="0,4,0,0"/></StackPanel>
+   <Border Grid.Column="1" Background="#173834" CornerRadius="15" Padding="14,8" VerticalAlignment="Center"><StackPanel Orientation="Horizontal"><Ellipse Width="9" Height="9" Fill="#F2B84B" Margin="0,0,8,0"/><TextBlock Text="MODO OFFLINE · SEM COMANDOS" Foreground="#D7F6EF" FontWeight="SemiBold"/></StackPanel></Border>
   </Grid>
+  <Grid Grid.Row="1"><Grid.ColumnDefinitions><ColumnDefinition Width="2.1*"/><ColumnDefinition Width="1*"/></Grid.ColumnDefinitions>
+   <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="22" Margin="0,0,18,0"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+    <DockPanel><StackPanel DockPanel.Dock="Left"><TextBlock Text="VISÃO OPERACIONAL" FontSize="19" FontWeight="SemiBold"/><TextBlock Text="Representação local baseada nas evidências disponíveis" Foreground="#9DBBB8" Margin="0,3,0,0"/></StackPanel><Border DockPanel.Dock="Right" Background="#0C222A" CornerRadius="10" Padding="10,5"><TextBlock Text="PLANTA PARADA · estado informado" Foreground="#F2B84B" FontWeight="SemiBold" FontSize="11"/></Border></DockPanel>
+    <Border Background="#0B2229" BorderBrush="#24606A" BorderThickness="1" CornerRadius="14" Padding="16" Margin="0,18,0,14"><StackPanel><TextBlock Text="IDENTIDADE OBSERVADA NA CAPTURA" Style="{StaticResource Caption}"/><TextBlock Text="192.168.164.100  ·  DF51 v3.7.5  ·  Monitor 3302" FontSize="18" FontWeight="SemiBold" Margin="0,4,0,2"/><TextBlock Text="MAC 00:30:5C:01:05:52 · anúncio UDP 4987 · sem sessão ativa" Foreground="#9DBBB8"/></StackPanel></Border>
+    <Grid Margin="0,0,0,14"><Grid.ColumnDefinitions><ColumnDefinition Width="1.4*"/><ColumnDefinition Width="1*"/></Grid.ColumnDefinitions>
+     <Border Background="#0C222A" CornerRadius="14" Padding="16" Margin="0,0,12,0"><StackPanel><TextBlock Text="PROCESSO DA PLANTA" Style="{StaticResource Caption}"/><Canvas Height="270" Margin="0,6,0,0"><Rectangle Width="160" Height="150" RadiusX="16" RadiusY="16" Fill="#153C49" Stroke="#39D9BA" StrokeThickness="2" Canvas.Left="35" Canvas.Top="65"/><Rectangle Width="160" Height="150" RadiusX="16" RadiusY="16" Fill="#153C49" Stroke="#39D9BA" StrokeThickness="2" Canvas.Left="350" Canvas.Top="65"/><Line X1="195" X2="350" Y1="140" Y2="140" Stroke="#39D9BA" StrokeThickness="9"/><Ellipse Width="74" Height="74" Fill="#24606A" Stroke="#39D9BA" StrokeThickness="3" Canvas.Left="235" Canvas.Top="103"/><TextBlock Text="TQ-01" FontSize="16" FontWeight="Bold" Canvas.Left="90" Canvas.Top="95"/><TextBlock Text="TQ-02" FontSize="16" FontWeight="Bold" Canvas.Left="405" Canvas.Top="95"/><TextBlock Text="P-01 / P-02" FontSize="12" FontWeight="SemiBold" Canvas.Left="237" Canvas.Top="130"/><TextBlock Text="Sinótico preliminar — confirmar instrumentos em campo" Foreground="#9DBBB8" Canvas.Left="24" Canvas.Top="235" FontSize="11"/></Canvas></StackPanel></Border>
+     <Border Grid.Column="1" Background="#0C222A" CornerRadius="14" Padding="16"><StackPanel><TextBlock Text="BOMBAS" Style="{StaticResource Caption}"/><Border Background="#132B31" CornerRadius="10" Padding="12" Margin="0,12,0,8"><DockPanel><StackPanel><TextBlock Text="BOMBA 1" FontWeight="SemiBold"/><TextBlock Text="Estado não confirmado" Foreground="#9DBBB8" FontSize="11"/></StackPanel><TextBlock Text="—" FontSize="24" Foreground="#F2B84B" HorizontalAlignment="Right"/></DockPanel></Border><Border Background="#132B31" CornerRadius="10" Padding="12"><DockPanel><StackPanel><TextBlock Text="BOMBA 2" FontWeight="SemiBold"/><TextBlock Text="Estado não confirmado" Foreground="#9DBBB8" FontSize="11"/></StackPanel><TextBlock Text="—" FontSize="24" Foreground="#F2B84B" HorizontalAlignment="Right"/></DockPanel></Border><TextBlock Text="Comandos bloqueados até validação." Foreground="#9DBBB8" FontSize="11" Margin="0,14,0,0"/></StackPanel></Border>
+    </Grid>
+    <TextBlock Text="PAINEL OPERACIONAL" Style="{StaticResource Caption}" Margin="0,0,0,8"/>
+    <ItemsControl ItemsSource="{Binding PanelSignals}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Columns="5"/></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate><Border Background="#0C222A" CornerRadius="12" Padding="11" Margin="0,0,8,8"><StackPanel><Ellipse Width="12" Height="12" Fill="{Binding Accent}"/><TextBlock Text="{Binding Label}" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,8,0,2"/><TextBlock Text="{Binding State}" Foreground="{Binding Accent}" FontSize="11"/><TextBlock Text="{Binding Detail}" Foreground="#9DBBB8" TextWrapping="Wrap" FontSize="10" Margin="0,5,0,0"/></StackPanel></Border></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+    <TextBlock Text="MEDIÇÕES SIMULADAS" Style="{StaticResource Caption}" Margin="0,10,0,8"/><ItemsControl ItemsSource="{Binding Tags}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Columns="3"/></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate><Border Background="#0C222A" CornerRadius="10" Padding="12" Margin="0,0,8,0"><StackPanel><TextBlock Text="{Binding Label}" Foreground="#9DBBB8"/><TextBlock Text="{Binding Value}" FontSize="22" FontWeight="SemiBold"/><TextBlock Text="{Binding Unit}" Foreground="{StaticResource AccentBrush}"/></StackPanel></Border></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+   </StackPanel></ScrollViewer></Border>
+   <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto"><StackPanel>
+    <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="18" Margin="0,0,0,14"><StackPanel><TextBlock Text="ALARME E SEGURANÇA" FontSize="16" FontWeight="SemiBold"/><Border Background="#332820" CornerRadius="10" Padding="10" Margin="0,12,0,0"><StackPanel><TextBlock Text="Nenhum alarme pode ser confirmado" Foreground="#F2B84B" FontWeight="SemiBold"/><TextBlock Text="A interface não lê E/S da planta nesta etapa." Foreground="#CBBDA2" TextWrapping="Wrap" FontSize="11" Margin="0,3,0,0"/></StackPanel></Border><UniformGrid Columns="2" Margin="0,10,0,0"><Button Content="Ligar bomba 1" Style="{StaticResource Blocked}"/><Button Content="Ligar bomba 2" Style="{StaticResource Blocked}"/><Button Content="Silenciar sirene" Style="{StaticResource Blocked}"/><Button Content="Liberar HOLD" Style="{StaticResource Blocked}"/></UniformGrid></StackPanel></Border>
+    <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="18" Margin="0,0,0,14"><StackPanel><TextBlock Text="RACK E CONTROLADOR" FontSize="16" FontWeight="SemiBold"/><ItemsControl ItemsSource="{Binding Inventory}" Margin="0,8,0,0"><ItemsControl.ItemTemplate><DataTemplate><Border BorderBrush="#24606A" BorderThickness="0,0,0,1" Padding="0,9"><StackPanel><TextBlock Text="{Binding Category}" Foreground="#9DBBB8" FontSize="11"/><TextBlock Text="{Binding Value}" FontWeight="SemiBold" TextWrapping="Wrap"/><TextBlock Text="{Binding Detail}" Foreground="#9DBBB8" TextWrapping="Wrap" FontSize="11" Margin="0,3,0,0"/></StackPanel></Border></DataTemplate></ItemsControl.ItemTemplate></ItemsControl></StackPanel></Border>
+    <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="18" Margin="0,0,0,14"><StackPanel><TextBlock Text="EVIDÊNCIA OFFLINE" FontSize="16" FontWeight="SemiBold"/><TextBlock Text="{Binding TopologyStatus}" Foreground="#9DBBB8" TextWrapping="Wrap" Margin="0,8,0,10"/><Button Content="Importar network-summary.json" Click="ImportNetworkSummary_Click" Padding="10,7"/><ListBox ItemsSource="{Binding ObservedNodes}" Background="Transparent" BorderThickness="0" MaxHeight="105" Margin="0,8,0,0"><ListBox.ItemTemplate><DataTemplate><StackPanel Margin="0,4"><TextBlock Text="{Binding Address}" FontWeight="SemiBold"/><TextBlock Text="{Binding Description}" Foreground="#9DBBB8" FontSize="11"/></StackPanel></DataTemplate></ListBox.ItemTemplate></ListBox></StackPanel></Border>
+    <Border Background="{StaticResource PanelBrush}" CornerRadius="18" Padding="18"><StackPanel><TextBlock Text="ESCUTA PASSIVA" FontSize="16" FontWeight="SemiBold"/><TextBlock Text="{Binding DiscoveryStatus}" TextWrapping="Wrap" Foreground="#9DBBB8" Margin="0,8,0,8"/><Button x:Name="DiscoveryButton" Content="Iniciar escuta passiva" Click="ToggleDiscovery_Click" Padding="10,7"/><TextBlock Text="Apenas recebe anúncios UDP já presentes; não envia pacotes." Foreground="#9DBBB8" FontSize="11" Margin="0,8,0,0"/></StackPanel></Border>
+   </StackPanel></ScrollViewer>
+  </Grid>
+  <TextBlock Grid.Row="2" Text="Dados identificados: evidência passiva · estados operacionais: aguardando confirmação em campo" Foreground="#789A96" FontSize="11" Margin="2,15,0,0"/>
+ </Grid>
 </Window>

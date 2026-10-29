@@ -21,9 +21,9 @@ public sealed class MainViewModel : INotifyPropertyChanged
 
     public ObservableCollection<string> Events { get; } =
     [
-        "Simulação local iniciada.",
+        "DF51 confirmado por anúncio passivo e ARP.",
+        "Conectividade IP validada uma vez; nenhum comando foi enviado.",
         "Adaptadores reais permanecem indisponíveis.",
-        "Nenhum comando foi enviado à rede industrial.",
     ];
 
     public ObservableCollection<TopologyNodeView> ObservedNodes { get; } = [];
@@ -46,8 +46,8 @@ public sealed class MainViewModel : INotifyPropertyChanged
 
     public ObservableCollection<InventoryItemView> Inventory { get; } =
     [
-        new("Controlador", "DFI302 / DF51 — associação provável", "Anúncio UDP observado em 192.168.164.100; etiqueta física ainda necessária."),
-        new("Identidade Ethernet", "MAC 00:30:5C:01:05:52", "UDP 4987 em broadcast, com firmware 3.7.5 e Monitor 3302."),
+        new("Controlador", "DF51 — controlador DFI302 confirmado", "1 Ethernet de 10 Mbps e 4 canais FOUNDATION Fieldbus H1."),
+        new("Identidade Ethernet", "MAC 00:30:5C:01:05:52", "UDP 4987 em broadcast, firmware 3.7.5 e Monitor 3302."),
         new("Rack de E/S", "Módulos presentes — modelo pendente", "Fotografar etiquetas frontais e bornes na próxima visita."),
         new("Painel", "2 bombas, emergência, sirene e alarmes", "Mapeamento entre botoeira e E/S ainda pendente."),
     ];

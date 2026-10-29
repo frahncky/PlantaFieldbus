@@ -18,9 +18,16 @@
 7. Designer inicial do sinótico. — concluído: prévia local e controles de visibilidade dos elementos demonstrativos.
 8. Decodificação de anúncios UDP observados. — concluída para replay offline; a escuta passiva fica desativada até início explícito do operador.
 
+## Evidência validada em campo
+
+- DF51/DFI302 confirmado por anúncio UDP, ARP e um único teste ICMP.
+- Endereço observado: `192.168.164.100`, MAC `00:30:5C:01:05:52`, UDP 4987.
+- A interface WPF mostra esse inventário e replica os comandos visíveis do
+  painel físico apenas como botões bloqueados.
+
 ## Gates obrigatórios
 
 - Sem instalação ou execução do software legado.
 - Sem descoberta ativa, varredura ou alteração de rede.
-- Sem conexão com PLC antes da identificação do adaptador.
+- Sem conexão de protocolo industrial com PLC antes da identificação do adaptador.
 - Sem escrita sem autorização explícita e laboratório.

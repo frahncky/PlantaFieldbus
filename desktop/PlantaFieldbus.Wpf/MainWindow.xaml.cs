@@ -76,6 +76,29 @@ public partial class MainWindow : Window
         }
     }
 
+    private void ExportTechnicalReport_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new SaveFileDialog
+        {
+            Title = "Exportar relatório técnico local",
+            FileName = $"planta-evidencias-{DateTime.Now:yyyyMMdd-HHmm}.txt",
+            Filter = "Relatório de texto (*.txt)|*.txt",
+            OverwritePrompt = true,
+        };
+
+        if (dialog.ShowDialog(this) != true) return;
+
+        try
+        {
+            File.WriteAllText(dialog.FileName, _viewModel.BuildTechnicalReport());
+            MessageBox.Show(this, "Relatório salvo localmente. Nenhuma comunicação com a planta foi realizada.", "Relatório técnico", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+        {
+            MessageBox.Show(this, $"Não foi possível salvar o relatório:\n{exception.Message}", "Relatório técnico", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+    }
+
     protected override async void OnClosed(EventArgs e)
     {
         await StopDiscoveryAsync();

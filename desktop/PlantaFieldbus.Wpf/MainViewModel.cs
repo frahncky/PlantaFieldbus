@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace PlantaFieldbus.Wpf;
 
@@ -113,6 +114,33 @@ public sealed class MainViewModel : INotifyPropertyChanged
         var shortHash = hash.Length >= 12 ? hash[..12] : hash;
         TopologyStatus = $"{capture} · {ObservedNodes.Count} endpoint(s) · hash {shortHash}";
         Events.Insert(0, "Resumo de captura importado localmente.");
+    }
+
+    /// <summary>Gera um registro local, sem abrir rede nem incluir comandos.</summary>
+    public string BuildTechnicalReport()
+    {
+        var report = new StringBuilder();
+        report.AppendLine("RELATÓRIO TÉCNICO LOCAL — PLANTAFIELDBUS");
+        report.AppendLine($"Gerado em: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+        report.AppendLine();
+        report.AppendLine("EVIDÊNCIA CONFIRMADA");
+        report.AppendLine("- Controlador: SMAR DF51 / plataforma DFI302.");
+        report.AppendLine("- Identidade: 192.168.164.100 · MAC 00:30:5C:01:05:52.");
+        report.AppendLine("- Anúncio: UDP 4987 · firmware 3.7.5 · Monitor 3302.");
+        report.AppendLine("- LED: HOLD aceso; RUN, FAIL e FORCE apagados; ETH TX piscando.");
+        report.AppendLine();
+        report.AppendLine("EVIDÊNCIA IMPORTADA");
+        report.AppendLine($"- {TopologyStatus}");
+        foreach (var node in ObservedNodes)
+            report.AppendLine($"- Endpoint observado: {node.Address}.");
+        if (ObservedNodes.Count == 0)
+            report.AppendLine("- Nenhum resumo de captura foi importado nesta sessão.");
+        report.AppendLine();
+        report.AppendLine("PENDÊNCIAS E LIMITES");
+        report.AppendLine("- Protocolo de leitura de processo, módulos de E/S e estratégia não foram confirmados.");
+        report.AppendLine("- Esta interface não confirma alarmes, não lê E/S e não envia comandos.");
+        report.AppendLine("- Qualquer conexão industrial requer revisão humana e autorização explícita.");
+        return report.ToString();
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

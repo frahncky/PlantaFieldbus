@@ -19,7 +19,7 @@ equipamento, sem mudar seu estado e sem assumir configurações desconhecidas.
 2. Fotografar, sem mexer em fiação:
    - etiqueta completa do DF51 e de cada módulo do rack;
    - LEDs do DF51 (HOLD, RUN, FAIL, FORCE e Ethernet);
-   - etiqueta e LEDs do PLC DF65;
+   - etiqueta e LEDs do controlador da planta;
    - bornes e identificação dos cabos Ethernet;
    - frente e etiquetas da botoeira/painel.
 3. Anotar data, horário e qualquer alteração observada nos LEDs.
@@ -55,7 +55,7 @@ reversível, e nunca no PLC.
 1. Abrir **System302 Settings** e habilitar *Communication Server* somente
    depois de selecionar a interface Ethernet correta.
 2. Abrir Studio302 e registrar visualmente as informações que ele apresentar
-   sobre o DF51. Isso não identifica nem habilita comunicação com o PLC DF65.
+   sobre o DF51. Isso não identifica nem habilita comunicação com o controlador.
 3. Se houver uma operação de descoberta, leitura, upload, download, alteração
    de IP ou mudança de estado, parar na tela e registrar a opção. Não confirmar
    a operação sem revisão humana do impacto.

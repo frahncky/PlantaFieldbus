@@ -14,8 +14,9 @@ os parâmetros ou a topologia efetivamente instalados nesta bancada.
 - A bancada é uma PD3-302 didática industrial conectada por Ethernet.
 - O equipamento observado é um SMAR **DF51** da plataforma DFI302, com uma
   porta Ethernet 10 Mbps e quatro canais FOUNDATION Fieldbus H1. Ele não é o
-  PLC da planta. O PLC informado pelo operador é um **DF65**; a função do DF51
-  e o endereço/protocolo do DF65 ainda não foram confirmados.
+  PLC da planta. O manual de referência da PD3-F descreve uma CPU DF63, mas o
+  modelo instalado nesta bancada, a função do DF51 e o endereço/protocolo do
+  controlador ainda devem ser confirmados por etiqueta e projeto.
 - O DF51 anuncia `192.168.164.100:4987` em broadcast, com MAC
   `00:30:5C:01:05:52`, firmware `3.7.5` e `Monitor 3302`.
 - A conectividade IP foi confirmada uma vez a partir de uma estação temporária
@@ -35,6 +36,6 @@ autoriza comunicação com qualquer equipamento.
 ## Confirmação necessária
 
 1. Inventário dos módulos de E/S e bornes do rack.
-2. Confirmação física do DF65 e recuperação de seu projeto/backup ou
+2. Confirmação física do controlador e recuperação de seu projeto/backup ou
    procedimento oficial de leitura aplicável.
 3. Revisão humana antes de habilitar qualquer adaptador de leitura.

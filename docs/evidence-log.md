@@ -32,8 +32,8 @@ Evidências REA: `ev_7ff816c4540dd917ef9b8e45a6beb3eff0e4bddfc1da8aaa425d1bc4399
 
 - Formato exato da solicitação, autenticação, porta, resposta e pré-condições.
 - Se o mecanismo se aplica ao firmware DF51 3.7.5 e à configuração da bancada.
-- A função do DF51 na planta e a confirmação física, endereço e protocolo do
-  PLC DF65 informado pelo operador.
+- A função do DF51 na planta e a confirmação física, endereço, protocolo e
+  modelo do controlador.
 
 ### Próximo gate
 
@@ -51,7 +51,7 @@ strings empacotadas.
   autenticação e associou `Run Mode` a `firmware` e `Hold Mode` a `monitor`.
 - O prompt aceito pelo cliente não inclui DF51. A presença do DF51 apenas na
   tabela de tipos de hardware não confirma suporte aos comandos, nem que ele
-  seja o PLC DF65.
+  seja o controlador da planta.
 - `DfiDiver.exe`, SHA-256
   `b339f777382ecad1a14975cdf9fd2720425d674f051c5cfd75712c929ac3a2a3`,
   reconhece `DF51*.abs` e escrita de memória, mas a busca REA não encontrou um
@@ -155,7 +155,7 @@ do aplicativo sem uma decisão explícita para alterar o ambiente de rede.
 
 ### Desconhecido
 
-- A função do DF51, e a configuração, módulos de E/S e projeto do PLC DF65.
+- A função do DF51, e a configuração, módulos de E/S e projeto do controlador.
 
 ### Limite
 
@@ -183,9 +183,9 @@ do aplicativo sem uma decisão explícita para alterar o ambiente de rede.
 
 - O equipamento na rede é um SMAR **DF51**, da plataforma DFI302, com Ethernet
   de 10 Mbps e quatro canais FOUNDATION Fieldbus H1.
-- O DF51 não é o PLC da planta. O PLC informado pelo operador é DF65; a captura
-  não confirma seu endereço, protocolo nem determina a função do DF51 no
-  processo.
+- O DF51 não é o PLC da planta. O manual padrão da PD3-F descreve uma CPU DF63,
+  mas a captura não confirma o modelo, endereço ou protocolo do controlador
+  desta bancada, nem determina a função do DF51 no processo.
 
 ### Limites mantidos
 

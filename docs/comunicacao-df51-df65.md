@@ -24,6 +24,19 @@ Evidências REA: `ev_30b763dca7d11f5788385dc3fcd0d433e28cb019634c25c42bae9db9657
 `ev_4e60c53da02dc516b281bad45e678e8ba91a85701edfe3e96fa5960f7e5de533`,
 `ev_c6f97b124e23bc46c36ee6cd47a526df176ca909dedcdd58fb7656014ae5e6f9`.
 
+## Projeto de exemplo instalado
+
+O `DF51_SE.ffp` fornecido com o System302 é um projeto de exemplo de 10.283
+bytes, identificado internamente como `Plant / DF51_SE`. Ele descreve um
+recurso DFI302, cinco portas, quatro equipamentos de campo e uma estratégia
+com blocos de temperatura, vazão e cascata. O arquivo também contém agendas de
+execução e de tráfego Fieldbus.
+
+Esse projeto é útil para reconhecer os tipos de artefato que devem existir na
+bancada, mas não deve ser carregado, comparado por endereço, nem usado como
+origem de parâmetros para a PD3-302. Não há evidência de que ele seja o projeto
+instalado no DF51 observado.
+
 ## Critério para comunicação correta
 
 Comunicação só é considerada correta quando todos os itens abaixo forem

@@ -37,6 +37,18 @@ bancada, mas não deve ser carregado, comparado por endereço, nem usado como
 origem de parâmetros para a PD3-302. Não há evidência de que ele seja o projeto
 instalado no DF51 observado.
 
+## Configuração local da estação
+
+O arquivo local `System302_Configuration.xml` declara a estação como engenharia
+e operação, com Configuration Server em `127.0.0.1`. Ele contém um endereço de
+OPC `192.168.164.10`, mas marca esse servidor como não configurado. Os arquivos
+de modelo HSE também citam UDP inicial `28000` e parâmetros de NIC.
+
+Esses valores pertencem à instalação local ou a arquivos de modelo. Eles não
+provam o endereço de engenharia do DF51, que o DF51 use HSE, nem que UDP 28000
+seja um serviço da bancada. Não devem ser copiados para a configuração de rede
+ou usados como destino de comunicação.
+
 ## Critério para comunicação correta
 
 Comunicação só é considerada correta quando todos os itens abaixo forem

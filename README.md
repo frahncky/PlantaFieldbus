@@ -29,7 +29,11 @@ Simulação local, evidência passiva de rede e uma interface independente para 
 
 O **PlantaFieldbus** é uma base para construir uma interface independente de engenharia e operação de uma planta didática industrial. O projeto começa deliberadamente em **simulação local**: antes de qualquer integração física, a topologia e o protocolo precisam ser comprovados por etiqueta do equipamento e evidência passiva de rede.
 
-O perfil de trabalho atual é uma planta didática com segmento FOUNDATION Fieldbus ainda sujeito à confirmação no laboratório.
+O perfil de trabalho atual é uma **PD3-302 — Planta Didática FOUNDATION™
+Fieldbus** da SMAR. Ela reproduz, em escala didática, malhas de processo e é
+supervisionada por uma estação PC; a configuração específica desta bancada
+continua sujeita à confirmação no laboratório. Consulte a [página oficial da
+PD3-302](https://www.smar.com.br/pt/produto/pd3-302-planta-didatica-foundation-fieldbus).
 
 ## 🧭 Recursos
 

@@ -1,8 +1,17 @@
-# Perfil provisório — planta didática Fieldbus
+# Perfil provisório — PD3-302 Fieldbus
+
+## Contexto do produto
+
+A [PD3-302 da SMAR](https://www.smar.com.br/pt/produto/pd3-302-planta-didatica-foundation-fieldbus)
+é uma planta didática compacta para demonstrar malhas de controle com
+FOUNDATION™ Fieldbus. A supervisão e operação são feitas por uma estação PC com
+software, e a estrutura permite configurar malhas sem mudanças mecânicas.
+Essas características descrevem a linha de produto; não substituem o projeto,
+os parâmetros ou a topologia efetivamente instalados nesta bancada.
 
 ## Base observada
 
-- A bancada é uma planta didática industrial conectada por Ethernet.
+- A bancada é uma PD3-302 didática industrial conectada por Ethernet.
 - O equipamento observado é um SMAR **DF51** da plataforma DFI302, com uma
   porta Ethernet 10 Mbps e quatro canais FOUNDATION Fieldbus H1. Ele não é o
   PLC da planta. O PLC informado pelo operador é um **DF65**; a função do DF51

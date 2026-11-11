@@ -1,5 +1,65 @@
 # Registro de evidências
 
+## 2026-11-10 — triagem REA do caminho de RUN/HOLD
+
+### Observado
+
+- A instalação local contém `FBTools/dfbatch/dfbatch.exe`, SHA-256
+  `c526f1e87d6e67fe41dfd3a434851e2211bc108d31f4bdd1531550c2c0d7bee9`.
+- O inventário REA classificou o alvo como PE32 x86 nativo, sem diretório CLI;
+  portanto ele não é um assembly .NET e requer um provedor nativo para
+  decompilação.
+- A triagem de bytes do artefato encontrou os rótulos `Run Modes`,
+  `Hold Modes` e `mode 1`, além de código Python 2 empacotado relacionado a
+  Telnet/FTP. Esses textos identificam o melhor alvo conhecido, mas não
+  estabelecem a sintaxe, o transporte ou a semântica segura de um comando.
+- O REA 6.7.0 e o Ghidra 12.1.4 foram localizados. A configuração apontava para
+  um JDK removido e foi atualizada para o JDK 21 instalado; o provedor nativo,
+  porém, ainda expira durante o autoteste Java no host Windows e não produziu
+  pseudocódigo.
+
+Evidências REA: `ev_7ff816c4540dd917ef9b8e45a6beb3eff0e4bddfc1da8aaa425d1bc4399cd673`,
+`ev_d9739d1d07a3f6b6c450d35ec0c078f34720eb16cedef6af72c3574b38569a42`,
+`ev_e7cc8af7e8953d4ecbd334cf0e779939872876c5ac21e50663c7b39877dfbedf`,
+`ev_5198bfeb8c11f6565a28d9e3f438c319ad2f42936c0207f9209478069ffaf313`.
+
+### Inferido
+
+- `dfbatch.exe`, e não o anúncio UDP 4987, é o primeiro alvo a decompilar para
+  reconstruir o caminho de RUN/HOLD.
+
+### Desconhecido
+
+- Formato exato da solicitação, autenticação, porta, resposta e pré-condições.
+- Se o mecanismo se aplica ao firmware DF51 3.7.5 e à configuração da bancada.
+
+### Próximo gate
+
+Reiniciar/reconectar o REA com o JDK corrigido e obter pseudocódigo/evidência de
+chamadas para o fluxo `mode`. Não transmitir comandos com base apenas nas
+strings empacotadas.
+
+### Continuação REA
+
+- O REA/Ghidra 12.1.4 voltou a operar após a correção do JDK.
+- O recurso PE `PYTHONSCRIPT` de `dfbatch.exe` foi identificado em offset
+  13.940, com 36.369 bytes e SHA-256
+  `32ac0d09c69a2eded262ec00f76016d3b739086504578a617cd5f6e4a2207405`.
+- A reconstrução do bytecode Python 2.5 confirmou transporte Telnet/23 com
+  autenticação e associou `Run Mode` a `firmware` e `Hold Mode` a `monitor`.
+- O prompt aceito pelo cliente não inclui DF51. A presença do DF51 apenas na
+  tabela de tipos de hardware não confirma suporte aos comandos.
+- `DfiDiver.exe`, SHA-256
+  `b339f777382ecad1a14975cdf9fd2720425d674f051c5cfd75712c929ac3a2a3`,
+  reconhece `DF51*.abs` e escrita de memória, mas a busca REA não encontrou um
+  caminho RUN/HOLD nesse utilitário.
+
+Evidências adicionais: `ev_c063b40f079d004a980ffbe570bc0bc966d751a2e4405a634039a7c1f656e14d`,
+`ev_618ccaa58939da4fb453b7999060aad0eaf253ad22e05ae10cfafbee732921b4`,
+`ev_f188e86218c23dad11829c11b2df57a46f0f49979beddf66c3efce67972673c4`,
+`ev_362a8d768f1e0e22fdccf2a23883d4f892e3d6c781a15c4780b240a0c10bf4c4`,
+`ev_3474f0fc2c39fba18b7609009dbe29f6dc99f70716e79b8b02b0f9c6e3a8651f`.
+
 ## 2026-10-28 — mídia System302 v8.2.2 SP1
 
 ### Observado

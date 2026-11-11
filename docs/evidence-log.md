@@ -237,3 +237,20 @@ O programa é tratado como ferramenta potencialmente alteradora de configuraçã
 AS-i/Modbus e não será usado para descoberta, recuperação do projeto ou RUN do
 DF51. A classificação é baseada nos metadados disponíveis; não prova todo o
 comportamento do programa.
+
+
+## 2026-11-11 — busca de backup compatível
+
+### Observado
+
+- A busca restrita por nomes PD3, DF51, DFI302 e System302 nos documentos
+  locais não encontrou projeto ou backup identificável da PD3-302.
+- A instalação do System302 contém apenas os exemplos de fábrica
+  `DF51_SE.ffp` (10.283 bytes) e `DF51_HSE.ffp` (10.482 bytes), ambos com data
+  de 2006. Eles não são evidência da configuração da bancada.
+
+### Próximo gate
+
+Obter um backup identificado ou orientação técnica da SMAR para DF51 `V3.7.5`.
+O rascunho de solicitação está em `docs/pedido-suporte-smar.md` e não foi
+enviado.

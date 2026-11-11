@@ -49,6 +49,16 @@ provam o endereço de engenharia do DF51, que o DF51 use HSE, nem que UDP 28000
 seja um serviço da bancada. Não devem ser copiados para a configuração de rede
 ou usados como destino de comunicação.
 
+## Estado de supervisão no componente Fieldbus
+
+O pseudocódigo recuperado da rotina `OFCServer::IsSupervisionOnly` consulta um
+objeto COM e registra o estado como `CONFIGURATION` ou `SUPERVISION_ONLY`
+(`ev_76dcb3f91d322bec36dad9d0911558bb23e770d6a95252e01b17630bfac55b3d`).
+Isso comprova que o componente diferencia os dois contextos. A análise estática
+não comprova o estado selecionado na bancada, nem que o modo de supervisão
+bloqueie todas as operações de escrita; essa validação depende do procedimento
+oficial e de uma sessão controlada.
+
 ## Critério para comunicação correta
 
 Comunicação só é considerada correta quando todos os itens abaixo forem

@@ -17,6 +17,15 @@ Use este procedimento somente em uma rede que você esteja autorizado a observar
 8. Preserve os arquivos PCAPNG, JSON e manifesto produzidos. Não publique
    capturas em repositórios públicos.
 
+Depois de voltar para um ambiente de análise, execute:
+
+```powershell
+./scripts/Invoke-SafeEvidencePipeline.ps1 -EvidenceDirectory ./field-capture
+```
+
+Ele calcula hashes e produz resumos locais do PCAP. Não captura tráfego, não
+abre o System302 e não envia pacotes.
+
 O script apenas registra a configuração local e captura tráfego já existente; não envia sondagens, não altera interfaces e não escreve no PLC.
 
 ## Captura vinculada a uma interface Ethernet

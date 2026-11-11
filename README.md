@@ -140,6 +140,8 @@ Quando o notebook estiver fisicamente conectado à bancada, siga [**captura-pass
 - variante e adaptador compatíveis.
 
 O plano completo, os artefatos esperados e os gates estão em [**automation-plan.md**](docs/automation-plan.md). O estado das etapas do aplicativo está em [**software-roadmap.md**](docs/software-roadmap.md).
+O escopo e os critérios de validação do caminho DF51/DF65 estão em
+[**comunicacao-df51-df65.md**](docs/comunicacao-df51-df65.md).
 
 ## 🔒 Limites de segurança
 

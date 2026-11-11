@@ -239,6 +239,9 @@ class _PlantConsoleState extends State<PlantConsole> {
     final level = _snapshot?.tags['level']?.value ?? 0;
     final flow = _snapshot?.tags['flow']?.value ?? 0;
     final pressure = _snapshot?.tags['pressure']?.value ?? 0;
+    final temperature = _snapshot?.tags['temperature']?.value ?? 0;
+    final flowSetpoint = _snapshot?.tags['flow_sp']?.value ?? 0;
+    final valvePosition = _snapshot?.tags['valve_position']?.value ?? 0;
     return ListView(
       padding: const EdgeInsets.all(24),
       children: [
@@ -284,10 +287,22 @@ class _PlantConsoleState extends State<PlantConsole> {
               Colors.deepPurpleAccent,
             ),
             _metric(
-              'TIT-101 • Temperatura',
-              '26.4 °C',
+              'TT302 • Temperatura simulada',
+              '${temperature.toStringAsFixed(1)} °C',
               Icons.thermostat_outlined,
               Colors.orangeAccent,
+            ),
+            _metric(
+              'PID mestre • SP de vazão',
+              '${flowSetpoint.toStringAsFixed(1)} L/min',
+              Icons.call_split,
+              Colors.pinkAccent,
+            ),
+            _metric(
+              'FP302 • Válvula simulada',
+              '${valvePosition.toStringAsFixed(1)} %',
+              Icons.tune,
+              Colors.amberAccent,
             ),
           ],
         ),
@@ -326,14 +341,16 @@ class _PlantConsoleState extends State<PlantConsole> {
                         _synopticNode(
                           Icons.tune,
                           'FV-101',
-                          'aberta',
+                          '${valvePosition.toStringAsFixed(1)} % simulada',
                           Colors.orangeAccent,
                         ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 12),
-                const Text('Layout demonstrativo editável na aba Designer.'),
+                const Text(
+                  'Cascata simulada: TT302 → PID mestre → PID de vazão → FP302.',
+                ),
               ],
             ),
           ),

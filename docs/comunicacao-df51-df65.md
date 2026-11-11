@@ -59,6 +59,22 @@ não comprova o estado selecionado na bancada, nem que o modo de supervisão
 bloqueie todas as operações de escrita; essa validação depende do procedimento
 oficial e de uma sessão controlada.
 
+## Classificação do NetConfDownloader
+
+A inspeção estática do `NetConfDownloader.exe` instalado com o System302
+(SHA-256 `95ccac48b16190ef7f381c2279d8b189ef9edd2818069f62f196daeab8f98741`)
+identificou referências às APIs `SmarNetConfOut.cASi` e
+`SmarNetConfOut.cModbus`. Ambas expõem `Connect`, `Disconnect` e `Download`;
+a segunda também expõe `WriteChannelGuid`. Os nomes e as assinaturas são
+evidência de um utilitário de aplicação de configuração para AS-i/Modbus, não
+de uma interface de descoberta somente de leitura nem de um mecanismo
+documentado para DF51 RUN/HOLD.
+
+Por isso, o executável está explicitamente excluído da recuperação inicial da
+PD3-302. A análise foi apenas de metadados do arquivo; ele não foi executado,
+não abriu conexão e não transmitiu dados à planta. Evidência REA:
+`ev_2452d1ffbdb2783d69eb8ad49ebf65df150209501dc2108634f12b87cf63b3d2`.
+
 ## Critério para comunicação correta
 
 Comunicação só é considerada correta quando todos os itens abaixo forem

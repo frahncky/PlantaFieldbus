@@ -217,3 +217,23 @@ do aplicativo sem uma decisão explícita para alterar o ambiente de rede.
   ou operações de download ao DF51.
 - O FBTools Wizard mostrou somente operações de download para o DF51; elas não
   foram executadas por não constituírem recuperação somente de leitura.
+
+## 2026-11-11 — classificação estática do NetConfDownloader
+
+### Observado
+
+- A inspeção estática de `NetConfDownloader.exe` instalado no System302
+  (SHA-256 `95ccac48b16190ef7f381c2279d8b189ef9edd2818069f62f196daeab8f98741`)
+  identificou os componentes `SmarNetConfOut.cASi` e `SmarNetConfOut.cModbus`.
+- As referências expõem `Connect`, `Disconnect` e `Download`; o componente
+  Modbus também expõe `WriteChannelGuid`.
+- A inspeção não carregou nem executou o binário. Não houve tráfego gerado
+  para a planta. Evidência REA:
+  `ev_2452d1ffbdb2783d69eb8ad49ebf65df150209501dc2108634f12b87cf63b3d2`.
+
+### Conclusão operacional
+
+O programa é tratado como ferramenta potencialmente alteradora de configuração
+AS-i/Modbus e não será usado para descoberta, recuperação do projeto ou RUN do
+DF51. A classificação é baseada nos metadados disponíveis; não prova todo o
+comportamento do programa.

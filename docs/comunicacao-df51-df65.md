@@ -98,3 +98,21 @@ Esta investigação não enviou pacotes, não iniciou o Communication Server e n
 executou o System302 contra a planta. Portanto, ela não garante comunicação com
 o DF51: fornece evidência para evitar o uso do caminho de escrita durante a
 validação inicial.
+
+
+## Compatibilidade observada de firmware
+
+O anúncio passivo identifica o controlador como `DF51V3.7.5`. A revisão atual
+do manual DFI302 publicado pela SMAR apresenta `V3.9.5` na tabela de
+compatibilidade do DF51 para as linhas System302 7.0 a 8.2. Isso é evidência de
+que a bancada pode usar uma revisão histórica do controlador; não é evidência
+de falha e não é autorização para atualização.
+
+O boletim de aplicações do System302 descreve a inicialização de comunicação
+depois de firmware e configuração preparados. Assim, a diferença deve ser
+resolvida somente ao identificar o projeto/backup original e o procedimento
+compatível para `V3.7.5`, ou com confirmação do suporte técnico SMAR. Não usar
+o firmware `V3.9.5` para experimentar conectividade.
+
+Fontes oficiais: [manual DFI302](https://www.smar.com.br/public/img/produtos/arquivos/dfi302me.pdf)
+e [boletim System302](https://www.smar.com.br/public/img/produtos/arquivos/system32me.pdf).

@@ -20,9 +20,9 @@
 
 ## Evidência validada em campo
 
-- DF51/DFI302 observado por anúncio UDP, ARP e um único teste ICMP; ele não é
-  o PLC da planta. O modelo, endereço e protocolo do controlador ainda devem
-  ser confirmados.
+- DF51/DFI302 observado por anúncio UDP, ARP e um único teste ICMP; é o
+  controlador da bancada e o DF65 é o coprocessador lógico, conforme inventário
+  informado. O protocolo de leitura e o projeto ainda devem ser confirmados.
 - Endereço observado: `192.168.164.100`, MAC `00:30:5C:01:05:52`, UDP 4987.
 - A interface WPF mostra esse inventário e replica os comandos visíveis do
   painel físico apenas como botões bloqueados.

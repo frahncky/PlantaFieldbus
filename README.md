@@ -59,7 +59,7 @@ PD3-302](https://www.smar.com.br/pt/produto/pd3-302-planta-didatica-foundation-f
 | Simulador local | ✅ | Fonte de dados de desenvolvimento, somente leitura |
 | Histórico de eventos | ✅ | Cache JSON local, sem envio de dados para rede |
 | Importação de topologia | ✅ | Consome `network-summary.json` produzido pela análise offline |
-| Equipamento e IP observados | ✅ | DF51 / DFI302 observado em `192.168.164.100` por captura passiva, ARP e ICMP; o modelo do controlador da bancada ainda deve ser confirmado |
+| Controlador e IP observados | ✅ | DF51 / DFI302 observado em `192.168.164.100` por captura passiva, ARP e ICMP; DF65 é o coprocessador lógico informado |
 | Protocolo de leitura de processo | ⏳ | O anúncio UDP 4987 identifica o DF51, mas não confirma uma API de leitura nem sua ligação com o controlador |
 | Comunicação com a planta | 🔒 | Intencionalmente desativada até validação do ambiente |
 

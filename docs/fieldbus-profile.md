@@ -12,18 +12,16 @@ os parâmetros ou a topologia efetivamente instalados nesta bancada.
 ## Base observada
 
 - A bancada é uma PD3-302 didática industrial conectada por Ethernet.
-- O equipamento observado é um SMAR **DF51** da plataforma DFI302, com uma
-  porta Ethernet 10 Mbps e quatro canais FOUNDATION Fieldbus H1. Ele não é o
-  PLC da planta. O manual de referência da PD3-F descreve uma CPU DF63, mas o
-  modelo instalado nesta bancada, a função do DF51 e o endereço/protocolo do
-  controlador ainda devem ser confirmados por etiqueta e projeto.
+- O controlador é um SMAR **DF51** da plataforma DFI302, com uma porta Ethernet
+  10 Mbps e quatro canais FOUNDATION Fieldbus H1. O controle lógico é fornecido
+  pelo coprocessador **DF65**; o inventário foi informado pelo operador e deve
+  ser conferido nas etiquetas do rack antes de qualquer intervenção.
 - O DF51 anuncia `192.168.164.100:4987` em broadcast, com MAC
   `00:30:5C:01:05:52`, firmware `3.7.5` e `Monitor 3302`.
 - A conectividade IP foi confirmada uma vez a partir de uma estação temporária
   em `192.168.164.10/24`; o notebook foi restaurado para DHCP depois do teste.
 - O formato do anúncio UDP foi decodificado apenas para identidade. O protocolo
-  de leitura de processo, os módulos de E/S e a estratégia continuam
-  desconhecidos.
+  de leitura de processo e a estratégia continuam desconhecidos.
 
 ## Hipótese visual usada no aplicativo
 
@@ -35,7 +33,7 @@ autoriza comunicação com qualquer equipamento.
 
 ## Confirmação necessária
 
-1. Inventário dos módulos de E/S e bornes do rack.
-2. Confirmação física do controlador e recuperação de seu projeto/backup ou
+1. Conferência física do inventário e dos bornes do rack.
+2. Recuperação do projeto/backup do DF51/DF65 ou de
    procedimento oficial de leitura aplicável.
 3. Revisão humana antes de habilitar qualquer adaptador de leitura.

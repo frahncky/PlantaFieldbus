@@ -183,9 +183,10 @@ do aplicativo sem uma decisão explícita para alterar o ambiente de rede.
 
 - O equipamento na rede é um SMAR **DF51**, da plataforma DFI302, com Ethernet
   de 10 Mbps e quatro canais FOUNDATION Fieldbus H1.
-- O DF51 não é o PLC da planta. O manual padrão da PD3-F descreve uma CPU DF63,
-  mas a captura não confirma o modelo, endereço ou protocolo do controlador
-  desta bancada, nem determina a função do DF51 no processo.
+- O DF51 é o controlador Ethernet/FOUNDATION Fieldbus e o DF65 é o
+  coprocessador lógico, conforme inventário posteriormente informado pelo
+  operador. A captura confirma o endereço do DF51, mas não o projeto, o
+  mapeamento de E/S nem o protocolo de leitura da aplicação.
 
 ### Limites mantidos
 

@@ -31,8 +31,9 @@ pessoal qualificado deve instalar, operar ou manter a planta.
 ## O que este repositório confirmou
 
 - Um DF51/DFI302 anuncia-se em `192.168.164.100` no segmento Ethernet.
-- Esse DF51 não é o controlador da planta.
-- O modelo do controlador, o projeto, o P&ID instalado e a topologia de rede
+- O DF51 é o controlador Ethernet/FOUNDATION Fieldbus e o DF65 é o
+  coprocessador lógico, conforme inventário informado pelo operador.
+- O projeto, o P&ID instalado, a topologia de rede e os parâmetros de operação
   ainda não foram confirmados. Portanto esta descrição não autoriza conexões,
   alterações de modo ou comandos.
 

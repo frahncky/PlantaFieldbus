@@ -20,8 +20,14 @@
 
 ## Leitura da arquitetura
 
-O DF51 é a cabeça de controle e comunicação Fieldbus; o DF65 fornece a função
-lógica. Os módulos DF18, DF19 e DF28 fazem a interface discreta com o painel e
-atuadores. DF52 e DF53 energizam e condicionam os segmentos FOUNDATION
-Fieldbus. A presença dos módulos não revela, por si só, o mapeamento de sinais,
-o projeto carregado ou quais saídas estão ativas.
+O DF51 é a cabeça de controle e comunicação Fieldbus, executando a função LAS
+nos quatro segmentos H1; o DF65 fornece a função lógica/Ladder. Os módulos
+DF18, DF19 e DF28 fazem a interface discreta com o painel e atuadores. DF52 e
+DF53 energizam e condicionam os segmentos FOUNDATION Fieldbus. A presença dos
+módulos não revela, por si só, o mapeamento de sinais, o projeto carregado ou
+quais saídas estão ativas.
+
+## Fontes técnicas
+
+- [Manual DFI302 / DF51 (SMAR)](https://www.smar.com.br/public/img/produtos/arquivos/dfi302mp.pdf)
+- [Manual de configuração LogicView para DF65 (SMAR)](https://www.smar.com.br/public/img/produtos/arquivos/logiviewmp.pdf)

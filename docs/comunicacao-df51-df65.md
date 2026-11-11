@@ -73,6 +73,8 @@ confirmados no local por procedimento oficial:
    resultado foi conferido com o inventário físico, sem alarmes ou alterações.
 5. O mapeamento de E/S, intertravamentos e estado das saídas foi revisado antes
    de qualquer função de escrita ou troca de modo.
+6. A versão de firmware do DF51 foi conferida com a matriz de compatibilidade
+   do System302 correspondente; não atualizar firmware para testar comunicação.
 
 ## Limites
 

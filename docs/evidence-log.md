@@ -1,5 +1,28 @@
 # Registro de evidências
 
+## 2026-11-11 — captura passiva Ethernet do DF51
+
+### Observado
+
+- Foi feita uma captura passiva de cinco minutos na interface Ethernet física,
+  sem iniciar o System302, alterar IP ou transmitir pacotes.
+- O arquivo `ethernet-20261111-elevated.pcapng` tem SHA-256
+  `6ea90e63689468e18a426befad50108bc90055c89ee36e7db46c4eec60b43788` e
+  contém 10 quadros UDP, durante 270,055 s.
+- Todos os quadros foram emitidos pelo MAC `00:30:5C:01:05:52`, de
+  `192.168.164.100:4987` para `255.255.255.255:4987`.
+- Os anúncios têm 59 bytes UDP e repetem a cada aproximadamente 30 s. O payload
+  contém os marcadores `DF51V3.7.5` e `Monitor 3302`.
+- Não foram observados pacotes originados pelo notebook, ARP, TCP, comandos de
+  engenharia ou tráfego de processo dentro desta janela de captura.
+
+### Conclusão limitada
+
+- A Ethernet está fisicamente conectada ao DF51 e o endereço observado
+  `192.168.164.100` é confirmado para seu anúncio de descoberta.
+- UDP/4987 é um canal de anúncio. A captura não identifica um canal de leitura
+  ou escrita de engenharia, e não autoriza sondagem ativa.
+
 ## 2026-11-10 — triagem REA do caminho de RUN/HOLD
 
 ### Observado

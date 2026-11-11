@@ -18,6 +18,9 @@ os parâmetros ou a topologia efetivamente instalados nesta bancada.
   ser conferido nas etiquetas do rack antes de qualquer intervenção.
 - O DF51 anuncia `192.168.164.100:4987` em broadcast, com MAC
   `00:30:5C:01:05:52`, firmware `3.7.5` e `Monitor 3302`.
+- Uma captura passiva de 11 de novembro confirmou 10 anúncios UDP desse
+  endpoint, a intervalos aproximados de 30 s. Nenhuma mensagem de engenharia
+  ou processo foi observada nessa janela.
 - A conectividade IP foi confirmada uma vez a partir de uma estação temporária
   em `192.168.164.10/24`; o notebook foi restaurado para DHCP depois do teste.
 - O formato do anúncio UDP foi decodificado apenas para identidade. O protocolo

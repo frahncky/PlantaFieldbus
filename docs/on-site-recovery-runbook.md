@@ -1,7 +1,7 @@
 # Roteiro de visita — recuperação do DFI302
 
 Este roteiro serve para recuperar evidências da bancada sem escrever no
-controlador, sem mudar seu estado e sem assumir configurações desconhecidas.
+equipamento, sem mudar seu estado e sem assumir configurações desconhecidas.
 
 ## Situação conhecida
 
@@ -17,8 +17,9 @@ controlador, sem mudar seu estado e sem assumir configurações desconhecidas.
 1. Confirmar que a planta está parada e que nenhuma pessoa depende das bombas,
    sirene ou comandos do painel durante a inspeção.
 2. Fotografar, sem mexer em fiação:
-   - etiqueta completa do controlador e de cada módulo do rack;
-   - LEDs do controlador (HOLD, RUN, FAIL, FORCE e Ethernet);
+   - etiqueta completa do DF51 e de cada módulo do rack;
+   - LEDs do DF51 (HOLD, RUN, FAIL, FORCE e Ethernet);
+   - etiqueta e LEDs do PLC DF65;
    - bornes e identificação dos cabos Ethernet;
    - frente e etiquetas da botoeira/painel.
 3. Anotar data, horário e qualquer alteração observada nos LEDs.
@@ -31,7 +32,7 @@ controlador, sem mudar seu estado e sem assumir configurações desconhecidas.
    possa ser restaurada depois.
 2. Fazer uma nova captura passiva de dois minutos.
 3. Confirmar se o anúncio `192.168.164.100:4987` ainda aparece, se há outros
-   MACs e se existe resposta ARP do controlador.
+   MACs e se existe resposta ARP do DF51.
 4. Preservar o arquivo original e registrar o SHA-256 antes de analisá-lo.
 
 ## Gate: configurar a interface do notebook
@@ -54,7 +55,7 @@ reversível, e nunca no PLC.
 1. Abrir **System302 Settings** e habilitar *Communication Server* somente
    depois de selecionar a interface Ethernet correta.
 2. Abrir Studio302 e registrar visualmente as informações que ele apresentar
-   sobre o controlador.
+   sobre o DF51. Isso não identifica nem habilita comunicação com o PLC DF65.
 3. Se houver uma operação de descoberta, leitura, upload, download, alteração
    de IP ou mudança de estado, parar na tela e registrar a opção. Não confirmar
    a operação sem revisão humana do impacto.

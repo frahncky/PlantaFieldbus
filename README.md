@@ -55,8 +55,8 @@ O perfil de trabalho atual é uma planta didática com segmento FOUNDATION Field
 | Simulador local | ✅ | Fonte de dados de desenvolvimento, somente leitura |
 | Histórico de eventos | ✅ | Cache JSON local, sem envio de dados para rede |
 | Importação de topologia | ✅ | Consome `network-summary.json` produzido pela análise offline |
-| Controlador e IP reais | ✅ | DF51 / DFI302 confirmado em `192.168.164.100` por captura passiva, ARP e ICMP |
-| Protocolo de leitura de processo | ⏳ | O anúncio UDP 4987 identifica o DF51, mas não confirma uma API de leitura |
+| Equipamento e IP observados | ✅ | DF51 / DFI302 observado em `192.168.164.100` por captura passiva, ARP e ICMP; o PLC informado é DF65, sem endereço/protocolo confirmados |
+| Protocolo de leitura de processo | ⏳ | O anúncio UDP 4987 identifica o DF51, mas não confirma uma API de leitura nem a ligação com o PLC DF65 |
 | Comunicação com a planta | 🔒 | Intencionalmente desativada até validação do ambiente |
 
 ## 🧱 Arquitetura

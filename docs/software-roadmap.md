@@ -20,7 +20,9 @@
 
 ## Evidência validada em campo
 
-- DF51/DFI302 confirmado por anúncio UDP, ARP e um único teste ICMP.
+- DF51/DFI302 observado por anúncio UDP, ARP e um único teste ICMP; ele não é
+  o PLC da planta. O PLC informado é DF65, ainda sem endereço e protocolo
+  confirmados.
 - Endereço observado: `192.168.164.100`, MAC `00:30:5C:01:05:52`, UDP 4987.
 - A interface WPF mostra esse inventário e replica os comandos visíveis do
   painel físico apenas como botões bloqueados.

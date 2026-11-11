@@ -44,3 +44,17 @@ cliente: documentação SMAR correspondente ao DF51 v3.7.5, backup/projeto
 identificado da bancada, ou captura de uma sessão oficial de leitura já
 existente. Depois disso, o primeiro artefato técnico será um replay offline
 somente de leitura — nunca tráfego para a planta.
+
+
+## Auditoria do aplicativo local
+
+Em 2026-11-11, a revisão do código confirmou que os adaptadores `OPC`,
+`Modbus TCP` e `HSE` são instâncias indisponíveis que somente retornam erro de
+uso; não possuem implementação de conexão ou escrita. O `ReplayAdapter` lê
+quadros já preservados sem abrir rede. `PassiveEthernetDiscovery` só cria um
+socket UDP após acionamento explícito do operador e sua implementação apenas
+recebe datagramas (`receive`), sem `send`, TCP, broadcast de descoberta ou
+comando de PLC.
+
+Isso confirma o limite do aplicativo atual, não a comunicação com o DF51. A
+suíte offline foi executada com sucesso: 6 testes passaram.

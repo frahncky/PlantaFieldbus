@@ -19,6 +19,14 @@ Este fluxo define o que pode ser executado automaticamente a partir de evidênci
 - Uma hipótese não equivale a protocolo confirmado; a confirmação exige tráfego observado ou documentação do equipamento.
 - O cliente inicial permanece somente leitura. Qualquer operação de escrita exige autorização explícita e laboratório/ambiente isolado.
 
+## Resultado da fase 3
+
+A correlação disponível está documentada em
+[`hipotese-protocolo-df51.md`](hipotese-protocolo-df51.md). Ela classifica
+UDP/4987 apenas como anúncio de identidade do DF51 e não como protocolo de
+engenharia ou leitura. A fase 4 permanece bloqueada até revisão humana de uma
+fonte técnica verificável.
+
 ## Próxima execução
 
 Para executar todas as fases automáticas permitidas de uma vez, use:

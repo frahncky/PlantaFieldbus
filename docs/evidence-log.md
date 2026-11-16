@@ -1,5 +1,56 @@
 # Registro de evidências
 
+## 2026-11-16 — teste Modbus TCP somente leitura no DF51 (QModMaster)
+
+### Contexto
+
+Teste ativo, solicitado e acompanhado pelo operador no laboratório, feito com
+o QModMaster (mestre Modbus) a partir do notebook ligado à bancada. Foram
+usadas **apenas funções de leitura** (FC01, FC03 e FC04). Nenhuma função de
+escrita, comando RUN/HOLD, download ou alteração de configuração foi enviada
+ao DF51.
+
+### Observado
+
+- A conexão TCP com `192.168.164.100:502` foi aceita: o DF51 mantém um
+  servidor Modbus TCP escutando na porta 502.
+- Respostas registradas no Bus Monitor (endereço Modbus no quadro, base 0):
+
+| Hora | Unit ID | Função | Endereço / qtd. | Quadro enviado | Resposta |
+| --- | :---: | --- | --- | --- | --- |
+| 19:07:23 | 1 | FC03 Read Holding Registers | 0 / 10 | `00 01 00 00 00 06 01 03 00 00 00 0A` | `00 01 00 00 00 03 01 83 07` |
+| 19:07:51 | 1 | FC01 Read Coils | 0 / 10 | `00 02 00 00 00 06 01 01 00 00 00 0A` | `00 02 00 00 00 03 01 81 07` |
+| ~19:19 | 0 | FC03 | 0 / 10 | — | Timeout |
+| 19:20:26 | 255 | FC03 | 0 / 10 | `00 01 00 00 00 06 FF 03 00 00 00 0A` | Timeout |
+| 19:20:52 | 1 | FC03 | 1000 / 10 | `00 02 00 00 00 06 01 03 03 E8 00 0A` | `00 02 00 00 00 03 01 83 07` |
+| 19:21:21 | 1 | FC04 Read Input Registers | 0 / 10 | `00 03 00 00 00 06 01 04 00 00 00 0A` | `00 03 00 00 00 03 01 84 07` |
+
+- Somente o Unit ID `1` responde; IDs `0` e `255` não geram resposta.
+- Todas as leituras com Unit ID `1` retornam exceção Modbus **07 (Negative
+  Acknowledge)**, independentemente da função e do endereço. Nenhuma resposta
+  trouxe exceção 02 (endereço ilegal) ou dados.
+
+### Inferido
+
+- O DF51 tem a pilha Modbus TCP ativa, mas não há mapeamento Modbus servindo
+  dados (blocos MBCF/MBSS ausentes, inativos ou o recurso fora de operação).
+  A exceção 07 uniforme indica recusa do serviço, não endereço incorreto.
+- Varrer outras faixas de endereço pelo QModMaster tem baixa probabilidade de
+  sucesso enquanto essa condição persistir.
+
+### Desconhecido
+
+- Se a configuração atual do DF51 contém blocos Modbus e em que estado está o
+  recurso; isso exige leitura (upload) da configuração pelo System302/Syscon.
+- O mapeamento de variáveis do processo, caso venha a ser criado.
+
+### Próximo gate
+
+Ler a configuração do DF51 com o System302 7.0.5 (upload no Syscon, sem
+download) para verificar o estado do recurso e a existência de blocos Modbus.
+Criar ou ativar um mapeamento Modbus é alteração de configuração e depende de
+autorização explícita e backup verificado, conforme `AGENTS.md`.
+
 ## 2026-11-11 — captura passiva Ethernet do DF51
 
 ### Observado

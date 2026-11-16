@@ -61,6 +61,7 @@ PD3-302](https://www.smar.com.br/pt/produto/pd3-302-planta-didatica-foundation-f
 | Importação de topologia | ✅ | Consome `network-summary.json` produzido pela análise offline |
 | Controlador e IP observados | ✅ | DF51 / DFI302 observado em `192.168.164.100` por captura passiva, ARP e ICMP; DF65 é o coprocessador lógico informado |
 | Protocolo de leitura de processo | ⏳ | O anúncio UDP 4987 identifica o DF51, mas não confirma uma API de leitura nem sua ligação com o controlador |
+| Modbus TCP no DF51 | ⚠️ | Porta 502 aberta e Unit ID 1 responde, mas toda leitura (FC01/03/04) retorna exceção 07 — sem mapeamento Modbus ativo. Ver [registro de 16/11/2026](docs/evidence-log.md) |
 | Comunicação com a planta | 🔒 | Intencionalmente desativada até validação do ambiente |
 
 ## 🧱 Arquitetura

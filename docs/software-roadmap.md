@@ -26,6 +26,10 @@
 - Endereço observado: `192.168.164.100`, MAC `00:30:5C:01:05:52`, UDP 4987.
 - A interface WPF mostra esse inventário e replica os comandos visíveis do
   painel físico apenas como botões bloqueados.
+- 2026-11-16: DFI Diver confirmou `DF51 SN# 1362`, firmware `V3.7.5` (2003).
+  Syscon 8.2 não comunica (HSE e SE). Modbus TCP/502 aberto, sem mapa
+  configurado (Unit ID 1 → exceção 7). O adaptador Modbus TCP do aplicativo
+  continua inativo até haver um mapa de registradores validado.
 
 ## Gates obrigatórios
 

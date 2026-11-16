@@ -60,8 +60,11 @@ PD3-302](https://www.smar.com.br/pt/produto/pd3-302-planta-didatica-foundation-f
 | Histórico de eventos | ✅ | Cache JSON local, sem envio de dados para rede |
 | Importação de topologia | ✅ | Consome `network-summary.json` produzido pela análise offline |
 | Controlador e IP observados | ✅ | DF51 / DFI302 observado em `192.168.164.100` por captura passiva, ARP e ICMP; DF65 é o coprocessador lógico informado |
-| Protocolo de leitura de processo | ⏳ | O anúncio UDP 4987 identifica o DF51, mas não confirma uma API de leitura nem sua ligação com o controlador |
-| Comunicação com a planta | 🔒 | Intencionalmente desativada até validação do ambiente |
+| Firmware do DF51 | ⚠️ | DFI Diver confirma `SN# 1362`, `DF51V3.7.5` de 17/10/2003; a instalação 8.2 traz `DF51V3.9.5` |
+| Syscon 8.2 ↔ DF51 | ❌ | Em 2026-11-16 a Live List HSE e a área SE não comunicaram; provável incompatibilidade de firmware ([detalhes](docs/sessao-2026-11-16-comunicacao.md)) |
+| Modbus TCP do DF51 | ⏳ | Porta 502 aberta, Unit ID 1 responde exceção 7: servidor ativo sem mapa configurado |
+| Protocolo de leitura de processo | ⏳ | Nenhum canal de leitura de processo confirmado |
+| Comunicação do aplicativo com a planta | 🔒 | Intencionalmente desativada até validação do ambiente |
 
 ## 🧱 Arquitetura
 
@@ -142,6 +145,8 @@ Quando o notebook estiver fisicamente conectado à bancada, siga [**captura-pass
 O plano completo, os artefatos esperados e os gates estão em [**automation-plan.md**](docs/automation-plan.md). O estado das etapas do aplicativo está em [**software-roadmap.md**](docs/software-roadmap.md).
 O escopo e os critérios de validação do caminho DF51/DF65 estão em
 [**comunicacao-df51-df65.md**](docs/comunicacao-df51-df65.md).
+O resultado da primeira tentativa de comunicação com o System302 8.2 está em
+[**sessao-2026-11-16-comunicacao.md**](docs/sessao-2026-11-16-comunicacao.md).
 
 ## 🔒 Limites de segurança
 

@@ -100,6 +100,16 @@ o DF51: fornece evidência para evitar o uso do caminho de escrita durante a
 validação inicial.
 
 
+## Sessão ativa de 2026-11-16
+
+A primeira tentativa real de comunicação está registrada em
+[`sessao-2026-11-16-comunicacao.md`](sessao-2026-11-16-comunicacao.md). Em
+resumo, dos critérios acima: o item 1 foi confirmado (Ethernet, IP e NIC
+corretos; DF51 responde por ICMP, Modbus TCP e DFI Diver); os itens 3 e 4
+continuam pendentes, porque o Syscon 8.2.2.1 não inicializa comunicação com o
+DF51 nem em HSE nem em SE. O DFI Diver confirmou o firmware `DF51V3.7.5` de
+17/10/2003 no `SN# 1362`.
+
 ## Compatibilidade observada de firmware
 
 O anúncio passivo identifica o controlador como `DF51V3.7.5`. A revisão atual

@@ -1,5 +1,62 @@
 # Registro de evidências
 
+## 2026-11-16 — sessão ativa somente leitura com System302 8.2.2.1
+
+Detalhes, linha do tempo e estado de reversão do notebook em
+[`sessao-2026-11-16-comunicacao.md`](sessao-2026-11-16-comunicacao.md).
+
+### Escopo
+
+Primeira sessão com **tráfego ativo**, autorizado pelo operador no local:
+ICMP, Live List do Syscon (HSE e SE), varredura Modbus TCP somente leitura
+(FC 01–04) e DFI Diver. Nada foi escrito no DF51/DF65; sem download, firmware,
+RUN/HOLD, reset ou parâmetro.
+
+### Observado
+
+- DFI Diver (Studio302 → Tools → System302 → DFI Task Management) lista
+  `Model DF51 - SN# 1362`, firmware `DF51V3.7.5`, datado de
+  `Fri Oct 17 08:46:12 2003`, 3.761.154 bytes.
+- LED RUN do DF51 aceso; DF65 em HOLD (operador).
+- ICMP para `192.168.164.100`: 4/4 respostas, TTL 30; ARP na Ethernet retorna
+  `00-30-5c-01-05-52` (OUI `SMARLaborato`).
+- Syscon 8.2.2.1, **HSE Area**: Live List mostra somente `HSE HOST 1` (a
+  estação). Captura Wireshark (`wireshark_EthernetUJ9ZY3.pcapng`, SHA-256 não
+  registrado) mostra a estação enviando *FMS Information Report Request* de
+  UDP 1089 para `239.0.0.2:28000` a cada ~5 s e **nenhuma resposta** do DF51;
+  o DF51 só emite o anúncio UDP/4987 a cada 30 s.
+- Syscon 8.2.2.1, **Area (SE)** com `Smar.DFIOLEServer.0`, H1 com bridge DF51
+  Device Rev 07: `Communication initialization failure`; Live List desabilitada.
+- Modbus TCP: porta 502 aceita conexão; Unit ID 1 responde exceção 7
+  (Negative Acknowledge) a todas as leituras testadas; Unit IDs 2–247 não
+  respondem.
+- A instalação local contém `FBTools\DF51V3.9.5.ABS`, `DF51V3.9.5R.ABS`,
+  `DF51VCF3.9.5.ABS`, `DF51VCF3.9.5R.ABS`, `DF51FBViewEth008.ABS`,
+  `Dfi Download.exe` e `DfiDiver.exe`.
+- Operador: a estação original usava System302 **7.0.5** e IP
+  `192.168.164.101`.
+- Erro de configuração durante a sessão: `192.168.164.101` foi colocado no
+  adaptador virtual Topaz Loopback e selecionado como NIC no System302 Settings;
+  corrigido movendo o IP para a Ethernet.
+
+### Inferido
+
+- Rede, IP, NIC, firewall e canal Smar proprietário estão funcionais; o
+  bloqueio é a comunicação de configuração do Syscon 8.2 com o firmware de
+  2003. Incompatibilidade de versão é a explicação mais coerente.
+- O servidor Modbus do DF51 está ativo, mas sem mapa de registradores.
+
+### Desconhecido
+
+- Arquivo de firmware correto para o SN# 1362 e se a atualização apaga a
+  configuração atual.
+- Disponibilidade do System302 7.0.5 / computador original.
+
+### Próximo gate
+
+Atualizar e enviar `pedido-suporte-smar.md`. Gravação de firmware continua
+proibida sem confirmação SMAR, tentativa de backup e autorização explícita.
+
 ## 2026-11-11 — captura passiva Ethernet do DF51
 
 ### Observado

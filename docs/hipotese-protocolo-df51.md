@@ -12,6 +12,10 @@ varredura, alteração de rede, download ou mudança RUN/HOLD.
 | Inventário do rack | DF51 é controlador Ethernet/4 H1; DF65 é coprocessador lógico | A identidade anunciada é compatível com a arquitetura declarada | Projeto instalado, tags, E/S, intertravamentos ou estado operacional atual |
 | `FbusComm.dll` estático | Há famílias `ReadParameterReq`, `ReadObjectReq`, `LiveListReq`, bem como chamadas de escrita | O System302 instalado contém uma pilha capaz de leitura e alteração | Que a instalação local esteja configurada para este DF51, o transporte utilizado, a porta, ou a semântica das requisições |
 | `NetConfDownloader.exe` estático | Referências a `Connect`, `Download` e `WriteChannelGuid` para AS-i/Modbus | É um caminho com potencial de alteração de configuração | Um caminho de leitura do DF51 ou meio seguro de recuperar o projeto |
+| Live List HSE do Syscon 8.2 (2026-11-16) | Estação envia *FMS Information Report Request* UDP 1089 → `239.0.0.2:28000`; DF51 não responde | O DF51 V3.7.5 não participa da descoberta HSE do System302 8.2 | Que o DF51 não tenha HSE em outra versão de firmware |
+| Area SE do Syscon 8.2 (2026-11-16) | `Smar.DFIOLEServer.0` → `Communication initialization failure` | O servidor SE do 8.2 também não inicializa sessão com este DF51 | A causa exata (versão, licença ou configuração) |
+| DFI Diver (2026-11-16) | `DF51 - SN# 1362`, `DF51V3.7.5`, 17/10/2003 | Existe canal Smar proprietário funcional entre estação e DF51 | O transporte/porta desse canal (provavelmente ligado ao UDP/4987, não confirmado) |
+| Modbus TCP (2026-11-16) | TCP/502 aberto; Unit ID 1 → exceção 7 em FC 01–04 | Servidor Modbus ativo sem mapa de registradores | Dados de processo; exige configurar blocos Modbus no DF51 |
 
 ## Correlação resultante
 

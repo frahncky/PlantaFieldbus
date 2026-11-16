@@ -1,5 +1,63 @@
 # Registro de evidências
 
+## 2026-11-16 — instrumentos, valores on-line, OPC e DF65 (somente leitura)
+
+### Contexto
+
+Continuação da sessão com o operador na bancada. Apenas visualização de
+atributos, caracterização on-line sem edição, TagView e exportação local.
+Nenhum comissionamento, download, mudança de modo ou escrita foi feito.
+
+### Observado
+
+- `FIT-31`: Smar **LD302**, Dev/DD/CF `03/02/01`, ID
+  `0003020001:SMAR-LD302:000810463`.
+- `TIT-31`: Smar **TT302**, Dev/DD/CF `03/02/01`, ID
+  `0003020002:SMAR-TT302:004808101`.
+- Nos dois, o menu oferece *Commission* e não *Decommission*, e o FB VFD não
+  tem blocos. No `LIT-31` ocorre o inverso (comissionado, com blocos `RES1`,
+  `TRD1`, `DIAG-1`, `AI1`, `ALM1`).
+- A caracterização on-line de `LIT-31_AI1` lista `MODE_BLK`, `BLOCK_ERR`,
+  `PV`, `OUT`, `XD_SCALE`, `OUT_SCALE`, `CHANNEL`, `L_TYPE`, `HI_LIM`,
+  `LO_LIM` etc., mas nenhum valor é retornado, mesmo com *Refresh all
+  parameters value*. O log de comunicação não mostra erros de leitura.
+- TagView + `Smar.DfiOleServer.0`: conecta, mas só expõe
+  `#SE_DIAG_SYSTEM302` (`SE_CLIENTS`, `SE_SOURCE1`, `SE_SOURCE2`).
+- `Export → Consolidate OPC Database` falha com `Write access denied to user
+  MicrosoftAccount\<usuário>`, inclusive com Studio302 como administrador,
+  login de segurança do System302 desativado e permissão *Modificar* em
+  `C:\Program Files (x86)\Smar`.
+- LogicView 8.2.2: opção **DF65 Logic** desabilitada.
+- TagView + `Smar.DF65Server.1` (`df65svr2.exe`, build 8051006): o processo
+  inicia com janela vazia e a conexão retorna `Error connecting to OPC
+  server`.
+- Existe na estação um projeto `PlantaDidaticaSE` criado às 16:57, de origem
+  não registrada nesta sessão.
+
+### Inferido
+
+- `FIT-31` e `TIT-31` estão presentes no barramento mas não comissionados;
+  as medições de vazão e temperatura correspondentes provavelmente não
+  alimentam a estratégia.
+- A ausência de valores on-line é coerente com incompatibilidade entre o
+  System302 8.2.2 e o DF51 `V3.7.5` (falta de *device support*), e não com
+  falha física.
+- O servidor OPC do DF65 não tem configuração de rota/tags; a configuração
+  esperada vem do projeto LogicView do DF65, ausente.
+
+### Desconhecido
+
+- Causa exata do bloqueio do Consolidate OPC Database.
+- Se o DF65 está em HOLD por parada manual ou por perda de programa.
+- Conteúdo do projeto `PlantaDidaticaSE`.
+
+### Próximo gate
+
+Localizar o PC antigo com System302 7.0.5 (projeto ladder do DF65, *device
+support* e servidor OPC configurados) ou obter orientação da SMAR conforme
+`docs/pedido-suporte-smar.md`. Comissionar `FIT-31`/`TIT-31` e colocar o DF65
+em RUN continuam bloqueados até que a estratégia e o programa sejam conhecidos.
+
 ## 2026-11-16 — upload somente leitura da configuração do DF51 (Syscon SE)
 
 ### Contexto

@@ -63,6 +63,7 @@ PD3-302](https://www.smar.com.br/pt/produto/pd3-302-planta-didatica-foundation-f
 | Protocolo de leitura de processo | ⏳ | O anúncio UDP 4987 identifica o DF51, mas não confirma uma API de leitura nem sua ligação com o controlador |
 | Modbus TCP no DF51 | ⚠️ | Porta 502 aberta e Unit ID 1 responde, mas toda leitura (FC01/03/04) retorna exceção 07. O upload mostrou que o DF51 é **mestre** Modbus (MBCF/MBCM), não escravo. Ver [registro de 16/11/2026](docs/evidence-log.md) |
 | Configuração do DF51 (upload SE) | ✅ | Firmware SE; upload somente leitura via `Smar.DFIOLEServer.0` encontrou o DFI-PD3 e 7 equipamentos no canal 1; backup local `PlantaSE_Leitura` salvo. DF51 em RUN, DF65 em HOLD |
+| Valores on-line e DF65 | ⛔ | FIT-31 e TIT-31 não comissionados; caracterização on-line sem valores; Consolidate OPC com acesso negado; DF65 Logic desabilitado e DF65Server sem conexão. Depende do PC antigo (System302 7.0.5) ou da [SMAR](docs/pedido-suporte-smar.md) |
 | Comunicação com a planta | 🔒 | Intencionalmente desativada até validação do ambiente |
 
 ## 🧱 Arquitetura

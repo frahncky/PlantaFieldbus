@@ -1,5 +1,64 @@
 # Registro de evidências
 
+## 2026-11-16 — upload somente leitura da configuração do DF51 (Syscon SE)
+
+### Contexto
+
+Feito com o operador presente na bancada, pelo Syscon do System302 v8.2.2 SP1
+no notebook. Foram usados apenas **Upload** (leitura do equipamento para o
+projeto local) e **On Line Characterization** sem edição. Nenhum Download,
+mudança de modo de bloco, escrita de parâmetro, RUN/HOLD ou alteração de rede
+foi feito.
+
+### Observado
+
+- Estado físico informado pelo operador: **DF51 em RUN** e **DF65 em HOLD**.
+- O projeto existente `PlantaDidatica` usa `Smar.HSEOLEServer.0`; nesse modo
+  a HSE Live List mostrou apenas `HSE HOST 1` em `192.168.164.101` (o próprio
+  notebook). O DF51 não aparece em HSE.
+- Um projeto novo do tipo Area (SE), `PlantaSE_Leitura`, com
+  `Smar.DFIOLEServer.0`, encontrou o controlador. O upload de topologia, lista
+  de equipamentos e lista de blocos retornou:
+  - controlador **DFI-PD3** com 4 canais Fieldbus;
+  - blocos no DFI-PD3: `DFI-PD3_RES1`, `DFI-TRD-1362`, `DFI-PD3-DIAG-1`,
+    `DFI-PD3_MBCF1`, `DFI-PD3_MBCM1`, `DFI-PD3_MBCM2`;
+  - **Fieldbus 1**: `LIT-31`, `FY-31`, `FIT-32`, `FY-32`, `TIT-32`, `FIT-31`,
+    `TIT-31` (`FIT-31` e `TIT-31` com marcador vermelho de alerta);
+  - **Fieldbus 2, 3 e 4**: somente o DFI-PD3, sem equipamentos de campo.
+- O log de comunicação registrou `Block creation failure during upload` para
+  `FB VFD`.
+- A caracterização on-line de `DFI-PD3_MBCM1` identifica o bloco como
+  *ModBus Control Master* e lista `MODE_BLK`, `BLOCK_ERR`, `LOCAL_MOD_MAP`,
+  `BAD_STATUS`, `IN_1..4`, `IN_D1..D4`, `OUT_1..4`, `OUT_D1..D4`, mas todos os
+  valores ficaram em branco, mesmo após atualização.
+- O projeto `PlantaSE_Leitura` foi salvo localmente no notebook (sem os valores
+  de parâmetros, que não foram incluídos no upload).
+
+### Inferido
+
+- O DF51 roda firmware **SE**, não HSE; por isso só é visível pelo
+  `DFIOLEServer`.
+- O DF51 atua como **mestre** Modbus (MBCF + MBCM) e não possui blocos de
+  escravo (MBSS/MBCS). Isso explica a exceção 07 a todas as leituras do
+  QModMaster registradas na entrada anterior.
+- O parceiro Modbus dos MBCM é provavelmente o DF65; com o DF65 em HOLD, a
+  lógica ladder não executa e esse intercâmbio deve estar falhando.
+- Os valores vazios e a falha de criação de blocos indicam falta de *device
+  support* no notebook para a versão de firmware do DF51.
+
+### Desconhecido
+
+- Parâmetros do MBCF1/MBCM1/MBCM2 (escravo, endereços, status, erros).
+- Conteúdo do programa ladder do DF65 e efeito de colocá-lo em RUN.
+- Causa do alerta em `FIT-31` e `TIT-31`.
+
+### Próximo gate
+
+Importar no Syscon (File → Import Device Support) o *device support* do DF51
+compatível com o firmware 3.7.5, obtido do PC antigo (System302 7.0.5) ou da
+SMAR, e repetir o upload incluindo parâmetros. Colocar o DF65 em RUN continua
+bloqueado até o programa ladder ser conhecido, conforme `AGENTS.md`.
+
 ## 2026-11-16 — teste Modbus TCP somente leitura no DF51 (QModMaster)
 
 ### Contexto

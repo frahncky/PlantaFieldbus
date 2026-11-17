@@ -57,10 +57,10 @@ pode ser regenerada com `node render.js dossie.html Dossie_PD3-302.pdf`
 | --- | --- |
 | **DF51** | V3.7.5, modo SE, **RUN**, `192.168.164.100` |
 | **DF65** | **HOLD** — lógica ladder parada |
-| **Canal H1 1** | LIT-31, FY-31, FIT-31, FIT-32, FY-32, TIT-31, TIT-32 (FIT-31 e TIT-31 não comissionados) |
+| **Canal H1 1** | LIT-31, FY-31, FIT-31, FIT-32, FY-32, TIT-31, TIT-32 (FIT-31 comissionado às 21:11; TIT-31 não comissionado — “Assign tag failure”) |
 | **Modbus** | DF51 é mestre (MBCF/MBCM); recusa mestre externo com exceção 07 |
 | **Backup** | topologia salva em `PlantaSE_Leitura.ffp` (estação local) |
-| **Escritas em equipamentos** | nenhuma |
+| **Escritas em equipamentos** | nenhuma pela investigação; comissionamento do FIT-31 feito pelo operador |
 
 ## 🧭 Recursos
 
@@ -90,7 +90,7 @@ pode ser regenerada com `node render.js dossie.html Dossie_PD3-302.pdf`
 | Protocolo de leitura de processo | ⏳ | O anúncio UDP 4987 identifica o DF51, mas não confirma uma API de leitura nem sua ligação com o controlador |
 | Modbus TCP no DF51 | ⚠️ | Porta 502 aberta e Unit ID 1 responde, mas toda leitura (FC01/03/04) retorna exceção 07. O upload mostrou que o DF51 é **mestre** Modbus (MBCF/MBCM), não escravo. Ver [registro de 16/11/2026](docs/evidence-log.md) |
 | Configuração do DF51 (upload SE) | ✅ | Firmware SE; upload somente leitura via `Smar.DFIOLEServer.0` encontrou o DFI-PD3 e 7 equipamentos no canal 1; backup local `PlantaSE_Leitura` salvo. DF51 em RUN, DF65 em HOLD |
-| Valores on-line e DF65 | ⛔ | FIT-31 e TIT-31 não comissionados; caracterização on-line sem valores; Consolidate OPC com acesso negado; DF65 Logic desabilitado e DF65Server sem conexão. Depende do PC antigo (System302 7.0.5) ou da [SMAR](docs/pedido-suporte-smar.md) |
+| Valores on-line e DF65 | ⛔ | TIT-31 não comissionado (FIT-31 comissionado, sem blocos no upload); caracterização on-line sem valores; Consolidate OPC com acesso negado; DF65 Logic desabilitado e DF65Server sem conexão. Depende do PC antigo (System302 7.0.5) ou da [SMAR](docs/pedido-suporte-smar.md) |
 | Comunicação com a planta | 🔒 | Intencionalmente desativada até validação do ambiente |
 
 ## 🧱 Arquitetura

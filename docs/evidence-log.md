@@ -1,5 +1,31 @@
 # Registro de evidências
 
+## 2026-11-16 (21:00–21:22) — comissionamento do FIT-31
+
+### Observado
+
+- O projeto `PlantaSE_Leitura.ffp` foi salvo às 21:11 pelo operador.
+- On-line (`Smar.DFIOLEServer.0`), o **FIT-31** deixou de ter a marca
+  vermelha; o menu passou a oferecer *Decommission*, *Upload* e *Download*
+  (antes só *Commission*). O FIT-31 está **comissionado**.
+- O **TIT-31** continua com a marca vermelha e só *Commission* disponível. O
+  log de comunicação registra `Assign tag failure` para `TIT-31` às 21:06:16.
+- Upload somente leitura do FIT-31 (lista de blocos + parâmetros) às 21:21
+  terminou com `Block creation failure during upload` (FB VFD); o FB VFD do
+  FIT-31 segue sem blocos no projeto.
+
+### Inferido
+
+- A falha na criação de blocos do LD302 tem a mesma causa provável dos demais
+  (falta de *device support* compatível no System302 8.2.2).
+- A tentativa de comissionar o TIT-31 falhou na atribuição de tag; a causa
+  não é conhecida.
+
+### Próximo gate
+
+Obter o *device support* do LD302/TT302 e do DF51 V3.7.5 para ler os blocos;
+investigar o `Assign tag failure` do TIT-31 antes de nova tentativa.
+
 ## 2026-11-16 — instrumentos, valores on-line, OPC e DF65 (somente leitura)
 
 ### Contexto

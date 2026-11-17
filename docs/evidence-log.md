@@ -1,5 +1,38 @@
 # Registro de evidências
 
+## 2026-11-16 (21:25) — Live List H1 do canal 1
+
+### Observado
+
+Live List do Fieldbus 1 (DFI-PD3, Port 1) no Syscon on-line, somente leitura:
+
+| Tag | Device ID | Endereço |
+| --- | --- | --- |
+| DFI-PD3 | `0003020008:SMAR-DF51:1362` | 0x10 |
+| LIT-31 | `0003020001:SMAR-LD302:000810551` | 0x18 |
+| FY-31 | `0003020006:SMAR-FY302:034803934` | 0x19 |
+| FIT-31 | `0003020001:SMAR-LD302:000810463` | 0x1A |
+| FIT-32 | `0003020001:SMAR-LD302:000810378` | 0x1C |
+| FY-32 | `0003020006:SMAR-FY302:034803955` | 0x1D |
+| TIT-32 | `0003020002:SMAR-TT302:004806490` | 0x1E |
+| TIT-31 | `0003020002:SMAR-TT302:004808101` | **0xFB** |
+
+- O TIT-31 responde já com o tag `TIT-31`, mas no endereço 0xFB e com ícone
+  esmaecido; os demais estão em 0x18–0x1E. O endereço 0x1B está vago.
+- LIT-31 é um LD302 (nível por pressão diferencial); FY-31/FY-32 são FY302.
+
+### Inferido
+
+- O TIT-31 está em endereço provisório/padrão (faixa alta), o que é coerente
+  com o `Assign tag failure` das 21:06; 0x1B provavelmente era seu endereço.
+
+### Próximo gate
+
+Antes de nova tentativa de comissionamento: confirmar no procedimento SMAR a
+sequência correta para um TT302 com tag já gravado e endereço provisório
+(limpar tag/endereço ou atribuir endereço 0x1B) e conferir a estratégia que
+usa o TIT-31.
+
 ## 2026-11-16 (21:00–21:22) — comissionamento do FIT-31
 
 ### Observado

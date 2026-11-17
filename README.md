@@ -57,7 +57,7 @@ pode ser regenerada com `node render.js dossie.html Dossie_PD3-302.pdf`
 | --- | --- |
 | **DF51** | V3.7.5, modo SE, **RUN**, `192.168.164.100` |
 | **DF65** | **HOLD** — lógica ladder parada |
-| **Canal H1 1** | LIT-31, FY-31, FIT-31, FIT-32, FY-32, TIT-31, TIT-32 (FIT-31 comissionado às 21:11; TIT-31 não comissionado — “Assign tag failure”) |
+| **Canal H1 1** | LIT-31, FY-31, FIT-31, FIT-32, FY-32, TIT-31, TIT-32 (FIT-31 comissionado às 21:11; TIT-31 não comissionado, em endereço provisório 0xFB — “Assign tag failure”) |
 | **Modbus** | DF51 é mestre (MBCF/MBCM); recusa mestre externo com exceção 07 |
 | **Backup** | topologia salva em `PlantaSE_Leitura.ffp` (estação local) |
 | **Escritas em equipamentos** | nenhuma pela investigação; comissionamento do FIT-31 feito pelo operador |

@@ -395,13 +395,13 @@ tr{break-inside:avoid}
     <text x="40" y="183" font-size="10" font-weight="700" fill="#c2410c">Canal H1 1 · 31,25 kbit/s</text><text x="40" y="170" font-size="9" fill="#9a3412">FOUNDATION Fieldbus · 2 fios (energia + dados)</text>
     <!-- instrumentos -->
     <g text-anchor="middle" font-size="10">
-      <g><path d="M90 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="90" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="90" y="266" font-weight="700" fill="#0f766e">LIT</text><text x="90" y="296" font-weight="700">LIT-31</text><text x="90" y="310" font-size="9" fill="#6b7280">nível</text></g>
-      <g><path d="M190 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="190" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="190" y="266" font-weight="700" fill="#0f766e">FY</text><text x="190" y="296" font-weight="700">FY-31</text><text x="190" y="310" font-size="9" fill="#6b7280">válvula 1</text></g>
+      <g><path d="M90 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="90" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="90" y="266" font-weight="700" fill="#0f766e">LIT</text><text x="90" y="296" font-weight="700">LIT-31</text><text x="90" y="310" font-size="9" fill="#6b7280">LD302 · nível</text></g>
+      <g><path d="M190 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="190" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="190" y="266" font-weight="700" fill="#0f766e">FY</text><text x="190" y="296" font-weight="700">FY-31</text><text x="190" y="310" font-size="9" fill="#6b7280">FY302 · válvula 1</text></g>
       <g><path d="M290 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="290" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="290" y="266" font-weight="700" fill="#0f766e">FIT</text><text x="290" y="296" font-weight="700">FIT-32</text><text x="290" y="310" font-size="9" fill="#6b7280">vazão 2</text></g>
-      <g><path d="M390 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="390" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="390" y="266" font-weight="700" fill="#0f766e">FY</text><text x="390" y="296" font-weight="700">FY-32</text><text x="390" y="310" font-size="9" fill="#6b7280">válvula 2</text></g>
+      <g><path d="M390 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="390" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="390" y="266" font-weight="700" fill="#0f766e">FY</text><text x="390" y="296" font-weight="700">FY-32</text><text x="390" y="310" font-size="9" fill="#6b7280">FY302 · válvula 2</text></g>
       <g><path d="M490 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="490" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="490" y="266" font-weight="700" fill="#0f766e">TIT</text><text x="490" y="296" font-weight="700">TIT-32</text><text x="490" y="310" font-size="9" fill="#6b7280">temperatura 2</text></g>
       <g><path d="M590 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="590" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="590" y="266" font-weight="700" fill="#0f766e">FIT</text><text x="590" y="296" font-weight="700">FIT-31</text><text x="590" y="310" font-size="9" fill="#6b7280">LD302 · vazão 1</text><text x="590" y="322" font-size="9" fill="#15803d">comissionado 21:11</text></g>
-      <g><path d="M690 195 V245" stroke="#c2410c" stroke-width="2" stroke-dasharray="4 3"/><circle cx="690" cy="262" r="18" fill="#fef2f2" stroke="#b91c1c" stroke-width="2" stroke-dasharray="4 2"/><text x="690" y="266" font-weight="700" fill="#b91c1c">TIT</text><text x="690" y="296" font-weight="700" fill="#b91c1c">TIT-31</text><text x="690" y="310" font-size="9" fill="#b91c1c">TT302</text><text x="690" y="322" font-size="9" fill="#b91c1c">não comissionado</text></g>
+      <g><path d="M690 195 V245" stroke="#c2410c" stroke-width="2" stroke-dasharray="4 3"/><circle cx="690" cy="262" r="18" fill="#fef2f2" stroke="#b91c1c" stroke-width="2" stroke-dasharray="4 2"/><text x="690" y="266" font-weight="700" fill="#b91c1c">TIT</text><text x="690" y="296" font-weight="700" fill="#b91c1c">TIT-31</text><text x="690" y="310" font-size="9" fill="#b91c1c">TT302 · 0xFB</text><text x="690" y="322" font-size="9" fill="#b91c1c">não comissionado</text></g>
     </g>
     <text x="380" y="350" text-anchor="middle" font-size="10" fill="#6b7280">Canais H1 2, 3 e 4: sem equipamentos (só o próprio DF51)</text>
   </svg>
@@ -680,6 +680,23 @@ tr{break-inside:avoid}
     <li><b>TIT-31 continua não comissionado</b>: o log registra <span class="mono">Assign tag failure — TIT-31</span> às 21:06.</li>
     <li>O upload do FIT-31 (blocos + parâmetros, só leitura) terminou com <span class="mono">Block creation failure during upload</span>: os blocos do LD302 também não são criados no System302 8.2.2.</li>
   </ul></div>
+
+  <h3>Live List do canal H1 1 (21:25)</h3>
+  <figure class="shot"><img src="img/livelist_h1.jpg" alt="Live List H1 do Fieldbus 1"></figure>
+  <table style="break-inside:avoid">
+    <tr><th>Tag</th><th>Device ID</th><th>Endereço</th></tr>
+    <tr><td>DFI-PD3</td><td class="mono">0003020008:SMAR-DF51:1362</td><td>0x10</td></tr>
+    <tr><td>LIT-31</td><td class="mono">0003020001:SMAR-LD302:000810551</td><td>0x18</td></tr>
+    <tr><td>FY-31</td><td class="mono">0003020006:SMAR-FY302:034803934</td><td>0x19</td></tr>
+    <tr><td>FIT-31</td><td class="mono">0003020001:SMAR-LD302:000810463</td><td>0x1A</td></tr>
+    <tr><td><i>(livre)</i></td><td></td><td><b>0x1B</b></td></tr>
+    <tr><td>FIT-32</td><td class="mono">0003020001:SMAR-LD302:000810378</td><td>0x1C</td></tr>
+    <tr><td>FY-32</td><td class="mono">0003020006:SMAR-FY302:034803955</td><td>0x1D</td></tr>
+    <tr><td>TIT-32</td><td class="mono">0003020002:SMAR-TT302:004806490</td><td>0x1E</td></tr>
+    <tr><td><b>TIT-31</b></td><td class="mono">0003020002:SMAR-TT302:004808101</td><td><span class="pill p-bad">0xFB</span></td></tr>
+  </table>
+  <div class="box learn"><div class="t"><span class="ico">i</span>Para entender: endereço provisório</div>
+  No H1, os endereços altos (0xF8–0xFB) são usados por instrumentos ainda sem endereço definitivo. O TIT-31 já responde com o tag “TIT-31”, mas está em <b>0xFB</b>, fora da faixa dos demais. O endereço <b>0x1B</b> está vago na sequência — é <b>provável</b> (inferido) que fosse o endereço original dele. Também se vê que o LIT-31 é um <b>LD302</b> (nível por pressão diferencial) e que FY-31/FY-32 são <b>FY302</b> (posicionadores de válvula).</div>
 
   <h2>8.6 Os valores não aparecem</h2>
   <div class="grid2">

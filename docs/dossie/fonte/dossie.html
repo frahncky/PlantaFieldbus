@@ -93,10 +93,10 @@ tr{break-inside:avoid}
   <div class="grid3" style="margin-top:9mm">
     <div class="stat"><div class="n" style="color:var(--green)">RUN</div><div class="l">DF51 · controlador Fieldbus<br>firmware V3.7.5 · modo SE</div></div>
     <div class="stat"><div class="n" style="color:var(--amber)">HOLD</div><div class="l">DF65 · coprocessador lógico<br>ladder parado</div></div>
-    <div class="stat"><div class="n">7</div><div class="l">instrumentos no canal H1 1<br>2 sem comissionamento</div></div>
+    <div class="stat"><div class="n">7</div><div class="l">instrumentos no canal H1 1<br>1 sem comissionamento (TIT-31)</div></div>
     <div class="stat"><div class="n">192.168.164.100</div><div class="l">endereço IP do DF51</div></div>
     <div class="stat"><div class="n">1º backup</div><div class="l">topologia salva em<br><span class="mono">PlantaSE_Leitura.ffp</span></div></div>
-    <div class="stat"><div class="n" style="color:var(--green)">0</div><div class="l">escritas em equipamentos<br>(só leituras)</div></div>
+    <div class="stat"><div class="n" style="color:var(--green)">0</div><div class="l">escritas feitas pela investigação<br>(FIT-31 comissionado pelo operador)</div></div>
   </div>
 
   <div class="box learn" style="margin-top:8mm">
@@ -145,7 +145,7 @@ tr{break-inside:avoid}
     <div class="box bad" style="margin:0"><div class="t"><span class="ico">!</span>Ainda trava</div>
       <ul style="margin:0">
         <li>DF65 em <b>HOLD</b>: a lógica ladder não roda.</li>
-        <li>FIT-31 e TIT-31 <b>não comissionados</b>.</li>
+        <li>TIT-31 <b>não comissionado</b> (falha de atribuição de tag às 21:06).</li>
         <li>Valores on-line não aparecem no System302 8.2.2.</li>
         <li>Sem ferramenta funcional para o DF65 no notebook.</li>
       </ul></div>
@@ -163,7 +163,7 @@ tr{break-inside:avoid}
       <text x="115" y="157" text-anchor="middle" font-weight="700" fill="#b45309">DF65 em HOLD</text>
       <text x="115" y="175" text-anchor="middle" fill="#374151" font-size="10">ladder parado</text>
       <rect x="275" y="20" width="210" height="52" rx="8" fill="#fef2f2" stroke="#b91c1c"/>
-      <text x="380" y="42" text-anchor="middle" font-weight="700" fill="#b91c1c">FIT-31 e TIT-31 fora</text>
+      <text x="380" y="42" text-anchor="middle" font-weight="700" fill="#b91c1c">TIT-31 fora</text>
       <text x="380" y="60" text-anchor="middle" fill="#374151" font-size="10">não comissionados</text>
       <rect x="275" y="135" width="210" height="52" rx="8" fill="#fef2f2" stroke="#b91c1c"/>
       <text x="380" y="157" text-anchor="middle" font-weight="700" fill="#b91c1c">Modbus DF51→DF65</text>
@@ -181,7 +181,7 @@ tr{break-inside:avoid}
   </figure>
 
   <div class="box warn"><div class="t"><span class="ico">!</span>Caminho recomendado</div>
-  Localizar o PC antigo com System302 7.0.5 (deve ter o programa do DF65 e o software compatível) ou obter orientação da SMAR. Colocar o DF65 em RUN e comissionar FIT-31/TIT-31 só depois de conhecer o programa e a estratégia.</div>
+  Localizar o PC antigo com System302 7.0.5 (deve ter o programa do DF65 e o software compatível) ou obter orientação da SMAR. Colocar o DF65 em RUN e comissionar o TIT-31 só depois de conhecer o programa e a estratégia.</div>
 </section>
 
 <!-- ======================= 2 PLANTA ======================= -->
@@ -238,8 +238,8 @@ tr{break-inside:avoid}
       <circle cx="330" cy="184" r="15" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="330" y="188" fill="#0f766e">FY</text>
       <text x="330" y="165" fill="#0f766e">FY-31</text>
       <line x1="372" y1="211" x2="372" y2="245" stroke="#6b7280" stroke-dasharray="3 2"/>
-      <circle cx="372" cy="196" r="15" fill="#fef2f2" stroke="#b91c1c" stroke-width="2" stroke-dasharray="4 2"/><text x="372" y="200" fill="#b91c1c">FIT</text>
-      <text x="372" y="177" fill="#b91c1c">FIT-31</text>
+      <circle cx="372" cy="196" r="15" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="372" y="200" fill="#0f766e">FIT</text>
+      <text x="372" y="177" fill="#0f766e">FIT-31</text>
       <line x1="330" y1="289" x2="330" y2="303" stroke="#6b7280" stroke-dasharray="3 2"/>
       <circle cx="330" cy="318" r="15" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="330" y="322" fill="#0f766e">FY</text>
       <text x="350" y="322" fill="#0f766e" text-anchor="start">FY-32</text>
@@ -257,7 +257,7 @@ tr{break-inside:avoid}
       <text x="767" y="211" fill="#0f766e">TIT-32</text>
     </g>
   </svg>
-  <figcaption><b>Figura 2.</b> Esquema didático do processo (baseado no manual PD3-F). As posições dos instrumentos são <b>inferidas</b> pelos tags e precisam ser conferidas no P&amp;ID da bancada. Em vermelho tracejado: instrumentos presentes mas não comissionados. FY-32 e FIT-32 ficam na linha de água fria (bomba B2).</figcaption>
+  <figcaption><b>Figura 2.</b> Esquema didático do processo (baseado no manual PD3-F). As posições dos instrumentos são <b>inferidas</b> pelos tags e precisam ser conferidas no P&amp;ID da bancada. Em vermelho tracejado: instrumento presente mas não comissionado (TIT-31). FY-32 e FIT-32 ficam na linha de água fria (bomba B2).</figcaption>
   </figure>
 
   <div class="grid2">
@@ -400,12 +400,12 @@ tr{break-inside:avoid}
       <g><path d="M290 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="290" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="290" y="266" font-weight="700" fill="#0f766e">FIT</text><text x="290" y="296" font-weight="700">FIT-32</text><text x="290" y="310" font-size="9" fill="#6b7280">vazão 2</text></g>
       <g><path d="M390 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="390" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="390" y="266" font-weight="700" fill="#0f766e">FY</text><text x="390" y="296" font-weight="700">FY-32</text><text x="390" y="310" font-size="9" fill="#6b7280">válvula 2</text></g>
       <g><path d="M490 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="490" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="490" y="266" font-weight="700" fill="#0f766e">TIT</text><text x="490" y="296" font-weight="700">TIT-32</text><text x="490" y="310" font-size="9" fill="#6b7280">temperatura 2</text></g>
-      <g><path d="M590 195 V245" stroke="#c2410c" stroke-width="2" stroke-dasharray="4 3"/><circle cx="590" cy="262" r="18" fill="#fef2f2" stroke="#b91c1c" stroke-width="2" stroke-dasharray="4 2"/><text x="590" y="266" font-weight="700" fill="#b91c1c">FIT</text><text x="590" y="296" font-weight="700" fill="#b91c1c">FIT-31</text><text x="590" y="310" font-size="9" fill="#b91c1c">LD302</text><text x="590" y="322" font-size="9" fill="#b91c1c">não comissionado</text></g>
+      <g><path d="M590 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="590" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="590" y="266" font-weight="700" fill="#0f766e">FIT</text><text x="590" y="296" font-weight="700">FIT-31</text><text x="590" y="310" font-size="9" fill="#6b7280">LD302 · vazão 1</text><text x="590" y="322" font-size="9" fill="#15803d">comissionado 21:11</text></g>
       <g><path d="M690 195 V245" stroke="#c2410c" stroke-width="2" stroke-dasharray="4 3"/><circle cx="690" cy="262" r="18" fill="#fef2f2" stroke="#b91c1c" stroke-width="2" stroke-dasharray="4 2"/><text x="690" y="266" font-weight="700" fill="#b91c1c">TIT</text><text x="690" y="296" font-weight="700" fill="#b91c1c">TIT-31</text><text x="690" y="310" font-size="9" fill="#b91c1c">TT302</text><text x="690" y="322" font-size="9" fill="#b91c1c">não comissionado</text></g>
     </g>
     <text x="380" y="350" text-anchor="middle" font-size="10" fill="#6b7280">Canais H1 2, 3 e 4: sem equipamentos (só o próprio DF51)</text>
   </svg>
-  <figcaption><b>Figura 5.</b> Arquitetura confirmada em 16/11/2026. A ligação Modbus DF51→DF65 aparece cortada porque o DF65 está em HOLD. A função de cada instrumento é <b>inferida</b> pelo tag.</figcaption>
+  <figcaption><b>Figura 5.</b> Arquitetura confirmada em 16/11/2026 (estado das 21:22: FIT-31 já comissionado). A ligação Modbus DF51→DF65 aparece cortada porque o DF65 está em HOLD. A função de cada instrumento é <b>inferida</b> pelo tag.</figcaption>
   </figure>
 
   <div class="grid2">
@@ -666,7 +666,7 @@ tr{break-inside:avoid}
         <tr><td>Mede</td><td>pressão diferencial → vazão</td><td>temperatura</td></tr>
         <tr><td>Rev.</td><td>03/02/01</td><td>03/02/01</td></tr>
         <tr><td>ID</td><td class="mono" style="font-size:7.6pt">…SMAR-LD302:000810463</td><td class="mono" style="font-size:7.6pt">…SMAR-TT302:004808101</td></tr>
-        <tr><td>Comissionado</td><td><span class="pill p-bad">não</span></td><td><span class="pill p-bad">não</span></td></tr>
+        <tr><td>Comissionado</td><td><span class="pill p-bad">não</span> → <span class="pill p-ok">sim, 21:11</span></td><td><span class="pill p-bad">não</span></td></tr>
       </table>
       <div class="box learn"><div class="t"><span class="ico">i</span>Para entender: comissionar</div>
       Comissionar é gravar no instrumento seu tag e endereço definitivos para que o controlador o inclua no ciclo da rede. Sem isso o instrumento responde no barramento, mas seus blocos não participam do controle. Como grava no equipamento, <b>não foi feito</b>.</div>
@@ -674,6 +674,12 @@ tr{break-inside:avoid}
     <figure class="shot" style="margin:0"><img src="img/fitattr.jpg" alt="Atributos do FIT-31"></figure>
   </div>
   <figcaption style="margin:1.5mm 0 4mm"><b>Figura 13.</b> Atributos do FIT-31 lidos no Syscon: fabricante, tipo, revisões e Device ID.</figcaption>
+  <div class="box ok"><div class="t"><span class="ico">↻</span>Atualização das 21:00–21:22</div>
+  <ul style="margin:0">
+    <li><b>FIT-31 comissionado</b> pelo operador (projeto salvo às 21:11). On-line, a marca vermelha sumiu e o menu passou a oferecer Decommission, Upload e Download.</li>
+    <li><b>TIT-31 continua não comissionado</b>: o log registra <span class="mono">Assign tag failure — TIT-31</span> às 21:06.</li>
+    <li>O upload do FIT-31 (blocos + parâmetros, só leitura) terminou com <span class="mono">Block creation failure during upload</span>: os blocos do LD302 também não são criados no System302 8.2.2.</li>
+  </ul></div>
 
   <h2>8.6 Os valores não aparecem</h2>
   <div class="grid2">
@@ -685,14 +691,14 @@ tr{break-inside:avoid}
   </div>
   <figcaption style="margin:1.5mm 0 4mm"><b>Figura 14.</b> Bloco MBCM1 aberto on-line: parâmetros listados, valores em branco.</figcaption>
 
-  <h2>8.7 O DF65</h2>
+  <div style="break-inside:avoid"><h2>8.7 O DF65</h2>
   <div class="box bad"><div class="t"><span class="ico">!</span>Sem caminho de software no notebook</div>
   <ul style="margin:0">
     <li>LogicView 8.2.2: opção “DF65 Logic” desabilitada.</li>
     <li>Smar.DF65Server.1 inicia com janela vazia; o TagView recebe “Error connecting to OPC server”.</li>
     <li>Nenhuma outra ferramenta oferece RUN para o DF65; o FB Tools só faz download de firmware.</li>
     <li>O pedido de colocar o DF65 em RUN <b>não</b> foi executado: não há ferramenta, não se sabe se o programa existe e não se conhece o que ele aciona.</li>
-  </ul></div>
+  </ul></div></div>
 </section>
 
 <!-- ======================= 9 DIAGNÓSTICO ======================= -->
@@ -706,7 +712,7 @@ tr{break-inside:avoid}
     <defs><marker id="a8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6b7280"/></marker></defs>
     <g text-anchor="middle">
       <rect x="10" y="20" width="170" height="44" rx="8" fill="#fffbeb" stroke="#b45309"/><text x="95" y="46" font-weight="700" fill="#b45309">DF65 em HOLD</text>
-      <rect x="10" y="130" width="170" height="44" rx="8" fill="#fef2f2" stroke="#b91c1c"/><text x="95" y="149" font-weight="700" fill="#b91c1c">FIT-31 e TIT-31</text><text x="95" y="164" font-size="9.5" fill="#374151">não comissionados</text>
+      <rect x="10" y="130" width="170" height="44" rx="8" fill="#fef2f2" stroke="#b91c1c"/><text x="95" y="149" font-weight="700" fill="#b91c1c">TIT-31</text><text x="95" y="164" font-size="9.5" fill="#374151">não comissionado</text>
       <rect x="10" y="196" width="170" height="44" rx="8" fill="#f3f4f6" stroke="#6b7280"/><text x="95" y="215" font-weight="700">System302 8.2.2</text><text x="95" y="230" font-size="9.5" fill="#374151">× DF51 V3.7.5</text>
       <rect x="255" y="0" width="200" height="40" rx="8" fill="#fff" stroke="#9ca3af"/><text x="355" y="24">ladder parado</text>
       <rect x="255" y="50" width="200" height="40" rx="8" fill="#fff" stroke="#9ca3af"/><text x="355" y="74">escravo Modbus ausente</text>
@@ -731,11 +737,11 @@ tr{break-inside:avoid}
     <tr><td><span class="pill p-ok">observado</span></td><td>DF51 V3.7.5 em RUN, modo SE, em 192.168.164.100.</td></tr>
     <tr><td><span class="pill p-ok">observado</span></td><td>DF65 em HOLD.</td></tr>
     <tr><td><span class="pill p-ok">observado</span></td><td>7 instrumentos no canal 1; canais 2–4 vazios.</td></tr>
-    <tr><td><span class="pill p-ok">observado</span></td><td>FIT-31 e TIT-31 não comissionados.</td></tr>
+    <tr><td><span class="pill p-ok">observado</span></td><td>TIT-31 não comissionado (“Assign tag failure” às 21:06). FIT-31 comissionado às 21:11, mas o upload não cria seus blocos.</td></tr>
     <tr><td><span class="pill p-ok">observado</span></td><td>Blocos MBCF1, MBCM1, MBCM2 no DF51; exceção 07 a mestre externo.</td></tr>
     <tr><td><span class="pill p-ok">observado</span></td><td>Valores on-line não retornam no System302 8.2.2.</td></tr>
     <tr><td><span class="pill p-warn">inferido</span></td><td>O DF51 é mestre Modbus do DF65; com o DF65 em HOLD, essa troca falha.</td></tr>
-    <tr><td><span class="pill p-warn">inferido</span></td><td>As malhas que usam FIT-31 e TIT-31 estão sem medição.</td></tr>
+    <tr><td><span class="pill p-warn">inferido</span></td><td>A malha que usa o TIT-31 está sem medição.</td></tr>
     <tr><td><span class="pill p-warn">inferido</span></td><td>Falta de valores por incompatibilidade 8.2.2 × V3.7.5 (device support).</td></tr>
     <tr><td><span class="pill p-bad">desconhecido</span></td><td>Por que o DF65 está em HOLD; se o programa ladder ainda existe.</td></tr>
     <tr><td><span class="pill p-bad">desconhecido</span></td><td>Parâmetros dos MBCM (escravo, endereços, status).</td></tr>
@@ -776,7 +782,7 @@ tr{break-inside:avoid}
     <text x="685" y="84" text-anchor="middle" font-weight="700" fill="#b91c1c" font-size="11.5">ESCRITA</text>
     <g text-anchor="middle" font-size="10">
       <circle cx="685" cy="115" r="11" fill="#b91c1c"/><text x="685" y="119" fill="#fff" font-weight="700">8</text>
-      <text x="685" y="145" font-weight="700">Comissionar</text><text x="685" y="159">FIT-31 e TIT-31</text>
+      <text x="685" y="145" font-weight="700">Comissionar</text><text x="685" y="159">TIT-31</text>
       <circle cx="685" cy="185" r="11" fill="#b91c1c"/><text x="685" y="189" fill="#fff" font-weight="700">9</text>
       <text x="685" y="214" font-weight="700">DF65 em RUN</text><text x="685" y="228" font-size="9">com operador presente</text>
     </g>
@@ -869,7 +875,7 @@ tr{break-inside:avoid}
         <li>Como habilitar o DF65 Logic no LogicView 8.2.2.</li>
         <li>Diagnosticar o DF65 em HOLD e voltar a RUN sem download.</li>
         <li>Configurar o DF65Server para leitura.</li>
-        <li>Cuidados ao comissionar FIT-31 e TIT-31.</li>
+        <li>Causa do “Assign tag failure” no TIT-31 e cuidados ao comissioná-lo.</li>
         <li>Informações adicionais a enviar.</li>
       </ol>
       <p class="small" style="margin:2mm 0 0">Rascunho completo em <span class="mono">docs/pedido-suporte-smar.md</span> (não enviado).</p>

@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Dossiê técnico PD3-302 / DFI302</title>
+<style>
+@page { size: A4; margin: 18mm 16mm 18mm 16mm; }
+:root{
+  --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb; --teal:#0f766e; --teal2:#14b8a6; --tealbg:#f0fdfa;
+  --green:#15803d; --greenbg:#ecfdf5; --amber:#b45309; --amberbg:#fffbeb; --red:#b91c1c; --redbg:#fef2f2;
+  --blue:#1d4ed8; --bluebg:#eff6ff; --violet:#6d28d9; --violetbg:#f5f3ff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#fff}
+body{font-family:Inter, "DejaVu Sans", sans-serif; color:var(--ink); font-size:10pt; line-height:1.5;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+code,.mono{font-family:"DejaVu Sans Mono", monospace; font-size:.86em}
+h1{font-family:"Inter Display",Inter,sans-serif;font-size:21pt;line-height:1.15;margin:0 0 4mm;color:var(--ink);font-weight:700;letter-spacing:-.01em}
+h2{font-size:12.5pt;margin:6mm 0 2mm;color:var(--teal);font-weight:700}
+h3{font-size:10.5pt;margin:4mm 0 1.5mm;font-weight:700}
+p{margin:0 0 2.6mm}
+ul{margin:0 0 3mm;padding-left:5mm} li{margin:0 0 1.2mm}
+.chapter{break-before:page}
+.kicker{font-size:8.5pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:1.5mm}
+.lead{font-size:11pt;color:#374151;margin-bottom:4mm}
+.oneline{display:flex;gap:3mm;align-items:flex-start;background:var(--tealbg);border-left:3px solid var(--teal);
+  padding:3mm 4mm;border-radius:2mm;margin:0 0 5mm;font-size:10pt}
+.oneline b{color:var(--teal)}
+figure{margin:3mm 0 5mm;break-inside:avoid}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:8.3pt;color:var(--muted);margin-top:1.5mm}
+figcaption b{color:var(--ink)}
+.shot{border:1px solid var(--line);border-radius:2mm;overflow:hidden;background:#fafafa}
+.shot img{display:block;width:100%}
+.box{border-radius:2.5mm;padding:3.2mm 4mm;margin:3mm 0 4mm;break-inside:avoid;font-size:9.4pt}
+.box .t{font-weight:700;font-size:9.6pt;margin-bottom:1.2mm;display:flex;gap:2mm;align-items:center}
+.learn{background:var(--bluebg);border:1px solid #bfdbfe}.learn .t{color:var(--blue)}
+.warn{background:var(--amberbg);border:1px solid #fde68a}.warn .t{color:var(--amber)}
+.ok{background:var(--greenbg);border:1px solid #a7f3d0}.ok .t{color:var(--green)}
+.bad{background:var(--redbg);border:1px solid #fecaca}.bad .t{color:var(--red)}
+.ico{display:inline-flex;width:5mm;height:5mm;border-radius:50%;align-items:center;justify-content:center;color:#fff;font-size:8pt;font-weight:700;flex:none}
+.learn .ico{background:var(--blue)}.warn .ico{background:var(--amber)}.ok .ico{background:var(--green)}.bad .ico{background:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:8.8pt;margin:2mm 0 4mm;break-inside:auto}
+th{background:var(--tealbg);color:#134e4a;text-align:left;font-weight:700;padding:1.6mm 2mm;border-bottom:1.5px solid #99f6e4}
+td{padding:1.5mm 2mm;border-bottom:1px solid var(--line);vertical-align:top}
+tr{break-inside:avoid}
+.pill{display:inline-block;padding:.2mm 2mm;border-radius:9mm;font-size:7.8pt;font-weight:700;white-space:nowrap}
+.p-ok{background:#dcfce7;color:var(--green)}.p-warn{background:#fef3c7;color:var(--amber)}.p-bad{background:#fee2e2;color:var(--red)}.p-info{background:#dbeafe;color:var(--blue)}.p-mut{background:#f3f4f6;color:#4b5563}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:4mm}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3mm}
+.card{border:1px solid var(--line);border-radius:2.5mm;padding:2.2mm 3mm;break-inside:avoid;background:#fff}
+.card .h{font-weight:700;font-size:9.4pt;margin-bottom:1mm}
+.card .s{font-size:8.3pt;color:#4b5563;line-height:1.4}
+.stat{border-radius:2.5mm;padding:3mm 3.5mm;background:#f9fafb;border:1px solid var(--line)}
+.stat .n{font-family:"Inter Display",Inter;font-size:15pt;font-weight:700;line-height:1.1}
+.stat .l{font-size:8.2pt;color:var(--muted)}
+.toc{columns:1;font-size:10pt}
+.toc a{display:flex;justify-content:space-between;color:var(--ink);text-decoration:none;padding:1.6mm 0;border-bottom:1px dotted #d1d5db}
+.toc a .n{color:var(--teal);font-weight:700;width:9mm;display:inline-block}
+.small{font-size:8.4pt;color:var(--muted)}
+.gloss dt{font-weight:700;margin-top:2mm}.gloss dd{margin:0 0 0 0;color:#374151;font-size:9.2pt}
+/* capa */
+.cover{height:261mm;position:relative;display:flex;flex-direction:column}
+.cover .band{background:linear-gradient(135deg,#0f766e 0%,#115e59 55%,#134e4a 100%);color:#fff;border-radius:4mm;padding:14mm 12mm 12mm;position:relative;overflow:hidden}
+.cover .band h1{color:#fff;font-size:28pt;margin:2mm 0 3mm}
+.cover .band .sub{font-size:12pt;opacity:.92;max-width:150mm}
+.cover .band .tag{font-size:9pt;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.cover .meta{margin-top:auto;font-size:9pt;color:var(--muted);border-top:1px solid var(--line);padding-top:3mm;display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+
+<!-- ======================= CAPA ======================= -->
+<section class="cover">
+  <div class="band">
+    <div class="tag">Dossiê técnico · Departamento de Eletroeletrônica · IFMA Monte Castelo</div>
+    <h1>Planta didática PD3-302<br>rack DFI302 · DF51 &amp; DF65</h1>
+    <div class="sub">Tudo o que sabemos sobre o sistema: o processo, o hardware, a rede, o software, a investigação desde 24/10/2026 e a sessão de campo de 16/11/2026 — explicado passo a passo.</div>
+    <svg viewBox="0 0 700 150" style="width:100%;margin-top:8mm" aria-hidden="true">
+      <g fill="none" stroke="#99f6e4" stroke-width="2" opacity=".9">
+        <rect x="20" y="40" width="110" height="80" rx="6"/><path d="M20 90 h110" opacity=".5"/>
+        <rect x="290" y="20" width="110" height="100" rx="6"/><path d="M290 80 h110" opacity=".5"/>
+        <rect x="560" y="50" width="110" height="70" rx="6"/><path d="M560 95 h110" opacity=".5"/>
+        <path d="M130 105 H200 V70 H290" /><path d="M400 100 H480 V85 H560"/><path d="M615 120 V140 H75 V120" stroke-dasharray="6 5"/>
+        <circle cx="200" cy="105" r="12"/><path d="M193 110 L200 97 L207 110 Z"/>
+        <circle cx="240" cy="45" r="13"/><text x="240" y="49" font-size="9" fill="#ccfbf1" stroke="none" text-anchor="middle" font-family="Inter">FIT</text><path d="M240 58 V70"/>
+        <circle cx="440" cy="50" r="13"/><text x="440" y="54" font-size="9" fill="#ccfbf1" stroke="none" text-anchor="middle" font-family="Inter">TIT</text><path d="M440 63 V75 H400"/>
+        <path d="M305 112 l8 -8 8 8 8 -8 8 8 8 -8 8 8 8 -8 8 8" stroke="#fca5a5"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="grid3" style="margin-top:9mm">
+    <div class="stat"><div class="n" style="color:var(--green)">RUN</div><div class="l">DF51 · controlador Fieldbus<br>firmware V3.7.5 · modo SE</div></div>
+    <div class="stat"><div class="n" style="color:var(--amber)">HOLD</div><div class="l">DF65 · coprocessador lógico<br>ladder parado</div></div>
+    <div class="stat"><div class="n">7</div><div class="l">instrumentos no canal H1 1<br>2 sem comissionamento</div></div>
+    <div class="stat"><div class="n">192.168.164.100</div><div class="l">endereço IP do DF51</div></div>
+    <div class="stat"><div class="n">1º backup</div><div class="l">topologia salva em<br><span class="mono">PlantaSE_Leitura.ffp</span></div></div>
+    <div class="stat"><div class="n" style="color:var(--green)">0</div><div class="l">escritas em equipamentos<br>(só leituras)</div></div>
+  </div>
+
+  <div class="box learn" style="margin-top:8mm">
+    <div class="t"><span class="ico">i</span>Como ler este documento</div>
+    Cada capítulo começa com um resumo em uma frase. Os quadros azuis (<b>Para entender</b>) explicam conceitos; os verdes mostram resultados; os amarelos, cuidados; os vermelhos, bloqueios. Toda conclusão vem marcada como <span class="pill p-ok">observado</span>, <span class="pill p-warn">inferido</span> ou <span class="pill p-bad">desconhecido</span>.
+  </div>
+
+  <div class="meta"><span>Francisco · Chefe do DEE-MTC · IFMA</span><span>São Luís, 16 de novembro de 2026</span></div>
+</section>
+
+<!-- ======================= SUMÁRIO ======================= -->
+<section class="chapter">
+  <div class="kicker">Sumário</div>
+  <h1>O que tem aqui</h1>
+  <div class="toc">
+    <a href="#c1"><span><span class="n">1</span>Resumo: onde estamos</span><span>Situação, o que funciona, o que trava</span></a>
+    <a href="#c2"><span><span class="n">2</span>A planta e o processo</span><span>Tanques, bombas, malhas, instrumentos</span></a>
+    <a href="#c3"><span><span class="n">3</span>O rack DFI302</span><span>Módulos, funções, estados</span></a>
+    <a href="#c4"><span><span class="n">4</span>Como tudo se conecta</span><span>Ethernet, H1, DF51 ↔ DF65</span></a>
+    <a href="#c5"><span><span class="n">5</span>O software</span><span>System302, Syscon, servidores OPC</span></a>
+    <a href="#c6"><span><span class="n">6</span>O projeto PlantaFieldbus</span><span>Aplicativo, scripts, regras de segurança</span></a>
+    <a href="#c7"><span><span class="n">7</span>A investigação, do início a hoje</span><span>Linha do tempo de 24/10 a 16/11</span></a>
+    <a href="#c8"><span><span class="n">8</span>Sessão de campo de 16/11</span><span>Modbus, SE × HSE, upload, instrumentos, OPC, DF65</span></a>
+    <a href="#c9"><span><span class="n">9</span>Diagnóstico</span><span>Observado · inferido · desconhecido</span></a>
+    <a href="#c10"><span><span class="n">10</span>Próximos passos</span><span>Roteiro com os portões de segurança</span></a>
+    <a href="#c11"><span><span class="n">A</span>Glossário</span><span>Termos usados no documento</span></a>
+    <a href="#c12"><span><span class="n">B</span>Anexos</span><span>Hashes, PRs, pedido à SMAR, referências</span></a>
+  </div>
+</section>
+
+<!-- ======================= 1 RESUMO ======================= -->
+<section class="chapter" id="c1">
+  <div class="kicker">Capítulo 1</div>
+  <h1>Resumo: onde estamos</h1>
+  <div class="oneline"><span>📍</span><span><b>Em uma frase:</b> o controlador DF51 está funcionando e já sabemos o que está ligado nele, mas o DF65 está parado e o software atual não consegue ler os valores do processo.</span></div>
+  <p class="lead">O computador original da planta (System302 7.0.5) não está disponível e não existia backup da configuração. Desde 24/10 o trabalho foi reconstruir o que está instalado <b>sem nunca escrever nos equipamentos</b>.</p>
+
+  <div class="grid2">
+    <div class="box ok" style="margin:0"><div class="t"><span class="ico">✓</span>Já confirmado</div>
+      <ul style="margin:0">
+        <li>DF51 (DFI302), firmware V3.7.5, IP 192.168.164.100, modo <b>SE</b>, em <b>RUN</b>.</li>
+        <li>7 instrumentos no canal H1 1: LIT-31, FY-31, FIT-31, FIT-32, FY-32, TIT-31, TIT-32.</li>
+        <li>O DF51 é <b>mestre Modbus</b> (blocos MBCF/MBCM).</li>
+        <li>Primeiro backup real da topologia salvo.</li>
+      </ul></div>
+    <div class="box bad" style="margin:0"><div class="t"><span class="ico">!</span>Ainda trava</div>
+      <ul style="margin:0">
+        <li>DF65 em <b>HOLD</b>: a lógica ladder não roda.</li>
+        <li>FIT-31 e TIT-31 <b>não comissionados</b>.</li>
+        <li>Valores on-line não aparecem no System302 8.2.2.</li>
+        <li>Sem ferramenta funcional para o DF65 no notebook.</li>
+      </ul></div>
+  </div>
+
+  <h2>O mapa do problema</h2>
+  <figure>
+  <svg viewBox="0 0 760 210" font-family="Inter" font-size="11">
+    <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6b7280"/></marker></defs>
+    <g>
+      <rect x="10" y="20" width="210" height="52" rx="8" fill="#ecfdf5" stroke="#15803d"/>
+      <text x="115" y="42" text-anchor="middle" font-weight="700" fill="#15803d">DF51 em RUN</text>
+      <text x="115" y="60" text-anchor="middle" fill="#374151" font-size="10">estratégia Fieldbus executando</text>
+      <rect x="10" y="135" width="210" height="52" rx="8" fill="#fffbeb" stroke="#b45309"/>
+      <text x="115" y="157" text-anchor="middle" font-weight="700" fill="#b45309">DF65 em HOLD</text>
+      <text x="115" y="175" text-anchor="middle" fill="#374151" font-size="10">ladder parado</text>
+      <rect x="275" y="20" width="210" height="52" rx="8" fill="#fef2f2" stroke="#b91c1c"/>
+      <text x="380" y="42" text-anchor="middle" font-weight="700" fill="#b91c1c">FIT-31 e TIT-31 fora</text>
+      <text x="380" y="60" text-anchor="middle" fill="#374151" font-size="10">não comissionados</text>
+      <rect x="275" y="135" width="210" height="52" rx="8" fill="#fef2f2" stroke="#b91c1c"/>
+      <text x="380" y="157" text-anchor="middle" font-weight="700" fill="#b91c1c">Modbus DF51→DF65</text>
+      <text x="380" y="175" text-anchor="middle" fill="#374151" font-size="10">mestre sem escravo respondendo</text>
+      <rect x="540" y="77" width="210" height="52" rx="8" fill="#f3f4f6" stroke="#6b7280"/>
+      <text x="645" y="99" text-anchor="middle" font-weight="700">Planta sem operar</text>
+      <text x="645" y="117" text-anchor="middle" fill="#374151" font-size="10">malhas incompletas, sem lógica</text>
+      <path d="M220 46 H275" stroke="#6b7280" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M220 161 H275" stroke="#6b7280" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M485 46 H510 V95 H540" stroke="#6b7280" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+      <path d="M485 161 H510 V112 H540" stroke="#6b7280" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+    </g>
+  </svg>
+  <figcaption><b>Figura 1.</b> Os dois problemas principais que impedem a planta de operar: medições fora da estratégia e o DF65 parado.</figcaption>
+  </figure>
+
+  <div class="box warn"><div class="t"><span class="ico">!</span>Caminho recomendado</div>
+  Localizar o PC antigo com System302 7.0.5 (deve ter o programa do DF65 e o software compatível) ou obter orientação da SMAR. Colocar o DF65 em RUN e comissionar FIT-31/TIT-31 só depois de conhecer o programa e a estratégia.</div>
+</section>
+
+<!-- ======================= 2 PLANTA ======================= -->
+<section class="chapter" id="c2">
+  <div class="kicker">Capítulo 2</div>
+  <h1>A planta e o processo</h1>
+  <div class="oneline"><span>💧</span><span><b>Em uma frase:</b> é um circuito fechado de água com três tanques, duas bombas, duas válvulas e resistências, usado para ensinar malhas de controle de vazão, temperatura e nível.</span></div>
+
+  <figure>
+  <svg viewBox="0 0 800 365" font-family="Inter" font-size="11" style="width:86%;margin:0 auto">
+    <defs>
+      <marker id="fl" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1d4ed8"/></marker>
+      <linearGradient id="wat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#93c5fd"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+      <linearGradient id="hot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdba74"/><stop offset="1" stop-color="#ef4444"/></linearGradient>
+      <linearGradient id="mix" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c4b5fd"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+    </defs>
+    <!-- tanques -->
+    <rect x="40" y="200" width="150" height="95" rx="6" fill="#fff" stroke="#374151" stroke-width="2"/>
+    <rect x="42" y="236" width="146" height="57" fill="url(#wat)" opacity=".75"/>
+    <text x="115" y="222" text-anchor="middle" font-weight="700">Tanque de abastecimento</text>
+    <rect x="430" y="45" width="130" height="115" rx="6" fill="#fff" stroke="#374151" stroke-width="2"/>
+    <rect x="432" y="80" width="126" height="78" fill="url(#hot)" opacity=".7"/>
+    <text x="495" y="38" text-anchor="middle" font-weight="700">Tanque de aquecimento</text>
+    <path d="M450 150 l8 -10 8 10 8 -10 8 10 8 -10 8 10 8 -10 8 10 8 -10 8 10" fill="none" stroke="#7f1d1d" stroke-width="2.2"/>
+    <text x="495" y="128" text-anchor="middle" fill="#7f1d1d" font-size="10">resistências</text>
+    <rect x="600" y="185" width="130" height="105" rx="6" fill="#fff" stroke="#374151" stroke-width="2"/>
+    <rect x="602" y="215" width="126" height="73" fill="url(#mix)" opacity=".7"/>
+    <text x="665" y="205" text-anchor="middle" font-weight="700">Tanque de mistura</text>
+    <!-- linhas -->
+    <g fill="none" stroke="#1d4ed8" stroke-width="2.4">
+      <path d="M190 245 H236"/><path d="M264 245 H316"/><path d="M344 245 H400 V140 H428" marker-end="url(#fl)"/>
+      <path d="M190 280 H236"/><path d="M264 280 H316"/><path d="M344 280 H598" marker-end="url(#fl)"/>
+      <path d="M560 100 H640 V183" marker-end="url(#fl)"/>
+      <path d="M665 290 V345 H115 V297" stroke-dasharray="7 5" marker-end="url(#fl)"/>
+    </g>
+    <text x="560" y="359" text-anchor="middle" fill="#1d4ed8" font-size="10">retorno por gravidade ao tanque de abastecimento</text>
+    <text x="600" y="93" fill="#1d4ed8" font-size="10">água quente</text>
+    <text x="470" y="273" fill="#1d4ed8" font-size="10">água fria</text>
+    <!-- bombas -->
+    <g stroke="#111827" stroke-width="1.8" fill="#fff">
+      <circle cx="250" cy="245" r="14"/><path d="M243 252 L250 237 L257 252 Z" fill="#111827"/>
+      <circle cx="250" cy="280" r="14"/><path d="M243 287 L250 272 L257 287 Z" fill="#111827"/>
+    </g>
+    <text x="250" y="226" text-anchor="middle" font-size="10" font-weight="700">B1</text>
+    <text x="250" y="306" text-anchor="middle" font-size="10" font-weight="700">B2</text>
+    <!-- válvulas -->
+    <g stroke="#111827" stroke-width="1.8" fill="#e5e7eb">
+      <path d="M316 236 L344 254 L344 236 L316 254 Z"/><path d="M330 245 V228" fill="none"/><rect x="322" y="220" width="16" height="9"/>
+      <path d="M316 271 L344 289 L344 271 L316 289 Z"/><path d="M330 280 V263" fill="none"/><rect x="322" y="255" width="16" height="9"/>
+    </g>
+    <!-- instrumentos -->
+    <g font-size="9.5" text-anchor="middle" font-weight="700">
+      <line x1="330" y1="199" x2="330" y2="220" stroke="#6b7280" stroke-dasharray="3 2"/>
+      <circle cx="330" cy="184" r="15" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="330" y="188" fill="#0f766e">FY</text>
+      <text x="330" y="165" fill="#0f766e">FY-31</text>
+      <line x1="372" y1="211" x2="372" y2="245" stroke="#6b7280" stroke-dasharray="3 2"/>
+      <circle cx="372" cy="196" r="15" fill="#fef2f2" stroke="#b91c1c" stroke-width="2" stroke-dasharray="4 2"/><text x="372" y="200" fill="#b91c1c">FIT</text>
+      <text x="372" y="177" fill="#b91c1c">FIT-31</text>
+      <line x1="330" y1="289" x2="330" y2="303" stroke="#6b7280" stroke-dasharray="3 2"/>
+      <circle cx="330" cy="318" r="15" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="330" y="322" fill="#0f766e">FY</text>
+      <text x="350" y="322" fill="#0f766e" text-anchor="start">FY-32</text>
+      <line x1="430" y1="280" x2="430" y2="303" stroke="#6b7280" stroke-dasharray="3 2"/>
+      <circle cx="430" cy="318" r="15" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="430" y="322" fill="#0f766e">FIT</text>
+      <text x="450" y="322" fill="#0f766e" text-anchor="start">FIT-32</text>
+      <line x1="560" y1="70" x2="584" y2="70" stroke="#6b7280" stroke-dasharray="3 2"/>
+      <circle cx="600" cy="62" r="15" fill="#fef2f2" stroke="#b91c1c" stroke-width="2" stroke-dasharray="4 2"/><text x="600" y="66" fill="#b91c1c">TIT</text>
+      <text x="600" y="43" fill="#b91c1c">TIT-31</text>
+      <line x1="406" y1="70" x2="430" y2="70" stroke="#6b7280" stroke-dasharray="3 2"/>
+      <circle cx="391" cy="70" r="15" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="391" y="74" fill="#0f766e">LIT</text>
+      <text x="391" y="51" fill="#0f766e">LIT-31</text>
+      <line x1="730" y1="230" x2="752" y2="230" stroke="#6b7280" stroke-dasharray="3 2"/>
+      <circle cx="767" cy="230" r="15" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="767" y="234" fill="#0f766e">TIT</text>
+      <text x="767" y="211" fill="#0f766e">TIT-32</text>
+    </g>
+  </svg>
+  <figcaption><b>Figura 2.</b> Esquema didático do processo (baseado no manual PD3-F). As posições dos instrumentos são <b>inferidas</b> pelos tags e precisam ser conferidas no P&amp;ID da bancada. Em vermelho tracejado: instrumentos presentes mas não comissionados. FY-32 e FIT-32 ficam na linha de água fria (bomba B2).</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <div>
+      <h3>As malhas de controle</h3>
+      <p><b>Tanque de aquecimento:</b> controla a temperatura ligando as resistências, com ajuda antecipada da vazão de entrada.</p>
+      <p><b>Tanque de mistura:</b> controle em <b>cascata</b>: a temperatura decide quanto de água fria deve entrar, e uma malha de vazão abre ou fecha a válvula.</p>
+    </div>
+    <div class="box learn" style="margin-top:4mm"><div class="t"><span class="ico">i</span>Para entender: como ler um tag</div>
+      Os tags seguem o padrão ISA: a primeira letra é a variável (<b>F</b>=vazão, <b>T</b>=temperatura, <b>L</b>=nível) e as seguintes dizem a função (<b>I</b>=indicador, <b>T</b>=transmissor, <b>Y</b>=conversor/atuador). <b>FIT-31</b> = transmissor indicador de vazão, malha 31. <b>FY-31</b> = conversor que move a válvula da malha 31.</div>
+  </div>
+
+  <div style="break-inside:avoid"><h2>Malha em cascata, passo a passo</h2>
+  <figure>
+  <svg viewBox="0 0 760 200" font-family="Inter" font-size="11" style="width:88%;margin:0 auto">
+    <defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#374151"/></marker></defs>
+    <g stroke="#374151" stroke-width="1.6" fill="none" marker-end="url(#a2)">
+      <path d="M120 50 H168"/><path d="M290 50 H338"/><path d="M460 50 H508"/><path d="M630 50 H678"/>
+      <path d="M120 150 H168"/><path d="M290 150 H399 V82"/>
+      <path d="M720 75 V180 H60 V170" stroke-dasharray="5 4"/>
+    </g>
+    <g text-anchor="middle">
+      <rect x="10" y="25" width="110" height="50" rx="8" fill="#fff7ed" stroke="#c2410c"/><text x="65" y="47" font-weight="700">TT302</text><text x="65" y="63" font-size="9.5" fill="#6b7280">temperatura</text>
+      <rect x="170" y="25" width="120" height="50" rx="8" fill="#f0fdfa" stroke="#0f766e"/><text x="230" y="47" font-weight="700">PID temperatura</text><text x="230" y="63" font-size="9.5" fill="#6b7280">malha mestre</text>
+      <rect x="340" y="25" width="120" height="50" rx="8" fill="#f0fdfa" stroke="#0f766e"/><text x="400" y="47" font-weight="700">PID vazão</text><text x="400" y="63" font-size="9.5" fill="#6b7280">malha escrava</text>
+      <rect x="510" y="25" width="120" height="50" rx="8" fill="#eff6ff" stroke="#1d4ed8"/><text x="570" y="47" font-weight="700">Saída (AO)</text><text x="570" y="63" font-size="9.5" fill="#6b7280">FY → válvula</text>
+      <rect x="680" y="25" width="70" height="50" rx="8" fill="#f3f4f6" stroke="#6b7280"/><text x="715" y="54" font-weight="700">Processo</text>
+      <rect x="10" y="125" width="110" height="50" rx="8" fill="#fff7ed" stroke="#c2410c"/><text x="65" y="147" font-weight="700">LD302</text><text x="65" y="163" font-size="9.5" fill="#6b7280">vazão (Δp)</text>
+      <rect x="170" y="125" width="120" height="50" rx="8" fill="#fff" stroke="#9ca3af"/><text x="230" y="147" font-weight="700">AI vazão</text><text x="230" y="163" font-size="9.5" fill="#6b7280">bloco de entrada</text>
+    </g>
+    <text x="314" y="42" font-size="9" fill="#0f766e" text-anchor="middle">setpoint</text>
+    <text x="314" y="56" font-size="9" fill="#0f766e" text-anchor="middle">(CAS_IN)</text>
+    <text x="405" y="120" font-size="9" fill="#374151">medição de vazão</text>
+    <text x="390" y="195" font-size="9" fill="#6b7280" text-anchor="middle">o processo realimenta os sensores</text>
+  </svg>
+  <figcaption><b>Figura 3.</b> Estratégia “Cascade” dos exemplos de fábrica do DF51: a malha de temperatura gera o setpoint da malha de vazão. O FIT-31 (LD302) e o TIT-31 (TT302) da bancada são exatamente esses tipos de instrumento.</figcaption>
+  </figure></div>
+</section>
+
+<!-- ======================= 3 RACK ======================= -->
+<section class="chapter" id="c3">
+  <div class="kicker">Capítulo 3</div>
+  <h1>O rack DFI302</h1>
+  <div class="oneline"><span>🧩</span><span><b>Em uma frase:</b> o rack é modular — o DF51 conversa com a rede e com os instrumentos, o DF65 executa a lógica, e os demais módulos ligam botões, bombas e resistências.</span></div>
+
+  <figure>
+  <svg viewBox="0 0 760 270" font-family="Inter" font-size="10">
+    <rect x="2" y="20" width="756" height="215" rx="8" fill="#e5e7eb" stroke="#9ca3af"/>
+    <text x="10" y="14" font-size="9" fill="#6b7280">BACKPLANE (ordem dos módulos ilustrativa — conferir no rack)</text>
+    <g text-anchor="middle">
+      <!-- módulos: x = 8 + i*68 -->
+      <g><rect x="8" y="30" width="64" height="195" rx="5" fill="#fff" stroke="#6b7280"/><rect x="8" y="30" width="64" height="26" rx="5" fill="#6b7280"/><text x="40" y="48" fill="#fff" font-weight="700" font-size="12">DF50</text><text x="40" y="78">Fonte</text><text x="40" y="91" fill="#6b7280">90–264 Vca</text></g>
+      <g><rect x="76" y="30" width="64" height="195" rx="5" fill="#fff" stroke="#0f766e" stroke-width="2.5"/><rect x="76" y="30" width="64" height="26" rx="5" fill="#0f766e"/><text x="108" y="48" fill="#fff" font-weight="700" font-size="12">DF51</text><text x="108" y="78">Controlador</text><text x="108" y="91" fill="#6b7280">Ethernet</text><text x="108" y="104" fill="#6b7280">4 × H1</text>
+        <circle cx="94" cy="150" r="5" fill="#22c55e" stroke="#15803d"/><text x="118" y="153" text-anchor="start" font-size="8.5" fill="#15803d" font-weight="700" dx="-14">RUN</text>
+        <circle cx="94" cy="168" r="5" fill="#e5e7eb" stroke="#9ca3af"/><text x="104" y="171" text-anchor="start" font-size="8.5" fill="#9ca3af">HOLD</text>
+        <circle cx="94" cy="186" r="5" fill="#e5e7eb" stroke="#9ca3af"/><text x="104" y="189" text-anchor="start" font-size="8.5" fill="#9ca3af">FAIL</text>
+        <rect x="88" y="200" width="40" height="16" rx="2" fill="#374151"/><text x="108" y="211" fill="#fff" font-size="7.5">ETH</text></g>
+      <g><rect x="144" y="30" width="64" height="195" rx="5" fill="#fff" stroke="#6d28d9" stroke-width="2.5"/><rect x="144" y="30" width="64" height="26" rx="5" fill="#6d28d9"/><text x="176" y="48" fill="#fff" font-weight="700" font-size="12">DF65</text><text x="176" y="78">Coproc.</text><text x="176" y="91" fill="#6b7280">lógico</text><text x="176" y="104" fill="#6b7280">(ladder)</text>
+        <circle cx="162" cy="150" r="5" fill="#e5e7eb" stroke="#9ca3af"/><text x="172" y="153" text-anchor="start" font-size="8.5" fill="#9ca3af">RUN</text>
+        <circle cx="162" cy="168" r="5" fill="#f59e0b" stroke="#b45309"/><text x="172" y="171" text-anchor="start" font-size="8.5" fill="#b45309" font-weight="700">HOLD</text></g>
+      <g><rect x="212" y="30" width="64" height="195" rx="5" fill="#fff" stroke="#1d4ed8"/><rect x="212" y="30" width="64" height="26" rx="5" fill="#1d4ed8"/><text x="244" y="48" fill="#fff" font-weight="700" font-size="12">DF20</text><text x="244" y="78">8 chaves</text><text x="244" y="91" fill="#6b7280">liga/desliga</text></g>
+      <g><rect x="280" y="30" width="64" height="195" rx="5" fill="#fff" stroke="#1d4ed8"/><rect x="280" y="30" width="64" height="26" rx="5" fill="#1d4ed8"/><text x="312" y="48" fill="#fff" font-weight="700" font-size="12">DF18</text><text x="312" y="78">16 entradas</text><text x="312" y="91" fill="#6b7280">120 Vca</text></g>
+      <g><rect x="348" y="30" width="64" height="195" rx="5" fill="#fff" stroke="#1d4ed8"/><rect x="348" y="30" width="64" height="26" rx="5" fill="#1d4ed8"/><text x="380" y="48" fill="#fff" font-weight="700" font-size="12">DF19</text><text x="380" y="78">16 entradas</text><text x="380" y="91" fill="#6b7280">240 Vca</text></g>
+      <g><rect x="416" y="30" width="64" height="195" rx="5" fill="#fff" stroke="#1d4ed8"/><rect x="416" y="30" width="64" height="26" rx="5" fill="#1d4ed8"/><text x="448" y="48" fill="#fff" font-weight="700" font-size="12">DF28</text><text x="448" y="78">16 saídas</text><text x="448" y="91" fill="#6b7280">relé NA</text></g>
+      <g><rect x="484" y="30" width="64" height="195" rx="5" fill="#fff" stroke="#4338ca"/><rect x="484" y="30" width="64" height="26" rx="5" fill="#4338ca"/><text x="516" y="48" fill="#fff" font-weight="700" font-size="12">DF58</text><text x="516" y="78">Serial</text><text x="516" y="91" fill="#6b7280">RS-232/485</text></g>
+      <g><rect x="552" y="30" width="64" height="195" rx="5" fill="#fff" stroke="#c2410c"/><rect x="552" y="30" width="64" height="26" rx="5" fill="#c2410c"/><text x="584" y="48" fill="#fff" font-weight="700" font-size="12">DF52</text><text x="584" y="78">Fonte</text><text x="584" y="91" fill="#6b7280">Fieldbus</text></g>
+      <g><rect x="620" y="30" width="64" height="195" rx="5" fill="#fff" stroke="#c2410c"/><rect x="620" y="30" width="64" height="26" rx="5" fill="#c2410c"/><text x="652" y="48" fill="#fff" font-weight="700" font-size="12">DF53</text><text x="652" y="78">Impedância</text><text x="652" y="91" fill="#6b7280">Fieldbus</text></g>
+      <g><rect x="688" y="30" width="64" height="195" rx="5" fill="#f9fafb" stroke="#d1d5db" stroke-dasharray="4 3"/><rect x="688" y="30" width="64" height="26" rx="5" fill="#d1d5db"/><text x="720" y="48" fill="#374151" font-weight="700" font-size="12">DF0</text><text x="720" y="78" fill="#6b7280">cego</text></g>
+    </g>
+    <g font-size="9.5">
+      <rect x="10" y="246" width="12" height="10" fill="#0f766e"/><text x="27" y="255">controle/rede</text>
+      <rect x="120" y="246" width="12" height="10" fill="#6d28d9"/><text x="137" y="255">lógica</text>
+      <rect x="190" y="246" width="12" height="10" fill="#1d4ed8"/><text x="207" y="255">entradas/saídas discretas</text>
+      <rect x="350" y="246" width="12" height="10" fill="#4338ca"/><text x="367" y="255">comunicação serial</text>
+      <rect x="480" y="246" width="12" height="10" fill="#c2410c"/><text x="497" y="255">alimentação Fieldbus</text>
+      <rect x="620" y="246" width="12" height="10" fill="#6b7280"/><text x="637" y="255">alimentação</text>
+    </g>
+  </svg>
+  <figcaption><b>Figura 4.</b> Módulos do rack conforme o inventário informado em 10/11/2026, com os LEDs observados em 16/11: DF51 em RUN e DF65 em HOLD.</figcaption>
+  </figure>
+
+  <table>
+    <tr><th style="width:18mm">Módulo</th><th>O que faz na planta</th><th style="width:30mm">Estado</th></tr>
+    <tr><td><b>DF51</b></td><td>“Cérebro” Fieldbus: executa os blocos de controle, comanda o barramento H1 (LAS) e fala com o notebook pela Ethernet.</td><td><span class="pill p-ok">RUN</span></td></tr>
+    <tr><td><b>DF65</b></td><td>Executa a lógica discreta (ladder): partida de bombas, intertravamentos, sirene. Programado pelo LogicView.</td><td><span class="pill p-warn">HOLD</span></td></tr>
+    <tr><td>DF18/DF19/DF20</td><td>Recebem botões e chaves do painel (entradas digitais).</td><td><span class="pill p-mut">não verificado</span></td></tr>
+    <tr><td>DF28</td><td>Acionam contatores de bombas e resistências (saídas a relé).</td><td><span class="pill p-mut">não verificado</span></td></tr>
+    <tr><td>DF58</td><td>Porta serial RS-232/RS-485.</td><td><span class="pill p-mut">não verificado</span></td></tr>
+    <tr><td>DF52/DF53</td><td>Alimentam e condicionam o barramento Fieldbus H1.</td><td><span class="pill p-mut">não verificado</span></td></tr>
+  </table>
+
+  <div class="box learn"><div class="t"><span class="ico">i</span>Para entender: RUN e HOLD</div>
+  Em <b>RUN</b>, o módulo executa o programa carregado. Em <b>HOLD</b>, ele está ligado mas parado, sem executar a lógica. Um módulo pode estar em HOLD porque alguém o parou, porque falhou na inicialização ou porque perdeu o programa (por exemplo, bateria da memória descarregada). Saber o motivo é essencial antes de tentar voltar para RUN.</div>
+</section>
+
+<!-- ======================= 4 REDE ======================= -->
+<section class="chapter" id="c4">
+  <div class="kicker">Capítulo 4</div>
+  <h1>Como tudo se conecta</h1>
+  <div class="oneline"><span>🔌</span><span><b>Em uma frase:</b> o notebook fala com o DF51 por Ethernet; o DF51 fala com os instrumentos por um único par de fios (H1) e com o DF65 por Modbus.</span></div>
+
+  <figure>
+  <svg viewBox="0 0 760 360" font-family="Inter" font-size="11">
+    <defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#374151"/></marker></defs>
+    <!-- notebook -->
+    <rect x="15" y="25" width="175" height="85" rx="10" fill="#f9fafb" stroke="#374151" stroke-width="1.5"/>
+    <text x="102" y="48" text-anchor="middle" font-weight="700">💻 Notebook</text>
+    <text x="102" y="66" text-anchor="middle" font-size="10" fill="#4b5563">System302 8.2.2 · QModMaster</text>
+    <text x="102" y="82" text-anchor="middle" font-size="10" fill="#4b5563">192.168.164.101/.102</text>
+    <!-- DF51 -->
+    <rect x="290" y="25" width="180" height="85" rx="10" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
+    <text x="380" y="48" text-anchor="middle" font-weight="700" fill="#0f766e">DF51 · “DFI-PD3”</text>
+    <text x="380" y="66" text-anchor="middle" font-size="10" fill="#4b5563">192.168.164.100 · V3.7.5 · SE</text>
+    <rect x="352" y="76" width="56" height="18" rx="9" fill="#dcfce7"/><text x="380" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="#15803d">RUN</text>
+    <!-- DF65 -->
+    <rect x="565" y="25" width="180" height="85" rx="10" fill="#f5f3ff" stroke="#6d28d9" stroke-width="2"/>
+    <text x="655" y="48" text-anchor="middle" font-weight="700" fill="#6d28d9">DF65 · lógica</text>
+    <text x="655" y="66" text-anchor="middle" font-size="10" fill="#4b5563">programa ladder</text>
+    <rect x="623" y="76" width="64" height="18" rx="9" fill="#fef3c7"/><text x="655" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="#b45309">HOLD</text>
+    <!-- ligações -->
+    <path d="M190 67 H290" stroke="#374151" stroke-width="3"/>
+    <text x="240" y="58" text-anchor="middle" font-size="9.5" fill="#374151">Ethernet</text>
+    <text x="240" y="82" text-anchor="middle" font-size="9.5" fill="#374151">10 Mbps</text>
+    <path d="M470 67 H565" stroke="#b91c1c" stroke-width="2.2" stroke-dasharray="6 4"/>
+    <text x="517" y="50" text-anchor="middle" font-size="9.5" fill="#b91c1c">Modbus</text>
+    <text x="517" y="92" text-anchor="middle" font-size="9.5" fill="#b91c1c">MBCM1/2</text>
+    <circle cx="517" cy="67" r="9" fill="#fff" stroke="#b91c1c" stroke-width="2"/><path d="M512 62 l10 10 M522 62 l-10 10" stroke="#b91c1c" stroke-width="2"/>
+    <!-- barramento H1 -->
+    <path d="M380 110 V185" stroke="#c2410c" stroke-width="3"/>
+    <rect x="395" y="135" width="160" height="34" rx="6" fill="#fff7ed" stroke="#c2410c"/>
+    <text x="475" y="150" text-anchor="middle" font-size="9.5" font-weight="700" fill="#c2410c">DF52 + DF53</text>
+    <text x="475" y="163" text-anchor="middle" font-size="9" fill="#4b5563">alimentação e impedância</text>
+    <path d="M30 195 H730" stroke="#c2410c" stroke-width="4"/>
+    <rect x="22" y="187" width="10" height="16" fill="#c2410c"/><rect x="728" y="187" width="10" height="16" fill="#c2410c"/>
+    <text x="40" y="183" font-size="10" font-weight="700" fill="#c2410c">Canal H1 1 · 31,25 kbit/s</text><text x="40" y="170" font-size="9" fill="#9a3412">FOUNDATION Fieldbus · 2 fios (energia + dados)</text>
+    <!-- instrumentos -->
+    <g text-anchor="middle" font-size="10">
+      <g><path d="M90 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="90" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="90" y="266" font-weight="700" fill="#0f766e">LIT</text><text x="90" y="296" font-weight="700">LIT-31</text><text x="90" y="310" font-size="9" fill="#6b7280">nível</text></g>
+      <g><path d="M190 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="190" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="190" y="266" font-weight="700" fill="#0f766e">FY</text><text x="190" y="296" font-weight="700">FY-31</text><text x="190" y="310" font-size="9" fill="#6b7280">válvula 1</text></g>
+      <g><path d="M290 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="290" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="290" y="266" font-weight="700" fill="#0f766e">FIT</text><text x="290" y="296" font-weight="700">FIT-32</text><text x="290" y="310" font-size="9" fill="#6b7280">vazão 2</text></g>
+      <g><path d="M390 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="390" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="390" y="266" font-weight="700" fill="#0f766e">FY</text><text x="390" y="296" font-weight="700">FY-32</text><text x="390" y="310" font-size="9" fill="#6b7280">válvula 2</text></g>
+      <g><path d="M490 195 V245" stroke="#c2410c" stroke-width="2"/><circle cx="490" cy="262" r="18" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="490" y="266" font-weight="700" fill="#0f766e">TIT</text><text x="490" y="296" font-weight="700">TIT-32</text><text x="490" y="310" font-size="9" fill="#6b7280">temperatura 2</text></g>
+      <g><path d="M590 195 V245" stroke="#c2410c" stroke-width="2" stroke-dasharray="4 3"/><circle cx="590" cy="262" r="18" fill="#fef2f2" stroke="#b91c1c" stroke-width="2" stroke-dasharray="4 2"/><text x="590" y="266" font-weight="700" fill="#b91c1c">FIT</text><text x="590" y="296" font-weight="700" fill="#b91c1c">FIT-31</text><text x="590" y="310" font-size="9" fill="#b91c1c">LD302</text><text x="590" y="322" font-size="9" fill="#b91c1c">não comissionado</text></g>
+      <g><path d="M690 195 V245" stroke="#c2410c" stroke-width="2" stroke-dasharray="4 3"/><circle cx="690" cy="262" r="18" fill="#fef2f2" stroke="#b91c1c" stroke-width="2" stroke-dasharray="4 2"/><text x="690" y="266" font-weight="700" fill="#b91c1c">TIT</text><text x="690" y="296" font-weight="700" fill="#b91c1c">TIT-31</text><text x="690" y="310" font-size="9" fill="#b91c1c">TT302</text><text x="690" y="322" font-size="9" fill="#b91c1c">não comissionado</text></g>
+    </g>
+    <text x="380" y="350" text-anchor="middle" font-size="10" fill="#6b7280">Canais H1 2, 3 e 4: sem equipamentos (só o próprio DF51)</text>
+  </svg>
+  <figcaption><b>Figura 5.</b> Arquitetura confirmada em 16/11/2026. A ligação Modbus DF51→DF65 aparece cortada porque o DF65 está em HOLD. A função de cada instrumento é <b>inferida</b> pelo tag.</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <div class="box learn" style="margin-top:0"><div class="t"><span class="ico">i</span>Para entender: FOUNDATION Fieldbus H1</div>
+    Em vez de um par de fios 4–20 mA para cada instrumento, todos compartilham o mesmo par de fios, que leva energia e dados digitais. Cada instrumento tem um endereço e “blocos de função” (entrada, PID, saída). O DF51 agenda quem fala em cada instante — essa função se chama <b>LAS</b> (Link Active Scheduler).</div>
+    <div>
+      <table style="margin-top:0">
+        <tr><th>Parâmetro</th><th>Valor</th></tr>
+        <tr><td>IP do DF51</td><td><span class="mono">192.168.164.100</span></td></tr>
+        <tr><td>MAC</td><td><span class="mono">00:30:5C:01:05:52</span></td></tr>
+        <tr><td>Firmware</td><td>V3.7.5 (manual atual: V3.9.5)</td></tr>
+        <tr><td>Anúncio</td><td>UDP 4987, broadcast a cada ~30 s</td></tr>
+        <tr><td>Marcadores</td><td>“DF51V3.7.5” · “Monitor 3302”</td></tr>
+        <tr><td>Porta 502</td><td>aberta; só Unit ID 1 responde</td></tr>
+        <tr><td>PC antigo</td><td>192.168.164.101 (System302 7.0.5)</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="box warn"><div class="t"><span class="ico">!</span>Firmware: não atualizar para testar</div>
+  O manual atual da SMAR lista o DF51 V3.9.5 como compatível com o System302 7.0 a 8.2. A bancada usa V3.7.5, uma revisão antiga — por isso o System302 8.2.2 do notebook lê só parte das informações. Atualizar o firmware pode apagar a configuração, e não existe backup do programa do DF65.</div>
+  <p class="small">Histórico: em 29/10 o operador identificou o controlador como “DF63” em 192.168.164.10; esse endereço nunca respondeu. As capturas e testes posteriores confirmaram o DF51 em .100.</p>
+</section>
+
+<!-- ======================= 5 SOFTWARE ======================= -->
+<section class="chapter" id="c5">
+  <div class="kicker">Capítulo 5</div>
+  <h1>O software</h1>
+  <div class="oneline"><span>🖥️</span><span><b>Em uma frase:</b> o System302 8.2.2 do notebook consegue ver a estrutura da planta, mas não os valores nem o DF65 — falta a versão compatível (7.0.5) ou os pacotes certos.</span></div>
+
+  <h2>O que funciona e o que não funciona</h2>
+  <div class="grid3">
+    <div class="card"><div class="h">Studio302 / Syscon <span class="pill p-ok">ok</span></div><div class="s">Abre o projeto, vai on-line e faz upload da topologia. O Syscon só abre pelo Studio302.</div></div>
+    <div class="card"><div class="h">DFIOLEServer <span class="pill p-warn">parcial</span></div><div class="s">Enxerga o DF51 (SE) e lê topologia e blocos. Não devolve valores on-line.</div></div>
+    <div class="card"><div class="h">HSEOLEServer <span class="pill p-bad">não serve</span></div><div class="s">Funciona, mas só vê redes HSE. O DF51 é SE.</div></div>
+    <div class="card"><div class="h">TagView <span class="pill p-warn">parcial</span></div><div class="s">Conecta, mas só mostra diagnósticos. Falta o banco de tags (Consolidate OPC bloqueado).</div></div>
+    <div class="card"><div class="h">LogicView <span class="pill p-bad">DF65 off</span></div><div class="s">Opção “DF65 Logic” desabilitada.</div></div>
+    <div class="card"><div class="h">DF65Server <span class="pill p-bad">erro</span></div><div class="s">Inicia, mas “Error connecting to OPC server”: sem rota nem tags.</div></div>
+    <div class="card"><div class="h">FB Tools Wizard <span class="pill p-bad">não usar</span></div><div class="s">Só oferece download de firmware para o DF51.</div></div>
+    <div class="card"><div class="h">QModMaster <span class="pill p-ok">ok</span></div><div class="s">Mestre Modbus de teste (0.5.3). Confirmou a porta 502 do DF51.</div></div>
+    <div class="card"><div class="h">PlantaFieldbus <span class="pill p-info">simulação</span></div><div class="s">Aplicativo próprio, com escrita bloqueada por projeto.</div></div>
+  </div>
+
+  <h2>SE e HSE: por que o DF51 “sumiu” no começo</h2>
+  <figure>
+  <svg viewBox="0 0 760 190" font-family="Inter" font-size="11" style="width:72%;margin:0 auto">
+    <defs><marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#374151"/></marker></defs>
+    <rect x="10" y="65" width="140" height="60" rx="10" fill="#f9fafb" stroke="#374151"/><text x="80" y="91" text-anchor="middle" font-weight="700">Syscon</text><text x="80" y="108" text-anchor="middle" font-size="9.5" fill="#6b7280">projeto + servidor</text>
+    <path d="M150 85 H210 V40 H250" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a4)"/>
+    <path d="M150 105 H210 V150 H250" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a4)"/>
+    <rect x="252" y="15" width="190" height="50" rx="8" fill="#fef2f2" stroke="#b91c1c"/><text x="347" y="37" text-anchor="middle" font-weight="700">Smar.HSEOLEServer.0</text><text x="347" y="53" text-anchor="middle" font-size="9.5" fill="#6b7280">projeto “PlantaDidatica”</text>
+    <rect x="252" y="125" width="190" height="50" rx="8" fill="#ecfdf5" stroke="#15803d"/><text x="347" y="147" text-anchor="middle" font-weight="700">Smar.DFIOLEServer.0</text><text x="347" y="163" text-anchor="middle" font-size="9.5" fill="#6b7280">projeto “PlantaSE_Leitura”</text>
+    <path d="M442 40 H500" stroke="#374151" stroke-width="1.6" marker-end="url(#a4)"/>
+    <path d="M442 150 H500" stroke="#374151" stroke-width="1.6" marker-end="url(#a4)"/>
+    <rect x="502" y="15" width="248" height="50" rx="8" fill="#fff" stroke="#b91c1c" stroke-dasharray="5 3"/><text x="626" y="37" text-anchor="middle" font-weight="700" fill="#b91c1c">✗ Live List: só o notebook</text><text x="626" y="53" text-anchor="middle" font-size="9.5" fill="#6b7280">HSE HOST 1 · 192.168.164.101</text>
+    <rect x="502" y="125" width="248" height="50" rx="8" fill="#fff" stroke="#15803d"/><text x="626" y="147" text-anchor="middle" font-weight="700" fill="#15803d">✓ DFI-PD3 encontrado</text><text x="626" y="163" text-anchor="middle" font-size="9.5" fill="#6b7280">4 canais · 7 instrumentos · blocos</text>
+  </svg>
+  <figcaption><b>Figura 6.</b> O mesmo Syscon com dois servidores. Na linha DFI302, o DF51 pode rodar firmware <b>HSE</b> (Fieldbus sobre Ethernet, padrão da Fieldbus Foundation) ou <b>SE</b>, acessado pelo servidor DFI OLE da SMAR. O projeto antigo estava montado para HSE — por isso o controlador não aparecia.</figcaption>
+  </figure>
+  
+
+  <div style="break-inside:avoid"><h2>Projetos no Syscon</h2>
+  <table>
+    <tr><th>Projeto</th><th>Conteúdo</th><th>Observação</th></tr>
+    <tr><td><b>PlantaSE_Leitura</b></td><td>DFI-PD3, 4 canais, 7 instrumentos, blocos</td><td><span class="pill p-ok">backup de 16/11, 19:51</span></td></tr>
+    <tr><td>PlantaDidatica</td><td>HSE Network 1 vazia</td><td>não enxerga o DF51</td></tr>
+    <tr><td>PlantaDidaticaSE</td><td>não aberto</td><td><span class="pill p-bad">origem desconhecida (16/11, 16:57)</span></td></tr>
+    <tr><td>DF51_SE.ffp / DF51_HSE.ffp</td><td>exemplos de fábrica (2006), estratégia “Cascade”</td><td>só referência offline</td></tr>
+  </table></div>
+</section>
+
+<!-- ======================= 6 PLANTAFIELDBUS ======================= -->
+<section class="chapter" id="c6">
+  <div class="kicker">Capítulo 6</div>
+  <h1>O projeto PlantaFieldbus</h1>
+  <div class="oneline"><span>🛠️</span><span><b>Em uma frase:</b> um repositório aberto para construir uma interface própria da planta, que começa em simulação e só se liga ao equipamento depois de cada etapa ser comprovada.</span></div>
+
+  <div class="grid2">
+    <div class="card"><div class="h">Interface WPF (.NET 8)</div><div class="s">Painel, sinótico, eventos, importação de topologia, descoberta UDP passiva e simulação da cascata do DF51. Adaptadores OPC/Modbus/HSE existem só como contratos inativos.</div></div>
+    <div class="card"><div class="h">Protótipo Flutter</div><div class="s">Versão anterior para Windows, preservada. 6 testes offline passando.</div></div>
+    <div class="card"><div class="h">Scripts PowerShell</div><div class="s">Captura passiva (PktMon/TShark), manifesto SHA-256, resumo de PCAP, triagem estática e um pipeline que processa tudo sem enviar pacotes.</div></div>
+    <div class="card"><div class="h">Documentação</div><div class="s">Processo, módulos, perfil Fieldbus, hipótese de protocolo, roteiro de visita, registro de evidências e pedido à SMAR.</div></div>
+  </div>
+
+  <h2>As fases e os portões</h2>
+  <figure>
+  <svg viewBox="0 0 760 150" font-family="Inter" font-size="10">
+    <defs><marker id="a5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9ca3af"/></marker></defs>
+    <g text-anchor="middle">
+      <g><rect x="5" y="30" width="95" height="56" rx="8" fill="#ecfdf5" stroke="#15803d"/><text x="52" y="52" font-weight="700">0 · Preservar</text><text x="52" y="68" fill="#6b7280" font-size="9">hash, inventário</text></g>
+      <g><rect x="113" y="30" width="95" height="56" rx="8" fill="#ecfdf5" stroke="#15803d"/><text x="160" y="52" font-weight="700">1 · Artefatos</text><text x="160" y="68" fill="#6b7280" font-size="9">análise estática</text></g>
+      <g><rect x="221" y="30" width="95" height="56" rx="8" fill="#ecfdf5" stroke="#15803d"/><text x="268" y="52" font-weight="700">2 · Rede</text><text x="268" y="68" fill="#6b7280" font-size="9">captura passiva</text></g>
+      <g><rect x="329" y="30" width="95" height="56" rx="8" fill="#ecfdf5" stroke="#15803d"/><text x="376" y="52" font-weight="700">3 · Correlação</text><text x="376" y="68" fill="#6b7280" font-size="9">hipótese</text></g>
+      <g><rect x="437" y="30" width="95" height="56" rx="8" fill="#fff" stroke="#9ca3af"/><text x="484" y="52" font-weight="700">4 · Cliente</text><text x="484" y="68" fill="#6b7280" font-size="9">só leitura</text></g>
+      <g><rect x="545" y="30" width="95" height="56" rx="8" fill="#fff" stroke="#9ca3af"/><text x="592" y="52" font-weight="700">5 · Validação</text><text x="592" y="68" fill="#6b7280" font-size="9">contra replay</text></g>
+      <g><rect x="653" y="30" width="100" height="56" rx="8" fill="#fef2f2" stroke="#b91c1c"/><text x="703" y="52" font-weight="700" fill="#b91c1c">6 · Escrita</text><text x="703" y="68" fill="#6b7280" font-size="9">autorização formal</text></g>
+      <g fill="#b45309" font-size="9" font-weight="700"><text x="430" y="110">▲ revisão humana</text><text x="538" y="125">▲ revisão</text><text x="646" y="110">▲ autorização</text></g>
+    </g>
+    <g stroke="#9ca3af" stroke-width="1.5" marker-end="url(#a5)"><path d="M100 58 H111"/><path d="M208 58 H219"/><path d="M316 58 H327"/><path d="M424 58 H435"/><path d="M532 58 H543"/><path d="M640 58 H651"/></g>
+    <text x="5" y="16" font-size="9.5" fill="#15803d" font-weight="700">■ concluídas</text><text x="100" y="16" font-size="9.5" fill="#6b7280" font-weight="700">□ aguardando</text>
+  </svg>
+  <figcaption><b>Figura 7.</b> Fluxo de investigação do repositório. A fase 4 só começa depois que uma pessoa aprova uma fonte técnica verificável.</figcaption>
+  </figure>
+
+  <div class="box warn"><div class="t"><span class="ico">!</span>Regras de segurança (AGENTS.md)</div>
+  <ul style="margin:0">
+    <li>Sem varredura, alteração de rede ou comandos ao PLC durante a investigação.</li>
+    <li>Mudar RUN/HOLD só em comissionamento separado, com: autorização para o controlador, protocolo validado, backup verificado, E/S e intertravamentos revisados, operador no local com parada de emergência ao alcance e procedimento de teste registrado.</li>
+    <li>Capturas, binários, licenças e dados de processo ficam fora do repositório público.</li>
+  </ul></div>
+  <div class="box ok"><div class="t"><span class="ico">✓</span>Como foi a sessão de 16/11</div>
+  Os testes ativos de hoje (QModMaster, Syscon on-line, upload) foram <b>somente de leitura</b>, autorizados e acompanhados pelo operador na bancada. Nenhum passo escreveu em equipamento.</div>
+</section>
+
+<!-- ======================= 7 LINHA DO TEMPO ======================= -->
+<section class="chapter" id="c7">
+  <div class="kicker">Capítulo 7</div>
+  <h1>A investigação, do início a hoje</h1>
+  <div class="oneline"><span>🗓️</span><span><b>Em uma frase:</b> em pouco mais de três semanas, saímos de “há um equipamento na rede” para a árvore completa de instrumentos e blocos da planta.</span></div>
+
+  <figure>
+  <svg viewBox="0 0 760 120" font-family="Inter" font-size="10">
+    <path d="M20 60 H740" stroke="#99f6e4" stroke-width="6" stroke-linecap="round"/>
+    <g text-anchor="middle">
+      <g><circle cx="40" cy="60" r="9" fill="#0f766e"/><text x="40" y="38" font-weight="700">24/10</text><text x="40" y="90" fill="#6b7280" font-size="9">repositório</text></g>
+      <g><circle cx="150" cy="60" r="9" fill="#0f766e"/><text x="150" y="38" font-weight="700">26–27/10</text><text x="150" y="90" fill="#6b7280" font-size="9">captura + WPF</text></g>
+      <g><circle cx="260" cy="60" r="9" fill="#0f766e"/><text x="260" y="38" font-weight="700">28/10</text><text x="260" y="90" fill="#6b7280" font-size="9">1º anúncio DF51</text></g>
+      <g><circle cx="370" cy="60" r="9" fill="#0f766e"/><text x="370" y="38" font-weight="700">29/10</text><text x="370" y="90" fill="#6b7280" font-size="9">ping .100 ok</text></g>
+      <g><circle cx="480" cy="60" r="9" fill="#0f766e"/><text x="480" y="38" font-weight="700">10/11</text><text x="480" y="90" fill="#6b7280" font-size="9">rack + RUN/HOLD</text></g>
+      <g><circle cx="590" cy="60" r="9" fill="#0f766e"/><text x="590" y="38" font-weight="700">11/11</text><text x="590" y="90" fill="#6b7280" font-size="9">evidências + SMAR</text></g>
+      <g><circle cx="710" cy="60" r="13" fill="#f59e0b" stroke="#b45309" stroke-width="2"/><text x="710" y="34" font-weight="700" fill="#b45309">16/11</text><text x="710" y="94" fill="#b45309" font-size="9" font-weight="700">sessão de campo</text></g>
+    </g>
+  </svg>
+  </figure>
+
+  <table>
+    <tr><th style="width:20mm">Data</th><th>O que aconteceu</th></tr>
+    <tr><td><b>24–25/10</b></td><td>Criação do repositório: kit de captura passiva, fluxo de agentes, triagem estática, console simulado, arquitetura de adaptadores seguros, perfil provisório SMAR PD3.</td></tr>
+    <tr><td><b>26–27/10</b></td><td>Captura com PktMon/TShark, análise de PCAPNG sem dependências, decodificador de anúncios UDP, interface WPF, pipeline seguro de evidências.</td></tr>
+    <tr><td><b>28/10</b></td><td>System302 8.2.2 SP1 instalado (só engenharia). Primeira captura: anúncio <span class="mono">DF51V3.7.5 / Monitor 3302</span>. Identificada a DLL DeviceNet da Hilscher.</td></tr>
+    <tr><td><b>29/10</b></td><td>Validação em campo: 232 quadros, ping para .100 em 7 ms, ARP com o mesmo MAC, HTTP sem resposta. Registro do “DF63” em .10 (sem resposta).</td></tr>
+    <tr><td><b>10/11</b></td><td>Inventário do rack; papéis DF51/DF65; análise do <span class="mono">dfbatch.exe</span> (RUN/HOLD via Telnet); exemplos de fábrica.</td></tr>
+    <tr><td><b>11/11</b></td><td>Captura de 5 min validada; NetConfDownloader classificado como ferramenta de escrita; matriz de evidências; compatibilidade V3.7.5 × V3.9.5; busca de backup sem sucesso; rascunho à SMAR; simulação da cascata.</td></tr>
+    <tr><td><b>16/11</b></td><td>Sessão de campo: Modbus TCP, descoberta do modo SE, upload da topologia, backup, diagnóstico de instrumentos, OPC e DF65. PRs #3, #4 e #5.</td></tr>
+  </table>
+
+  <h2>Análise estática dos programas da SMAR</h2>
+  <table>
+    <tr><th style="width:38mm">Arquivo</th><th>O que revelou</th></tr>
+    <tr><td><span class="mono">dfbatch.exe</span></td><td>Script Python 2.5 interno; RUN/HOLD por Telnet (porta 23) com autenticação. A lista de equipamentos aceitos <b>não</b> inclui o DF51.</td></tr>
+    <tr><td><span class="mono">FbusComm.dll</span></td><td>Funções de leitura (LiveList, ReadParameter) e de escrita (WriteParameter, ChangeBootOperational).</td></tr>
+    <tr><td><span class="mono">NetConfDownloader.exe</span></td><td>Connect/Download para AS-i e Modbus: ferramenta de escrita, excluída da recuperação.</td></tr>
+    <tr><td><span class="mono">DfiDiver.exe</span></td><td>Reconhece arquivos DF51*.abs e escrita de memória; sem RUN/HOLD.</td></tr>
+    <tr><td><span class="mono">DEVNet.dll</span></td><td>Biblioteca DeviceNet da Hilscher, versão 2.6.9.8.</td></tr>
+  </table>
+</section>
+
+<!-- ======================= 8 SESSÃO ======================= -->
+<section class="chapter" id="c8">
+  <div class="kicker">Capítulo 8</div>
+  <h1>Sessão de campo de 16/11/2026</h1>
+  <div class="oneline"><span>🔎</span><span><b>Em uma frase:</b> operando o notebook remotamente com o operador na bancada, lemos o DF51 por três caminhos diferentes até descobrir como ele está configurado.</span></div>
+
+  <h2>8.1 Primeiro teste: Modbus TCP com o QModMaster</h2>
+  <figure class="shot"><img src="img/qmod.jpg" alt="QModMaster com erro Negative acknowledge"></figure>
+  <figcaption style="margin:-3mm 0 4mm"><b>Figura 8.</b> Tela real: o QModMaster conecta ao DF51, mas a leitura volta com “Negative acknowledge”. À direita, o Bus Monitor mostra os bytes trocados.</figcaption>
+
+  <figure>
+  <svg viewBox="0 0 760 250" font-family="Inter" font-size="10">
+    <text x="0" y="18" font-weight="700" font-size="11">Pergunta (notebook → DF51)</text>
+    <g font-family="DejaVu Sans Mono" font-size="12" text-anchor="middle">
+      <g fill="#eff6ff" stroke="#1d4ed8">
+        <rect x="70" y="30" width="48" height="30"/><rect x="118" y="30" width="48" height="30"/><rect x="166" y="30" width="48" height="30"/><rect x="214" y="30" width="48" height="30"/><rect x="262" y="30" width="48" height="30"/><rect x="310" y="30" width="48" height="30"/><rect x="358" y="30" width="48" height="30"/>
+      </g>
+      <g fill="#f0fdfa" stroke="#0f766e">
+        <rect x="406" y="30" width="48" height="30"/><rect x="454" y="30" width="48" height="30"/><rect x="502" y="30" width="48" height="30"/><rect x="550" y="30" width="48" height="30"/><rect x="598" y="30" width="48" height="30"/>
+      </g>
+      <g fill="#111827"><text x="94" y="50">00</text><text x="142" y="50">01</text><text x="190" y="50">00</text><text x="238" y="50">00</text><text x="286" y="50">00</text><text x="334" y="50">06</text><text x="382" y="50">01</text><text x="430" y="50" font-weight="700">03</text><text x="478" y="50">00</text><text x="526" y="50">00</text><text x="574" y="50">00</text><text x="622" y="50">0A</text></g>
+    </g>
+    <g font-size="9" text-anchor="middle" fill="#374151">
+      <path d="M72 66 v5 h92 v-5 M168 66 v5 h92 v-5 M264 66 v5 h92 v-5" fill="none" stroke="#9ca3af"/>
+      <text x="118" y="84">transação</text><text x="214" y="84">protocolo</text><text x="310" y="84">tamanho</text><text x="382" y="84">unidade 1</text>
+      <text x="430" y="84" font-weight="700" fill="#0f766e">função 03</text>
+      <path d="M456 66 v5 h92 v-5 M552 66 v5 h92 v-5" fill="none" stroke="#9ca3af"/>
+      <text x="502" y="84">endereço 0</text><text x="598" y="84">10 registros</text>
+      <path d="M70 96 h336" stroke="#1d4ed8" stroke-width="2"/><text x="238" y="110" fill="#1d4ed8" font-weight="700">cabeçalho MBAP (TCP)</text>
+      <path d="M406 96 h240" stroke="#0f766e" stroke-width="2"/><text x="526" y="110" fill="#0f766e" font-weight="700">PDU — o pedido em si</text>
+    </g>
+    <text x="0" y="148" font-weight="700" font-size="11">Resposta (DF51 → notebook)</text>
+    <g font-family="DejaVu Sans Mono" font-size="12" text-anchor="middle">
+      <g fill="#eff6ff" stroke="#1d4ed8"><rect x="70" y="160" width="48" height="30"/><rect x="118" y="160" width="48" height="30"/><rect x="166" y="160" width="48" height="30"/><rect x="214" y="160" width="48" height="30"/><rect x="262" y="160" width="48" height="30"/><rect x="310" y="160" width="48" height="30"/><rect x="358" y="160" width="48" height="30"/></g>
+      <g fill="#fef2f2" stroke="#b91c1c"><rect x="406" y="160" width="48" height="30"/><rect x="454" y="160" width="48" height="30"/></g>
+      <g fill="#111827"><text x="94" y="180">00</text><text x="142" y="180">01</text><text x="190" y="180">00</text><text x="238" y="180">00</text><text x="286" y="180">00</text><text x="334" y="180">03</text><text x="382" y="180">01</text><text x="430" y="180" font-weight="700" fill="#b91c1c">83</text><text x="478" y="180" font-weight="700" fill="#b91c1c">07</text></g>
+    </g>
+    <g font-size="9.5" fill="#b91c1c">
+      <path d="M430 196 V214 H520" fill="none" stroke="#b91c1c"/><text x="526" y="212">83 = 03 + 80 → “é um erro na função 03”</text>
+      <path d="M478 196 V232 H520" fill="none" stroke="#b91c1c"/><text x="526" y="236">07 = Negative Acknowledge → “não vou atender”</text>
+    </g>
+  </svg>
+  <figcaption><b>Figura 9.</b> Anatomia dos quadros Modbus TCP. O DF51 entendeu o pedido, mas recusou o serviço. Ele nunca respondeu “02 – endereço inválido”, o que mostra que o problema não era o endereço.</figcaption>
+  </figure>
+
+  <table>
+    <tr><th>Unit ID</th><th>Função</th><th>Endereço</th><th>Resposta</th></tr>
+    <tr><td>1</td><td>FC03 holding registers</td><td>0 e 1000</td><td><span class="pill p-bad">83 07</span></td></tr>
+    <tr><td>1</td><td>FC01 coils</td><td>0</td><td><span class="pill p-bad">81 07</span></td></tr>
+    <tr><td>1</td><td>FC04 input registers</td><td>0</td><td><span class="pill p-bad">84 07</span></td></tr>
+    <tr><td>0 e 255</td><td>FC03</td><td>0</td><td><span class="pill p-mut">timeout</span></td></tr>
+  </table>
+
+  <h2>8.2 Por que o DF51 recusou: dois mestres não conversam</h2>
+  <figure>
+  <svg viewBox="0 0 760 170" font-family="Inter" font-size="11">
+    <defs><marker id="a6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#374151"/></marker>
+    <marker id="a7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#b91c1c"/></marker></defs>
+    <rect x="10" y="50" width="160" height="70" rx="10" fill="#f9fafb" stroke="#374151"/><text x="90" y="78" text-anchor="middle" font-weight="700">QModMaster</text><text x="90" y="96" text-anchor="middle" font-size="10" fill="#1d4ed8" font-weight="700">MESTRE</text>
+    <rect x="300" y="50" width="160" height="70" rx="10" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/><text x="380" y="78" text-anchor="middle" font-weight="700">DF51</text><text x="380" y="96" text-anchor="middle" font-size="10" fill="#1d4ed8" font-weight="700">MESTRE (MBCM)</text>
+    <rect x="590" y="50" width="160" height="70" rx="10" fill="#f5f3ff" stroke="#6d28d9" stroke-width="2"/><text x="670" y="78" text-anchor="middle" font-weight="700">DF65</text><text x="670" y="96" text-anchor="middle" font-size="10" fill="#b45309" font-weight="700">ESCRAVO · em HOLD</text>
+    <path d="M170 72 H298" stroke="#374151" stroke-width="1.6" marker-end="url(#a6)"/><text x="234" y="64" text-anchor="middle" font-size="9.5">pergunta</text>
+    <path d="M298 100 H172" stroke="#b91c1c" stroke-width="1.6" marker-end="url(#a7)"/><text x="234" y="116" text-anchor="middle" font-size="9.5" fill="#b91c1c">exceção 07</text>
+    <path d="M460 72 H588" stroke="#374151" stroke-width="1.6" marker-end="url(#a6)"/><text x="524" y="64" text-anchor="middle" font-size="9.5">pergunta periódica</text>
+    <path d="M588 100 H462" stroke="#b91c1c" stroke-width="1.6" stroke-dasharray="5 4"/><text x="524" y="116" text-anchor="middle" font-size="9.5" fill="#b91c1c">sem resposta</text>
+    <text x="380" y="155" text-anchor="middle" font-size="10" fill="#6b7280">O DF51 tem blocos de mestre (MBCF + MBCM) e nenhum bloco de escravo (MBSS/MBCS).</text>
+  </svg>
+  <figcaption><b>Figura 10.</b> Num barramento Modbus, só o escravo responde. O DF51 foi configurado para perguntar (provavelmente ao DF65), não para responder.</figcaption>
+  </figure>
+  <div class="box learn"><div class="t"><span class="ico">i</span>Para entender: Modbus mestre e escravo</div>
+  No Modbus, um <b>mestre</b> faz perguntas (“me dê os registros 0 a 9”) e um <b>escravo</b> responde. Cada escravo tem um número (Unit ID). Um equipamento configurado só como mestre não responde a perguntas de outro mestre — foi exatamente isso que o QModMaster encontrou.</div>
+
+  <h2>8.3 Segundo caminho: o Syscon</h2>
+  <div class="grid2">
+    <figure class="shot" style="margin:0"><img src="img/liveli.jpg" alt="HSE Live List só com o notebook"></figure>
+    <figure class="shot" style="margin:0"><img src="img/uploadprog.jpg" alt="Upload em andamento"></figure>
+  </div>
+  <figcaption style="margin:1.5mm 0 4mm"><b>Figura 11.</b> À esquerda, a Live List HSE mostra só o próprio notebook. À direita, com o servidor SE, o upload encontra o DFI-PD3 e começa a ler o LIT-31.</figcaption>
+
+  <h2>8.4 O que o upload encontrou</h2>
+  <div class="grid2">
+    <figure class="shot" style="margin:0"><img src="img/upload.jpg" alt="Árvore do Fieldbus 1 com blocos MBCM"></figure>
+    <div>
+      <p>A árvore do canal H1 1 mostra o DF51 (“DFI-PD3”) com seus blocos e os sete instrumentos.</p>
+      <ul>
+        <li><b>RES1</b>: bloco de recursos do equipamento.</li>
+        <li><b>TRD-1362</b>, <b>DIAG-1</b>: transdutor e diagnóstico.</li>
+        <li><b>MBCF1</b>: configuração Modbus.</li>
+        <li><b>MBCM1</b>, <b>MBCM2</b>: Modbus Control <b>Master</b>.</li>
+      </ul>
+      <p>O FIT-31 e o TIT-31 aparecem com marca vermelha e sem blocos.</p>
+    </div>
+  </div>
+  <figcaption style="margin:1.5mm 0 4mm"><b>Figura 12.</b> Tela real do upload: os blocos MBCM explicam a exceção 07.</figcaption>
+
+  <h2>8.5 FIT-31 e TIT-31: presentes, mas fora da estratégia</h2>
+  <div class="grid2">
+    <div>
+      <table style="margin-top:0">
+        <tr><th></th><th>FIT-31</th><th>TIT-31</th></tr>
+        <tr><td>Tipo</td><td>Smar LD302</td><td>Smar TT302</td></tr>
+        <tr><td>Mede</td><td>pressão diferencial → vazão</td><td>temperatura</td></tr>
+        <tr><td>Rev.</td><td>03/02/01</td><td>03/02/01</td></tr>
+        <tr><td>ID</td><td class="mono" style="font-size:7.6pt">…SMAR-LD302:000810463</td><td class="mono" style="font-size:7.6pt">…SMAR-TT302:004808101</td></tr>
+        <tr><td>Comissionado</td><td><span class="pill p-bad">não</span></td><td><span class="pill p-bad">não</span></td></tr>
+      </table>
+      <div class="box learn"><div class="t"><span class="ico">i</span>Para entender: comissionar</div>
+      Comissionar é gravar no instrumento seu tag e endereço definitivos para que o controlador o inclua no ciclo da rede. Sem isso o instrumento responde no barramento, mas seus blocos não participam do controle. Como grava no equipamento, <b>não foi feito</b>.</div>
+    </div>
+    <figure class="shot" style="margin:0"><img src="img/fitattr.jpg" alt="Atributos do FIT-31"></figure>
+  </div>
+  <figcaption style="margin:1.5mm 0 4mm"><b>Figura 13.</b> Atributos do FIT-31 lidos no Syscon: fabricante, tipo, revisões e Device ID.</figcaption>
+
+  <h2>8.6 Os valores não aparecem</h2>
+  <div class="grid2">
+    <figure class="shot" style="margin:0"><img src="img/mbcm.jpg" alt="Caracterização on-line do MBCM1 sem valores"></figure>
+    <div>
+      <p>Ao abrir os blocos em modo on-line (MBCM1, LIT-31_AI1), o Syscon lista todos os parâmetros — MODE_BLK, PV, OUT, escalas, limites — mas a coluna <b>Value</b> fica vazia, mesmo após “Refresh all parameters value”.</p>
+      <p>O caminho alternativo, ler por OPC no TagView, depende do <i>Consolidate OPC Database</i>, que falhou com <span class="mono" style="font-size:7.8pt">Write access denied to user …</span> mesmo como administrador e com permissão na pasta da SMAR.</p>
+    </div>
+  </div>
+  <figcaption style="margin:1.5mm 0 4mm"><b>Figura 14.</b> Bloco MBCM1 aberto on-line: parâmetros listados, valores em branco.</figcaption>
+
+  <h2>8.7 O DF65</h2>
+  <div class="box bad"><div class="t"><span class="ico">!</span>Sem caminho de software no notebook</div>
+  <ul style="margin:0">
+    <li>LogicView 8.2.2: opção “DF65 Logic” desabilitada.</li>
+    <li>Smar.DF65Server.1 inicia com janela vazia; o TagView recebe “Error connecting to OPC server”.</li>
+    <li>Nenhuma outra ferramenta oferece RUN para o DF65; o FB Tools só faz download de firmware.</li>
+    <li>O pedido de colocar o DF65 em RUN <b>não</b> foi executado: não há ferramenta, não se sabe se o programa existe e não se conhece o que ele aciona.</li>
+  </ul></div>
+</section>
+
+<!-- ======================= 9 DIAGNÓSTICO ======================= -->
+<section class="chapter" id="c9">
+  <div class="kicker">Capítulo 9</div>
+  <h1>Diagnóstico</h1>
+  <div class="oneline"><span>🧠</span><span><b>Em uma frase:</b> a estrutura da planta está íntegra; o que falta é o programa do DF65, o comissionamento de dois instrumentos e um software compatível para ler valores.</span></div>
+
+  <figure>
+  <svg viewBox="0 0 760 250" font-family="Inter" font-size="10.5">
+    <defs><marker id="a8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6b7280"/></marker></defs>
+    <g text-anchor="middle">
+      <rect x="10" y="20" width="170" height="44" rx="8" fill="#fffbeb" stroke="#b45309"/><text x="95" y="46" font-weight="700" fill="#b45309">DF65 em HOLD</text>
+      <rect x="10" y="130" width="170" height="44" rx="8" fill="#fef2f2" stroke="#b91c1c"/><text x="95" y="149" font-weight="700" fill="#b91c1c">FIT-31 e TIT-31</text><text x="95" y="164" font-size="9.5" fill="#374151">não comissionados</text>
+      <rect x="10" y="196" width="170" height="44" rx="8" fill="#f3f4f6" stroke="#6b7280"/><text x="95" y="215" font-weight="700">System302 8.2.2</text><text x="95" y="230" font-size="9.5" fill="#374151">× DF51 V3.7.5</text>
+      <rect x="255" y="0" width="200" height="40" rx="8" fill="#fff" stroke="#9ca3af"/><text x="355" y="24">ladder parado</text>
+      <rect x="255" y="50" width="200" height="40" rx="8" fill="#fff" stroke="#9ca3af"/><text x="355" y="74">escravo Modbus ausente</text>
+      <rect x="255" y="130" width="200" height="44" rx="8" fill="#fff" stroke="#9ca3af"/><text x="355" y="156">medições fora da estratégia</text>
+      <rect x="255" y="196" width="200" height="44" rx="8" fill="#fff" stroke="#9ca3af"/><text x="355" y="222">valores e DF65 inacessíveis</text>
+      <rect x="530" y="0" width="220" height="40" rx="8" fill="#fef2f2" stroke="#b91c1c"/><text x="640" y="24">bombas/resistências sem lógica</text>
+      <rect x="530" y="50" width="220" height="40" rx="8" fill="#fef2f2" stroke="#b91c1c"/><text x="640" y="74">MBCM1/2 sem parceiro</text>
+      <rect x="530" y="130" width="220" height="44" rx="8" fill="#fef2f2" stroke="#b91c1c"/><text x="640" y="149">malhas de vazão/temperatura</text><text x="640" y="164" font-size="9.5">sem medição</text>
+      <rect x="530" y="196" width="220" height="44" rx="8" fill="#f3f4f6" stroke="#6b7280"/><text x="640" y="222">diagnóstico depende do PC antigo</text>
+    </g>
+    <g stroke="#6b7280" stroke-width="1.5" fill="none" marker-end="url(#a8)">
+      <path d="M180 36 H215 V20 H253"/><path d="M180 48 H215 V70 H253"/>
+      <path d="M180 152 H253"/><path d="M180 218 H253"/>
+      <path d="M455 20 H528"/><path d="M455 70 H528"/><path d="M455 152 H528"/><path d="M455 218 H528"/>
+    </g>
+  </svg>
+  <figcaption><b>Figura 15.</b> Cadeia de causas: três problemas na raiz (à esquerda) e seus efeitos na planta (à direita).</figcaption>
+  </figure>
+
+  <table>
+    <tr><th style="width:26mm">Classe</th><th>Conclusão</th></tr>
+    <tr><td><span class="pill p-ok">observado</span></td><td>DF51 V3.7.5 em RUN, modo SE, em 192.168.164.100.</td></tr>
+    <tr><td><span class="pill p-ok">observado</span></td><td>DF65 em HOLD.</td></tr>
+    <tr><td><span class="pill p-ok">observado</span></td><td>7 instrumentos no canal 1; canais 2–4 vazios.</td></tr>
+    <tr><td><span class="pill p-ok">observado</span></td><td>FIT-31 e TIT-31 não comissionados.</td></tr>
+    <tr><td><span class="pill p-ok">observado</span></td><td>Blocos MBCF1, MBCM1, MBCM2 no DF51; exceção 07 a mestre externo.</td></tr>
+    <tr><td><span class="pill p-ok">observado</span></td><td>Valores on-line não retornam no System302 8.2.2.</td></tr>
+    <tr><td><span class="pill p-warn">inferido</span></td><td>O DF51 é mestre Modbus do DF65; com o DF65 em HOLD, essa troca falha.</td></tr>
+    <tr><td><span class="pill p-warn">inferido</span></td><td>As malhas que usam FIT-31 e TIT-31 estão sem medição.</td></tr>
+    <tr><td><span class="pill p-warn">inferido</span></td><td>Falta de valores por incompatibilidade 8.2.2 × V3.7.5 (device support).</td></tr>
+    <tr><td><span class="pill p-bad">desconhecido</span></td><td>Por que o DF65 está em HOLD; se o programa ladder ainda existe.</td></tr>
+    <tr><td><span class="pill p-bad">desconhecido</span></td><td>Parâmetros dos MBCM (escravo, endereços, status).</td></tr>
+    <tr><td><span class="pill p-bad">desconhecido</span></td><td>Estratégia completa e P&amp;ID instalado.</td></tr>
+    <tr><td><span class="pill p-bad">desconhecido</span></td><td>Causa do acesso negado no Consolidate OPC.</td></tr>
+    <tr><td><span class="pill p-bad">desconhecido</span></td><td>Conteúdo do projeto PlantaDidaticaSE.</td></tr>
+  </table>
+</section>
+
+<!-- ======================= 10 PRÓXIMOS ======================= -->
+<section class="chapter" id="c10">
+  <div class="kicker">Capítulo 10</div>
+  <h1>Próximos passos</h1>
+  <div class="oneline"><span>🧭</span><span><b>Em uma frase:</b> primeiro tudo o que é leitura; só depois de passar pelo portão de segurança, comissionar instrumentos e colocar o DF65 em RUN.</span></div>
+
+  <figure>
+  <svg viewBox="0 0 760 300" font-family="Inter" font-size="10.5">
+    <defs><marker id="a9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6b7280"/></marker></defs>
+    <rect x="5" y="5" width="430" height="290" rx="12" fill="#ecfdf5" stroke="#a7f3d0"/>
+    <text x="20" y="28" font-weight="700" fill="#15803d" font-size="11.5">ETAPA DE LEITURA</text>
+    <g font-size="10">
+      <g><circle cx="32" cy="55" r="11" fill="#15803d"/><text x="32" y="59" fill="#fff" text-anchor="middle" font-weight="700">1</text><text x="52" y="59"><tspan font-weight="700">Localizar o PC antigo</tspan> (System302 7.0.5)</text></g>
+      <g><circle cx="32" cy="88" r="11" fill="#15803d"/><text x="32" y="92" fill="#fff" text-anchor="middle" font-weight="700">2</text><text x="52" y="92"><tspan font-weight="700">Enviar o pedido à SMAR</tspan> (Anexo C)</text></g>
+      <g><circle cx="32" cy="121" r="11" fill="#15803d"/><text x="32" y="125" fill="#fff" text-anchor="middle" font-weight="700">3</text><text x="52" y="125"><tspan font-weight="700">Fotografar</tspan> DF65, etiquetas e rack</text></g>
+      <g><circle cx="32" cy="154" r="11" fill="#15803d"/><text x="32" y="158" fill="#fff" text-anchor="middle" font-weight="700">4</text><text x="52" y="158"><tspan font-weight="700">Serial do DF65</tspan> como escravo Modbus RTU</text></g>
+      <g><circle cx="32" cy="187" r="11" fill="#15803d"/><text x="32" y="191" fill="#fff" text-anchor="middle" font-weight="700">5</text><text x="52" y="191"><tspan font-weight="700">Resolver o acesso negado</tspan> do Consolidate OPC</text></g>
+      <g><circle cx="32" cy="220" r="11" fill="#15803d"/><text x="32" y="224" fill="#fff" text-anchor="middle" font-weight="700">6</text><text x="52" y="224"><tspan font-weight="700">Device support</tspan> + upload com parâmetros</text></g>
+      <g><circle cx="32" cy="253" r="11" fill="#15803d"/><text x="32" y="257" fill="#fff" text-anchor="middle" font-weight="700">7</text><text x="52" y="257"><tspan font-weight="700">Abrir</tspan> o projeto PlantaDidaticaSE</text></g>
+    </g>
+    <path d="M435 150 H468" stroke="#6b7280" stroke-width="1.6" marker-end="url(#a9)"/>
+    <path d="M530 70 L590 150 L530 230 L470 150 Z" fill="#fffbeb" stroke="#b45309" stroke-width="2"/>
+    <text x="530" y="132" text-anchor="middle" font-weight="700" fill="#b45309">PORTÃO</text>
+    <text x="530" y="148" text-anchor="middle" font-size="9">backup verificado</text>
+    <text x="530" y="161" text-anchor="middle" font-size="9">programa conhecido</text>
+    <text x="530" y="174" text-anchor="middle" font-size="9">E/S revisada · emergência</text>
+    <path d="M590 150 H612" stroke="#6b7280" stroke-width="1.6" marker-end="url(#a9)"/>
+    <rect x="615" y="60" width="140" height="180" rx="12" fill="#fef2f2" stroke="#fecaca"/>
+    <text x="685" y="84" text-anchor="middle" font-weight="700" fill="#b91c1c" font-size="11.5">ESCRITA</text>
+    <g text-anchor="middle" font-size="10">
+      <circle cx="685" cy="115" r="11" fill="#b91c1c"/><text x="685" y="119" fill="#fff" font-weight="700">8</text>
+      <text x="685" y="145" font-weight="700">Comissionar</text><text x="685" y="159">FIT-31 e TIT-31</text>
+      <circle cx="685" cy="185" r="11" fill="#b91c1c"/><text x="685" y="189" fill="#fff" font-weight="700">9</text>
+      <text x="685" y="214" font-weight="700">DF65 em RUN</text><text x="685" y="228" font-size="9">com operador presente</text>
+    </g>
+  </svg>
+  <figcaption><b>Figura 16.</b> Roteiro. Os passos 1 a 7 só leem informações; os passos 8 e 9 alteram equipamentos e dependem do portão de segurança.</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <div class="box ok" style="margin-top:0"><div class="t"><span class="ico">★</span>Mais promissor: o PC antigo</div>
+    Ele deve ter, de uma vez, o projeto ladder do DF65, o device support compatível com o V3.7.5 e o servidor OPC já configurado. Com ele, dá para ler o programa antes de qualquer RUN.</div>
+    <div class="box warn" style="margin-top:0"><div class="t"><span class="ico">!</span>Antes de qualquer escrita</div>
+    Backup verificado · programa e estratégia conhecidos · E/S e intertravamentos revisados · operador no local com parada de emergência ao alcance · procedimento registrado.</div>
+  </div>
+</section>
+
+<!-- ======================= GLOSSÁRIO ======================= -->
+<section class="chapter" id="c11">
+  <div class="kicker">Anexo A</div>
+  <h1>Glossário</h1>
+  <div class="grid2 gloss">
+    <dl style="margin:0">
+      <dt>Bloco de função</dt><dd>Pedaço de software dentro de um instrumento ou controlador (AI = entrada analógica, PID = controle, AO = saída).</dd>
+      <dt>CAS_IN</dt><dd>Entrada de setpoint de um PID usada no controle em cascata.</dd>
+      <dt>Comissionar</dt><dd>Gravar tag e endereço definitivos num instrumento Fieldbus para incluí-lo na rede de controle.</dd>
+      <dt>Device support / DD</dt><dd>Arquivos que descrevem os parâmetros de um equipamento para o software de configuração.</dd>
+      <dt>DFI302</dt><dd>Família de controladores modulares da SMAR para FOUNDATION Fieldbus.</dd>
+      <dt>Download / Upload</dt><dd>Download envia configuração ao equipamento (escrita). Upload traz do equipamento para o PC (leitura).</dd>
+      <dt>H1</dt><dd>Barramento FOUNDATION Fieldbus de campo, 31,25 kbit/s, dois fios com energia e dados.</dd>
+      <dt>HSE</dt><dd>High Speed Ethernet: FOUNDATION Fieldbus sobre Ethernet.</dd>
+    </dl>
+    <dl style="margin:0">
+      <dt>LAS</dt><dd>Link Active Scheduler: quem organiza a vez de falar no barramento H1 (aqui, o DF51).</dd>
+      <dt>Live List</dt><dd>Lista dos equipamentos que respondem na rede naquele momento.</dd>
+      <dt>MBCF / MBCM</dt><dd>Blocos Modbus do DF51: configuração e Control Master (mestre).</dd>
+      <dt>Modbus</dt><dd>Protocolo industrial mestre/escravo; o TCP usa a porta 502.</dd>
+      <dt>OPC</dt><dd>Padrão para que programas leiam dados de equipamentos industriais por um “servidor”.</dd>
+      <dt>RUN / HOLD</dt><dd>Executando o programa / ligado mas parado.</dd>
+      <dt>SE</dt><dd>Variante de firmware do DF51 acessada pelo servidor DFI OLE da SMAR.</dd>
+      <dt>Syscon</dt><dd>Configurador de estratégias Fieldbus do System302.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ======================= ANEXOS ======================= -->
+<section class="chapter" id="c12">
+  <div class="kicker">Anexo B</div>
+  <h1>Evidências e referências</h1>
+  <h2>Hashes SHA-256</h2>
+  <table class="mono" style="font-size:7.4pt">
+    <tr><th style="font-family:Inter">Artefato</th><th style="font-family:Inter">SHA-256</th></tr>
+    <tr><td>ethernet-20261028-154658.pcapng</td><td>811e897a584dfe984c7dda906ba9b81991389e78fc6f8a143183555d1f62f849</td></tr>
+    <tr><td>ethernet-20261029-100437.pcapng</td><td>08d04cc90b222e4c29b641c5e6d1e0705f2dddab753b2dd9a794b577e95d00eb</td></tr>
+    <tr><td>ethernet-20261111-elevated.pcapng</td><td>6ea90e63689468e18a426befad50108bc90055c89ee36e7db46c4eec60b43788</td></tr>
+    <tr><td>dfbatch.exe</td><td>c526f1e87d6e67fe41dfd3a434851e2211bc108d31f4bdd1531550c2c0d7bee9</td></tr>
+    <tr><td>dfbatch PYTHONSCRIPT</td><td>32ac0d09c69a2eded262ec00f76016d3b739086504578a617cd5f6e4a2207405</td></tr>
+    <tr><td>DfiDiver.exe</td><td>b339f777382ecad1a14975cdf9fd2720425d674f051c5cfd75712c929ac3a2a3</td></tr>
+    <tr><td>FbusComm.dll</td><td>70052383e1acab15ce6f35a65bd8976177314cce1bf7e51e1be445c385f6b104</td></tr>
+    <tr><td>NetConfDownloader.exe</td><td>95ccac48b16190ef7f381c2279d8b189ef9edd2818069f62f196daeab8f98741</td></tr>
+    <tr><td>DEVNet.dll</td><td>e79d77cf6f343b82d4f1428d217f22fba1bbc8dc80bbe81cc1a1dc4ed56fe81d</td></tr>
+    <tr><td>CheckPreinstall.exe</td><td>5305299de3b90fd822469b95477bb2ff0743860805443d6c6b10bad545d2a8c1</td></tr>
+    <tr><td>DF51_SE.ffp</td><td>7384beb88959422ed8b025451c6cb85e4bc61b12eea171583e6b83c4657431e4</td></tr>
+    <tr><td>DF51_HSE.ffp</td><td>90265d0327f0ee79db6bd8f9564e9d935329beaee27be825f9f69e73dd948f8d</td></tr>
+  </table>
+
+  <div class="grid2">
+    <div>
+      <h2>PRs de 16/11</h2>
+      <table>
+        <tr><th>PR</th><th>Conteúdo</th></tr>
+        <tr><td>#3</td><td>Teste Modbus TCP somente leitura</td></tr>
+        <tr><td>#4</td><td>Upload da configuração (modo SE, MBCM)</td></tr>
+        <tr><td>#5</td><td>Instrumentos, OPC, DF65; pedido à SMAR</td></tr>
+      </table>
+      <h2>Referências</h2>
+      <ul class="small" style="color:#374151">
+        <li>Manual PD3-F (SMAR) — piloplfmp.pdf</li>
+        <li>Manual DFI302/DF51 (SMAR) — dfi302mp.pdf, dfi302me.pdf</li>
+        <li>Manual LogicView para DF65 (SMAR) — logiviewmp.pdf</li>
+        <li>Boletim System302 (SMAR) — system32me.pdf</li>
+        <li>Produto PD3-302 — smar.com.br</li>
+        <li>github.com/frahncky/PlantaFieldbus</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Perguntas à SMAR</h2>
+      <div class="box learn" style="margin-top:0">
+      <ol style="margin:0;padding-left:4.5mm;font-size:8.8pt">
+        <li>Versão e device support compatíveis com o DF51 V3.7.5 (SE) para ler valores on-line.</li>
+        <li>Causa e solução do “Write access denied” no Consolidate OPC.</li>
+        <li>Como habilitar o DF65 Logic no LogicView 8.2.2.</li>
+        <li>Diagnosticar o DF65 em HOLD e voltar a RUN sem download.</li>
+        <li>Configurar o DF65Server para leitura.</li>
+        <li>Cuidados ao comissionar FIT-31 e TIT-31.</li>
+        <li>Informações adicionais a enviar.</li>
+      </ol>
+      <p class="small" style="margin:2mm 0 0">Rascunho completo em <span class="mono">docs/pedido-suporte-smar.md</span> (não enviado).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

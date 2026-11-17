@@ -15,6 +15,7 @@ Simulação local, evidência passiva de rede e uma interface independente para 
 [![Segurança](https://img.shields.io/badge/PLC-escrita%20bloqueada-b91c1c)](#-limites-de-segurança)
 
 [Visão geral](#-visão-geral) ·
+[Dossiê técnico](#-dossiê-técnico) ·
 [Recursos](#-recursos) ·
 [Arquitetura](#-arquitetura) ·
 [Como executar](#-como-executar) ·
@@ -34,6 +35,32 @@ Fieldbus** da SMAR. Ela reproduz, em escala didática, malhas de processo e é
 supervisionada por uma estação PC; a configuração específica desta bancada
 continua sujeita à confirmação no laboratório. Consulte a [página oficial da
 PD3-302](https://www.smar.com.br/pt/produto/pd3-302-planta-didatica-foundation-fieldbus).
+
+## 📘 Dossiê técnico
+
+<a href="docs/dossie/Dossie_PD3-302.pdf"><b>Baixar o dossiê da PD3-302 (PDF, 16 páginas)</b></a>
+
+Material didático que reúne tudo o que se sabe sobre a bancada, de 24/10 a
+16/11/2026: o processo e as malhas, o rack DFI302, a arquitetura Ethernet + H1 +
+Modbus, o software disponível, a linha do tempo da investigação, a sessão de
+campo de 16/11 com telas reais, o diagnóstico (observado · inferido ·
+desconhecido) e o roteiro de próximos passos com os portões de segurança.
+Inclui diagramas explicativos, quadros “Para entender” e glossário.
+
+A fonte (HTML + imagens) está em [`docs/dossie/fonte/`](docs/dossie/fonte/) e
+pode ser regenerada com `node render.js dossie.html Dossie_PD3-302.pdf`
+(requer Playwright).
+
+### Situação em 16/11/2026
+
+| | |
+| --- | --- |
+| **DF51** | V3.7.5, modo SE, **RUN**, `192.168.164.100` |
+| **DF65** | **HOLD** — lógica ladder parada |
+| **Canal H1 1** | LIT-31, FY-31, FIT-31, FIT-32, FY-32, TIT-31, TIT-32 (FIT-31 e TIT-31 não comissionados) |
+| **Modbus** | DF51 é mestre (MBCF/MBCM); recusa mestre externo com exceção 07 |
+| **Backup** | topologia salva em `PlantaSE_Leitura.ffp` (estação local) |
+| **Escritas em equipamentos** | nenhuma |
 
 ## 🧭 Recursos
 
@@ -59,7 +86,7 @@ PD3-302](https://www.smar.com.br/pt/produto/pd3-302-planta-didatica-foundation-f
 | Simulador local | ✅ | Fonte de dados de desenvolvimento, somente leitura |
 | Histórico de eventos | ✅ | Cache JSON local, sem envio de dados para rede |
 | Importação de topologia | ✅ | Consome `network-summary.json` produzido pela análise offline |
-| Controlador e IP observados | ✅ | DF51 / DFI302 observado em `192.168.164.100` por captura passiva, ARP e ICMP; DF65 é o coprocessador lógico informado |
+| Controlador e IP observados | ✅ | DF51 / DFI302 em `192.168.164.100` (captura passiva, ARP, ICMP, Syscon); firmware SE em RUN. DF65 é o coprocessador lógico, em HOLD |
 | Protocolo de leitura de processo | ⏳ | O anúncio UDP 4987 identifica o DF51, mas não confirma uma API de leitura nem sua ligação com o controlador |
 | Modbus TCP no DF51 | ⚠️ | Porta 502 aberta e Unit ID 1 responde, mas toda leitura (FC01/03/04) retorna exceção 07. O upload mostrou que o DF51 é **mestre** Modbus (MBCF/MBCM), não escravo. Ver [registro de 16/11/2026](docs/evidence-log.md) |
 | Configuração do DF51 (upload SE) | ✅ | Firmware SE; upload somente leitura via `Smar.DFIOLEServer.0` encontrou o DFI-PD3 e 7 equipamentos no canal 1; backup local `PlantaSE_Leitura` salvo. DF51 em RUN, DF65 em HOLD |
@@ -82,7 +109,8 @@ flowchart LR
 | Pasta | Conteúdo |
 | --- | --- |
 | [`app/`](app/) | Console Flutter desktop, domínio, adaptadores e testes |
-| [`docs/`](docs/) | Captura passiva, plano de automação, perfil Fieldbus e roadmap |
+| [`docs/`](docs/) | Captura passiva, plano de automação, perfil Fieldbus, roadmap e registro de evidências |
+| [`docs/dossie/`](docs/dossie/) | Dossiê técnico em PDF e sua fonte HTML |
 | [`desktop/PlantaFieldbus.Wpf/`](desktop/PlantaFieldbus.Wpf/) | Interface WPF nativa para Windows, em simulação local |
 | [`scripts/`](scripts/) | Coleta e análise offline de evidências de rede |
 | [`agents/`](agents/) | Papéis, máquinas de estado e gates para a investigação |
